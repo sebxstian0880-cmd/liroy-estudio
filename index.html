@@ -3,149 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plataforma Oficial de Idiomas</title>
+  <title>Academia de Idiomas Leroy Estudo</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --primary: #1e3a8a;
-      --primary-light: #3b82f6;
+      --primary: #0f172a;
+      --primary-light: #1e3a8a;
+      --accent: #2563eb;
       --secondary: #d97706;
-      --dark: #0f172a;
+      --dark: #090d16;
       --light: #f8fafc;
       --gray: #64748b;
       --success: #16a34a;
       --danger: #dc2626;
       --owner-gold: #b45309;
-      --radius: 12px;
-      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --radius: 14px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; }
     body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
 
+    /* BANNER PROMO CON CONTADOR EN CEROS POR DEFECTO */
     #promo-banner {
-      background: linear-gradient(90deg, #78350f, #d97706, #1e3a8a);
-      color: white; padding: 0.6rem 1rem; font-weight: bold; font-size: 0.9rem;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      background: linear-gradient(135deg, #0f172a, #1e3a8a, #d97706);
+      color: white; padding: 0.75rem 1.5rem; font-weight: 600; font-size: 0.92rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .promo-tag { background: #f59e0b; color: #0f172a; padding: 2px 8px; border-radius: 4px; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; }
-    .timer-badge { background: rgba(15, 23, 42, 0.6); padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 1rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
+    .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+    .timer-badge { background: rgba(15, 23, 42, 0.75); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.25); }
 
-    /* PANTALLA INTRO ANIMADA SEGURA */
+    /* MUÑEQUITO / MASCOTA DE BIENVENIDA ANIMADA */
     #welcome-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
       z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; color: white; transition: opacity 0.5s ease, visibility 0.5s; padding: 2rem;
+      text-align: center; color: white; transition: opacity 0.6s ease, visibility 0.6s; padding: 2rem;
     }
-    .welcome-logo-icon { font-size: 4rem; color: #f59e0b; margin-bottom: 1.5rem; animation: pulseGlow 1.5s infinite alternate; }
-    .welcome-text { font-size: 2.2rem; font-weight: 800; letter-spacing: 2px; color: #f59e0b; text-transform: uppercase; }
-    .welcome-subtext { margin-top: 1rem; font-size: 1.1rem; color: #94a3b8; }
-    .loading-bar-box { width: 220px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; margin-top: 2rem; overflow: hidden; }
-    .loading-bar-progress { width: 100%; height: 100%; background: linear-gradient(90deg, #f59e0b, #3b82f6); animation: loadProgress 1.2s infinite; }
+    .mascot-avatar {
+      width: 110px; height: 110px; background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem;
+      color: #0f172a; box-shadow: 0 0 30px rgba(245, 158, 11, 0.5); animation: mascotBounce 1.8s infinite alternate ease-in-out;
+      margin-bottom: 1.5rem; border: 4px solid #ffffff;
+    }
+    @keyframes mascotBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-12px) scale(1.05); } }
+    .welcome-title { font-size: 2.2rem; font-weight: 800; letter-spacing: 1px; color: #f8fafc; margin-bottom: 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+    .welcome-subtitle { font-size: 1.15rem; color: #cbd5e1; max-width: 600px; font-weight: 400; }
+    .loading-progress-pill { width: 180px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; margin-top: 2.5rem; overflow: hidden; }
+    .loading-progress-bar { width: 100%; height: 100%; background: #f59e0b; animation: loadProgressLine 1.5s infinite linear; }
+    @keyframes loadProgressLine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-    @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-    @keyframes loadProgress { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
+    /* HEADER PROFESIONAL */
     header {
-      background: linear-gradient(135deg, var(--dark), var(--primary));
-      color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: var(--shadow); flex-wrap: wrap; gap: 10px;
+      background: linear-gradient(135deg, #090d16, #0f172a);
+      color: white; padding: 1.1rem 2.5rem; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: var(--shadow); flex-wrap: wrap; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .logo { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
-    .logo i { color: var(--secondary); }
+    .logo { font-size: 1.45rem; font-weight: 800; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px; }
+    .logo i { color: #f59e0b; font-size: 1.6rem; }
     .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
     .tab-btn {
-      background: rgba(255,255,255,0.15); color: white; border: none; padding: 0.6rem 1rem;
-      border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.2s;
+      background: rgba(255, 255, 255, 0.08); color: #cbd5e1; border: none; padding: 0.65rem 1.1rem;
+      border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.25s ease;
     }
-    .tab-btn:hover, .tab-btn.active { background: var(--secondary); color: white; }
-    .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #78350f); border: 1px solid #fef3c7; }
+    .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+    .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #b45309); color: white; border: 1px solid rgba(254, 243, 199, 0.3); }
 
-    .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    .container { max-width: 1240px; margin: 2.5rem auto; padding: 0 1.5rem; }
     .portal-section { display: none; }
-    .portal-section.active { display: block; }
+    .portal-section.active { display: block; animation: fadeInPortal 0.4s ease; }
+    @keyframes fadeInPortal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
     .section-title {
-      font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--primary);
-      display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;
+      font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary);
+      display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.6rem; font-weight: 700;
     }
 
+    /* TARJETAS DE IDIOMAS */
     .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .lang-card { background: white; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
+    .lang-card { background: white; border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; transition: transform 0.2s; }
+    .lang-card:hover { transform: translateY(-3px); }
     .lang-card.active { border-left: 6px solid var(--success); }
-    .lang-card.locked { opacity: 0.75; background: #f8fafc; border-left: 6px solid var(--gray); }
-    .badge-status { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+    .lang-card.locked { opacity: 0.7; background: #f8fafc; border-left: 6px solid var(--gray); }
+    .badge-status { position: absolute; top: 18px; right: 18px; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px; }
     .badge-active { background: #dcfce7; color: var(--success); }
     .badge-locked { background: #e2e8f0; color: var(--gray); }
 
     .btn {
-      display: inline-block; width: 100%; padding: 0.75rem; border: none; border-radius: 8px;
-      background: var(--primary); color: white; font-weight: bold; text-align: center; cursor: pointer;
-      margin-top: 1rem; text-decoration: none; font-size: 0.95rem;
+      display: inline-block; width: 100%; padding: 0.8rem; border: none; border-radius: 10px;
+      background: var(--accent); color: white; font-weight: 700; text-align: center; cursor: pointer;
+      margin-top: 1.2rem; text-decoration: none; font-size: 0.95rem; transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
     }
-    .btn:hover { background: var(--primary-light); }
-    .btn-disabled { background: #cbd5e1; cursor: not-allowed; }
-    .btn-history { background: #2563eb; font-size: 0.85rem; padding: 0.5rem; margin-top: 8px; }
+    .btn:hover { background: #1d4ed8; box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3); }
+    .btn-disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; }
+    .btn-history { background: #2563eb; font-size: 0.85rem; padding: 0.6rem; margin-top: 10px; box-shadow: none; }
 
-    .modules-accordion { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+    /* MÓDULOS ACORDEÓN */
+    .modules-accordion { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2.5rem; }
     .folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; box-shadow: var(--shadow); overflow: hidden; }
-    .folder-header { background: #ffffff; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: var(--primary); }
-    .folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .folder-header { background: #ffffff; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; color: var(--primary); transition: background 0.2s; }
+    .folder-header:hover { background: #f8fafc; }
+    .folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
     .folder-content.open { display: grid; }
-    .classroom-box { background: white; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center; }
+    .classroom-box { background: white; padding: 1.4rem; border-radius: 12px; border: 1px solid #cbd5e1; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
 
-    .lb-folder-card { background: white; border-radius: var(--radius); border: 2px solid #cbd5e1; margin-bottom: 1rem; box-shadow: var(--shadow); overflow: hidden; }
-    .lb-folder-header { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
-    .lb-folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #cbd5e1; }
+    /* LEADERBOARDS EN CARPETAS */
+    .lb-folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; margin-bottom: 1.2rem; box-shadow: var(--shadow); overflow: hidden; }
+    .lb-folder-header { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; }
+    .lb-folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid #cbd5e1; }
     .lb-folder-content.open { display: block; }
 
     .levels-lb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
-    .level-lb-card { background: white; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; }
-    .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .lb-top-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; }
+    .level-lb-card { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .lb-top-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 9px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 500; }
 
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 2000; justify-content: center; align-items: center; padding: 1rem; }
-    .modal-card { background: white; max-width: 620px; width: 100%; border-radius: var(--radius); padding: 2rem; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow); }
-    .option-btn { display: block; width: 100%; padding: 0.8rem; margin: 0.5rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; text-align: left; cursor: pointer; font-size: 0.95rem; }
-    .option-btn:hover { background: #e2e8f0; }
+    /* MODALES PROFESIONALES */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 2000; justify-content: center; align-items: center; padding: 1.5rem; backdrop-filter: blur(4px); }
+    .modal-card { background: white; max-width: 650px; width: 100%; border-radius: 18px; padding: 2.5rem; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); animation: modalZoom 0.3s ease; }
+    @keyframes modalZoom { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .option-btn { display: block; width: 100%; padding: 0.9rem 1rem; margin: 0.6rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; text-align: left; cursor: pointer; font-size: 0.98rem; font-weight: 500; transition: all 0.2s; }
+    .option-btn:hover { background: #e2e8f0; border-color: #94a3b8; }
 
-    .feedback-box { margin-top: 1rem; padding: 1.2rem; border-radius: 8px; display: none; font-size: 0.95rem; }
+    .feedback-box { margin-top: 1.2rem; padding: 1.3rem; border-radius: 12px; display: none; font-size: 0.98rem; }
     .feedback-box.correct { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
     .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 2px solid #fca5a5; }
 
-    .input-pass { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 0.5rem; text-align: center; }
+    .input-pass, .input-text-pro { width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 10px; margin-top: 0.6rem; font-size: 0.95rem; background: #fff; }
+    .input-pass:focus, .input-text-pro:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+
+    /* CERTIFICADO ANIMADO Y COMPROBACIÓN VISUAL */
+    .cert-announcement-card {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 2px dashed #f59e0b; border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15); animation: fadeInPortal 0.5s ease;
+    }
+    .cert-icon-anim { font-size: 4.5rem; color: #d97706; margin-bottom: 0.8rem; animation: mascotBounce 1.5s infinite alternate ease-in-out; }
   </style>
 </head>
 <body>
 
-  <!-- BANNER PROMO CON CONTADOR EN CEROS POR DEFECTO -->
+  <!-- BANNER PROMO CON CONTADOR -->
   <div id="promo-banner">
     <div><span class="promo-tag">OFERTA ESPECIAL</span> 30 minutos de Clase GRATIS</div>
-    <div style="display: flex; align-items: center; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
       <div class="timer-badge" id="week-timer-display">OFFLINE (00d : 00h : 00m : 00s)</div>
-      <button onclick="iniciarQuiz()" style="background: #f59e0b; border: none; padding: 4px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Probar Quiz</button>
+      <button onclick="iniciarQuiz()" style="background: #f59e0b; color: #0f172a; border: none; padding: 6px 14px; border-radius: 8px; font-weight: 700; cursor: pointer;">Probar Quiz</button>
     </div>
   </div>
 
-  <!-- PANTALLA INTRO ANIMADA CON DOBLE SISTEMA DE SEGURIDAD ANTIBLOQUEO -->
+  <!-- MUÑEQUITO / MASCOTA DE BIENVENIDA -->
   <div id="welcome-screen">
-    <div class="welcome-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-    <h1 class="welcome-text">Academia de Idiomas</h1>
-    <p class="welcome-subtext">Plataforma Oficial de Aprendizaje</p>
-    <div class="loading-bar-box"><div class="loading-bar-progress"></div></div>
+    <div class="mascot-avatar"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1 class="welcome-title">Bienvenido a Academia Leroy Estudo</h1>
+    <p class="welcome-subtitle">Plataforma Oficial de Estudio y Certificación de Idiomas</p>
+    <div class="loading-progress-pill"><div class="loading-progress-bar"></div></div>
   </div>
 
   <header>
-    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Academia de Idiomas</div>
+    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Academia Leroy Estudo</div>
     <div class="nav-tabs">
-      <button class="tab-btn active" onclick="cambiarPortal('estudiantes')">Estudiantes</button>
-      <button class="tab-btn" onclick="cambiarPortal('perfil')">Mi Perfil</button>
-      <button class="tab-btn" onclick="cambiarPortal('speaking')">Speaking Zone</button>
-      <button class="tab-btn" onclick="cambiarPortal('certificados')">Certificados</button>
-      <button class="tab-btn" onclick="abrirLoginProfesor()">Profesores</button>
-      <button class="tab-btn owner-btn" onclick="abrirLoginOwner()">Owner</button>
+      <button class="tab-btn active" onclick="cambiarPortal('estudiantes')"><i class="fa-solid fa-user-graduate"></i> Estudiantes</button>
+      <button class="tab-btn" onclick="cambiarPortal('perfil')"><i class="fa-solid fa-id-card"></i> Mi Perfil</button>
+      <button class="tab-btn" onclick="cambiarPortal('speaking')"><i class="fa-solid fa-comments"></i> Speaking Zone</button>
+      <button class="tab-btn" onclick="cambiarPortal('certificados')"><i class="fa-solid fa-award"></i> Certificados</button>
+      <button class="tab-btn" onclick="abrirLoginProfesor()"><i class="fa-solid fa-chalkboard-user"></i> Profesores</button>
+      <button class="tab-btn owner-btn" onclick="abrirLoginOwner()"><i class="fa-solid fa-crown"></i> Owner</button>
     </div>
   </header>
 
@@ -153,133 +178,256 @@
 
     <!-- PORTAL ESTUDIANTES -->
     <div id="portal-estudiantes" class="portal-section active">
-      <section style="margin-bottom: 2rem; background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.8rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+      <section style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 2.2rem; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: var(--shadow);">
         <div>
-          <h3>Quiz Evaluativo (24 Puntos Totales / 2 Quizzes)</h3>
-          <p style="color: #cbd5e1; font-size: 0.9rem;">Evaluaciones continuas con guardado automático directo en Perfil.</p>
+          <h3 style="font-size: 1.4rem; margin-bottom: 6px;"><i class="fa-solid fa-clipboard-question"></i> Quiz Evaluativo de Nivel (24 Puntos Totales)</h3>
+          <p style="color: #cbd5e1; font-size: 0.95rem;">Evaluaciones continuas con explicaciones inmediatas y sincronización en vivo a tu perfil.</p>
         </div>
-        <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.7rem 1.5rem;" onclick="iniciarQuiz()">Iniciar Quiz</button>
+        <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.8rem 1.8rem;" onclick="iniciarQuiz()"><i class="fa-solid fa-play"></i> Iniciar Quiz</button>
       </section>
 
       <section>
-        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos e Idiomas (7 Idiomas)</h2>
+        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos e Idiomas Disponibles</h2>
         <div class="languages-grid">
           <div class="lang-card active">
             <span class="badge-status badge-active">Disponible</span>
-            <h3>Inglés</h3>
-            <p>Acceso a módulos, historial de clases y exámenes con corrección.</p>
-            <button class="btn" onclick="iniciarQuiz()">Realizar Quiz</button>
+            <h3>Inglés Leroy</h3>
+            <p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Acceso completo a módulos, historial de clases grabadas y exámenes escritos.</p>
+            <button class="btn" onclick="iniciarQuiz()">Ingresar al Curso</button>
           </div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
         </div>
       </section>
 
       <section>
-        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje (1 al 9)</h2>
+        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje (Módulos 1 al 9)</h2>
         <div class="modules-accordion" id="modulesContainer"></div>
       </section>
 
       <section>
-        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Leaderboards por Módulo</h2>
+        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Leaderboards por Módulo (Top 3)</h2>
         <div id="leaderboardsFoldersContainer"></div>
       </section>
     </div>
 
     <!-- MI PERFIL -->
     <div id="portal-perfil" class="portal-section">
-      <div style="background: white; border-radius: 12px; padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
-        <h2>Mi Perfil</h2>
-        <p style="color: var(--gray);" id="profile-desc-display">Estudiante Activo</p>
-        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-top: 15px; border: 1px solid #cbd5e1;">
-          <p style="font-size: 1.1rem;"><strong>Puntuación Acumulada:</strong> <span id="profile-score-quiz" style="color:var(--primary); font-weight:bold;">0 / 24 Puntos</span></p>
-          <p style="font-size: 1.1rem; margin-top: 6px;"><strong>Nivel Calculado:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Sin evaluación</span></p>
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; max-width: 750px; margin: auto;">
+        <div style="display: flex; align-items: center; gap: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 1.8rem; flex-wrap: wrap;">
+          <div id="profile-photo-container" style="width: 90px; height: 90px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; overflow: hidden; border: 3px solid var(--accent);">
+            <span id="profile-initial">U</span>
+          </div>
+          <div>
+            <h2 id="profile-name-display" style="font-size: 1.6rem; color: var(--primary);">Estudiante Leroy</h2>
+            <p style="color: var(--gray); margin-top: 4px;" id="profile-desc-display">Nivel A1 (Básico Initial)</p>
+            <button class="btn" style="width: auto; padding: 0.5rem 1.2rem; font-size: 0.85rem; margin-top: 10px;" onclick="abrirConfigPerfil()"><i class="fa-solid fa-gear"></i> Configurar Perfil</button>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 1.8rem; color: var(--primary); font-size: 1.2rem;"><i class="fa-solid fa-chart-line"></i> Progreso y Evaluaciones</h3>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-top: 12px; border: 1px solid #cbd5e1;">
+          <p style="font-size: 1.1rem;"><strong>Puntuación Acumulada:</strong> <span id="profile-score-quiz" style="color:var(--accent); font-weight:bold;">0 / 24 Puntos</span></p>
+          <p style="font-size: 1.1rem; margin-top: 8px;"><strong>Nivel Actual:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Sin evaluación registrada</span></p>
         </div>
       </div>
     </div>
 
     <!-- SPEAKING ZONE -->
     <div id="portal-speaking" class="portal-section">
-      <div style="background: white; border-radius: 12px; padding: 2rem; border: 1px solid #cbd5e1;">
-        <h2 class="section-title">Speaking Zone - Práctica</h2>
-        <textarea id="speaking-text-msg" style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;" rows="3" placeholder="Escribe tu texto..."></textarea>
-        <button class="btn" style="width: auto; background: #25d366;" onclick="enviarTarea('Speaking')">Enviar a WhatsApp</button>
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; max-width: 750px; margin: auto;">
+        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Opinión</h2>
+        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 1.5rem;">
+          <p style="color: var(--dark); font-size: 0.95rem;">
+            <strong>¿Qué se hace aquí?</strong> Este espacio está diseñado para que envíes tu opinión o práctica hablada/escrita directamente al Owner de la academia desde la plataforma.
+          </p>
+        </div>
+
+        <textarea id="speaking-text-msg" class="input-text-pro" rows="4" placeholder="Escribe tu opinión o tarea aquí para enviarla al Owner..."></textarea>
+        
+        <div style="display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap;">
+          <button class="btn" style="width: auto; background: #25d366; flex: 1;" onclick="enviarTarea('Speaking WhatsApp')"><i class="fa-brands fa-whatsapp"></i> Enviar Directo al Owner (WhatsApp)</button>
+          <button class="btn btn-disabled" style="width: auto; flex: 1; background: #94a3b8; cursor: not-allowed;" disabled><i class="fa-solid fa-envelope"></i> Enviar por Correo Electrónico (Bloqueado)</button>
+        </div>
       </div>
     </div>
 
     <!-- CERTIFICADOS -->
     <div id="portal-certificados" class="portal-section">
-      <div style="background: white; border-radius: 12px; padding: 2rem; border: 1px solid #cbd5e1; text-align: center; max-width: 600px; margin: auto;">
-        <h2>Emisión de Certificados</h2>
-        <input type="text" id="cert-code-input" class="input-pass" placeholder="Ingresa la clave del certificado">
-        <input type="text" id="cert-full-name" class="input-pass" placeholder="Tu nombre completo">
-        <button class="btn" style="background: #d97706; margin-top: 10px;" onclick="procesarCertificado()">Procesar Certificado</button>
-        <div id="cert-announcement-box" style="display:none; margin-top: 15px; background: #fef3c7; padding: 1rem; border-radius: 8px;">
-          🎉 ¡Certificado Solicitado! En 24 horas te llegará vía WhatsApp. Toma captura y reenvíala al Owner.
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; text-align: center; max-width: 650px; margin: auto;">
+        <i class="fa-solid fa-award" style="font-size: 3.5rem; color: #d97706; margin-bottom: 1rem;"></i>
+        <h2>Solicitud de Certificado Oficial</h2>
+        <p style="color: var(--gray); margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por el Owner para validar y emitir tu diploma:</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
+          <label style="font-size: 0.88rem; font-weight: bold;">Clave del Certificado Activa:</label>
+          <input type="text" id="cert-code-input" class="input-pass" placeholder="Ej: CERT-OWNER-2026" style="margin:0;">
+
+          <label style="font-size: 0.88rem; font-weight: bold; margin-top: 6px;">Nombre Completo del Estudiante:</label>
+          <input type="text" id="cert-full-name" class="input-pass" placeholder="Tu nombre para el diploma" style="margin:0;">
+
+          <label style="font-size: 0.88rem; font-weight: bold; margin-top: 6px;">Módulo Aprobado:</label>
+          <select id="cert-mod-select" class="input-pass" style="margin:0; text-align:left;">
+            <option value="Módulo 1">Módulo 1</option><option value="Módulo 2">Módulo 2</option><option value="Módulo 3">Módulo 3</option>
+            <option value="Módulo 4">Módulo 4</option><option value="Módulo 5">Módulo 5</option><option value="Módulo 6">Módulo 6</option>
+            <option value="Módulo 7">Módulo 7</option><option value="Módulo 8">Módulo 8</option><option value="Módulo 9">Módulo 9</option>
+          </select>
+
+          <button class="btn" style="background: #d97706; margin-top: 10px;" onclick="procesarCertificado()"><i class="fa-solid fa-paper-plane"></i> Procesar Solicitud de Certificado</button>
+        </div>
+
+        <div id="cert-announcement-box" style="display:none;" class="cert-announcement-card">
+          <div class="cert-icon-anim"><i class="fa-solid fa-certificate"></i></div>
+          <h3 style="color: #92400e; margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 ¡Certificado Solicitado con Éxito!</h3>
+          <p style="color: #78350f; font-size: 0.98rem; margin-bottom: 1rem;" id="cert-announcement-text">
+            Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será emitido y enviado directamente.
+          </p>
+          <div style="background: #ffffff; padding: 1.1rem; border-radius: 10px; border: 2px dashed #d97706; font-size: 0.9rem; color: #451a03; text-align: left;">
+            📷 <strong>PASO OBLIGATORIO DE COMPROBACIÓN:</strong> Toma una captura de pantalla a este recuadro y envíasela al <strong>Owner</strong> vía WhatsApp para confirmar tu solicitud de entrega.
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- PROFESORES -->
+    <!-- PANEL PROFESORES -->
     <div id="portal-profesores" class="portal-section">
-      <div style="background: white; border-radius: 12px; padding: 2rem; max-width: 700px; margin: auto; border: 1px solid #cbd5e1;">
-        <h2 class="section-title">Panel Docente Específico por Módulo y Nivel</h2>
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; max-width: 750px; margin: auto; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
+        <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente por Módulo y Nivel</h2>
         
-        <label style="font-weight:bold;">Seleccionar Módulo:</label>
-        <select id="teacher-mod-select" style="width:100%; padding:0.6rem; margin-top:5px; margin-bottom:10px;">
-          <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
-          <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
-          <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
-        </select>
-        
-        <label style="font-weight:bold;">Seleccionar Nivel:</label>
-        <select id="teacher-lvl-select" style="width:100%; padding:0.6rem; margin-top:5px; margin-bottom:15px;">
-          <option value="A1">A1</option><option value="A2">A2</option><option value="B1">B1</option>
-          <option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option>
-        </select>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+          <div>
+            <label style="font-weight:700; font-size:0.9rem;">Seleccionar Módulo:</label>
+            <select id="teacher-mod-select" class="input-pass" style="margin-top:5px;" onchange="cargarConfigProfesor()">
+              <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
+              <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
+              <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-weight:700; font-size:0.9rem;">Seleccionar Nivel:</label>
+            <select id="teacher-lvl-select" class="input-pass" style="margin-top:5px;" onchange="cargarConfigProfesor()">
+              <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option>
+              <option value="B2">Nivel B2</option><option value="C1">Nivel C1</option><option value="C2">Nivel C2</option>
+            </select>
+          </div>
+        </div>
 
-        <input type="text" id="teacher-mod-pass" class="input-pass" placeholder="Nueva Contraseña para esta clase específica">
-        <button class="btn" onclick="guardarClaveClase()">Guardar Contraseña</button>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
+          <label style="font-weight:700; font-size:0.9rem;">Contraseña de esta clase específica:</label>
+          <input type="text" id="teacher-mod-pass" class="input-pass" placeholder="Ej: MOD3-A1-SECURE">
+          <button class="btn" style="margin-top:8px;" onclick="guardarClaveClase()">Guardar Contraseña</button>
+        </div>
 
-        <input type="text" id="teacher-meet-url" class="input-pass" placeholder="Link de Google Meet">
-        <button class="btn" onclick="guardarMeetClase()">Guardar Link de Meet</button>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
+          <label style="font-weight:700; font-size:0.9rem;">Link de Google Meet:</label>
+          <input type="text" id="teacher-meet-url" class="input-pass" placeholder="https://meet.google.com/xxx-xxxx-xxx">
+          <button class="btn" style="margin-top:8px;" onclick="guardarMeetClase()">Guardar Link de Meet</button>
+        </div>
 
-        <input type="text" id="teacher-video-url" class="input-pass" placeholder="URL del Video para el Historial">
-        <button class="btn" style="background:#2563eb;" onclick="guardarVideoHistorial()">Publicar en Historial de esta Clase</button>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1;">
+          <label style="font-weight:700; font-size:0.9rem;">Subir Archivo de Clase Grabada (Galería / Archivo):</label>
+          <input type="file" id="teacher-class-file" accept="video/*" class="input-pass" style="margin-top:5px; background:white; padding:0.5rem;">
+          <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Archivo en Historial</button>
+        </div>
       </div>
     </div>
 
     <!-- OWNER -->
     <div id="portal-owner" class="portal-section">
-      <div style="background: white; border-radius: 12px; padding: 2rem; border: 2px solid #f59e0b;">
-        <h2 class="section-title"><i class="fa-solid fa-crown"></i> Panel Owner Supremo</h2>
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 2px solid #f59e0b; max-width: 900px; margin: auto;">
+        <h2 class="section-title"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> Panel Owner Supremo (Control Total)</h2>
         
-        <button class="btn" style="background: #16a34a; margin-bottom: 1.5rem;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Actualizar Quizzes a Estudiantes</button>
-
-        <h3>Control de Contador (En Ceros por Defecto)</h3>
-        <div style="margin: 10px 0;">
-          <input type="number" id="owner-timer-days-input" value="7" style="width: 80px; padding:0.5rem; text-align:center; font-weight:bold;"> Días de vigencia
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 2rem;">
+          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid #cbd5e1;">
+            <h4>Gestión de Quizzes</h4>
+            <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Actualizar Quizzes</button>
+          </div>
+          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid #cbd5e1;">
+            <h4>Contador de Descuento</h4>
+            <input type="number" id="owner-timer-days-input" value="7" style="width: 60px; padding:4px; text-align:center; font-weight:bold;"> Días
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="btn" style="background:#16a34a; margin:0;" onclick="iniciarContador()">START</button>
+              <button class="btn" style="background:#dc2626; margin:0;" onclick="detenerContador()">STOP</button>
+            </div>
+          </div>
         </div>
-        <div style="display:flex; gap:10px; margin-bottom:1.5rem;">
-          <button class="btn" style="background:#16a34a; flex:1;" onclick="iniciarContador()">START</button>
-          <button class="btn" style="background:#dc2626; flex:1;" onclick="detenerContador()">STOP / Resetear</button>
+
+        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
+          <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-users-gear"></i> Control de Profesores y Contraseñas de Acceso</h3>
+          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:10px;">Como Owner puedes ver y modificar la clave general del profesor o inhabilitar su acceso:</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <input type="text" id="owner-prof-pass-edit" value="PROFESOR2026" class="input-pass" style="flex:1; margin:0;">
+            <button class="btn" style="width:auto; margin:0; background:#d97706;" onclick="alert('¡Contraseña del profesor actualizada!')">Actualizar Clave Profesor</button>
+            <button class="btn" style="width:auto; margin:0; background:#dc2626;" onclick="alert('¡Acceso del profesor inhabilitado temporalmente!')">Inhabilitar Profesor</button>
+          </div>
         </div>
 
-        <h3>Clave Activa de Certificados</h3>
-        <input type="text" id="owner-cert-key-input" class="input-pass" placeholder="Nueva Clave Certificados">
-        <button class="btn" style="background:#d97706; margin-top:10px;" onclick="actualizarClaveCertificado()">Actualizar Clave</button>
+        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
+          <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-key"></i> Clave Activa de Certificados</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <input type="text" id="owner-cert-key-input" class="input-pass" placeholder="Nueva Clave Certificados" style="flex:1; margin:0;">
+            <button class="btn" style="width:auto; margin:0; background:#d97706;" onclick="actualizarClaveCertificado()">Cambiar Clave</button>
+          </div>
+        </div>
+
+        <!-- ACTUALIZAR LEADERBOARDS POR MÓDULO -->
+        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1;">
+          <h3 style="color:var(--primary); margin-bottom:1rem;"><i class="fa-solid fa-folder-open"></i> Actualizar Leaderboards por Módulo (1 al 9)</h3>
+          
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+            <button class="tab-btn active" onclick="seleccionarModuloOwner(1, this)">Módulo 1</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(2, this)">Módulo 2</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(3, this)">Módulo 3</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(4, this)">Módulo 4</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(5, this)">Módulo 5</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(6, this)">Módulo 6</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(7, this)">Módulo 7</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(8, this)">Módulo 8</button>
+            <button class="tab-btn" onclick="seleccionarModuloOwner(9, this)">Módulo 9</button>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:10px;">
+            <select id="lb-owner-lvl" class="input-pass" style="margin:0;">
+              <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option>
+              <option value="B2">Nivel B2</option><option value="C1">Nivel C1</option><option value="C2">Nivel C2</option>
+            </select>
+            <select id="lb-owner-pos" class="input-pass" style="margin:0;">
+              <option value="1">Top 1 (🥇)</option><option value="2">Top 2 (🥈)</option><option value="3">Top 3 (🥉)</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <input type="text" id="lb-student-name" placeholder="Nombre Estudiante" class="input-pass" style="flex:1; margin:0;">
+            <input type="number" id="lb-student-score" placeholder="Puntos" class="input-pass" style="width:120px; margin:0;">
+            <button class="btn" style="width:auto; margin:0;" onclick="actualizarLeaderboardOwner()">Guardar en Leaderboard</button>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <!-- MODALS LOGINS -->
-  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Profesor</h3><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:5px;" onclick="document.getElementById('loginProfesorModal').style.display='none'">Cancelar</button></div></div>
-  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Owner</h3><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:5px;" onclick="document.getElementById('loginOwnerModal').style.display='none'">Cancelar</button></div></div>
+  <!-- MODALS LOGINS Y PERFIL -->
+  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Profesor</h3><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('loginProfesorModal').style.display='none'">Cancelar</button></div></div>
+  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Owner</h3><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('loginOwnerModal').style.display='none'">Cancelar</button></div></div>
+
+  <!-- MODAL CONFIGURAR PERFIL -->
+  <div class="modal-overlay" id="configPerfilModal">
+    <div class="modal-card" style="max-width:450px;">
+      <h3 style="margin-bottom:15px; color:var(--primary);"><i class="fa-solid fa-id-card"></i> Configurar mi Perfil</h3>
+      <label style="font-weight:600; font-size:0.9rem;">Tu Nombre:</label>
+      <input type="text" id="input-edit-name" class="input-pass" placeholder="Tu nombre" style="margin-top:4px; margin-bottom:12px;">
+      <label style="font-weight:600; font-size:0.9rem;">Descripción Personal / Nivel:</label>
+      <input type="text" id="input-edit-desc" class="input-pass" placeholder="Ej: Estudiante avanzado" style="margin-top:4px; margin-bottom:12px;">
+      <label style="font-weight:600; font-size:0.9rem;">Subir Foto de Perfil:</label>
+      <input type="file" id="input-edit-photo" accept="image/*" class="input-pass" style="margin-top:4px; margin-bottom:20px; background:white; padding:0.5rem;">
+      <button class="btn" onclick="guardarPerfilEstudiante()">Guardar Cambios</button>
+      <button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('configPerfilModal').style.display='none'">Cancelar</button>
+    </div>
+  </div>
 
   <!-- MODAL QUIZ -->
   <div class="modal-overlay" id="quizModal">
@@ -293,23 +441,24 @@
   </div>
 
   <script>
-    // SISTEMA DE SEGURIDAD ANTIBLOQUEO PARA LA PANTALLA DE BIENVENIDA
+    // MASCOTA DE BIENVENIDA ANTIBLOQUEO
     function ocultarIntroSegura() {
       const screen = document.getElementById('welcome-screen');
       if (screen && screen.style.display !== 'none') {
         screen.style.opacity = '0';
-        setTimeout(() => { screen.style.display = 'none'; }, 500);
+        setTimeout(() => { screen.style.display = 'none'; }, 600);
       }
     }
-
-    window.addEventListener('load', () => { setTimeout(ocultarIntroSegura, 1200); });
-    setTimeout(ocultarIntroSegura, 2500); // Respaldo de seguridad absoluto
+    window.addEventListener('load', () => { setTimeout(ocultarIntroSegura, 2200); });
+    setTimeout(ocultarIntroSegura, 3500);
 
     const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
     let datosClases = {}; 
     let leaderboardDatos = {};
+    let moduloOwnerSeleccionado = 1;
     let claveCertificadoOwner = "CERT-OWNER-2026";
     let timerInterval = null;
+    let perfilUsuario = { nombre: "Estudiante Leroy", desc: "Nivel A1 (Básico Initial)" };
 
     window.addEventListener('DOMContentLoaded', () => {
       renderizarModulos();
@@ -325,7 +474,7 @@
         let html = `<div class="folder-card"><div class="folder-header" onclick="toggleFolder('mod${m}')"><span><i class="fa-solid fa-folder"></i> Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="folder-content" id="mod${m}">`;
         niveles.forEach(lvl => {
           const key = `${m}-${lvl}`;
-          const conf = datosClases[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', video: '' };
+          const conf = datosClases[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', videoName: '' };
           html += `
             <div class="classroom-box">
               <h4>Nivel ${lvl}</h4>
@@ -349,7 +498,18 @@
       for (let m = 1; m <= 9; m++) {
         let html = `<div class="lb-folder-card"><div class="lb-folder-header" onclick="toggleFolder('lb-mod${m}')"><span><i class="fa-solid fa-trophy"></i> Leaderboard - Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="lb-folder-content" id="lb-mod${m}"><div class="levels-lb-grid">`;
         niveles.forEach(lvl => {
-          html += `<div class="level-lb-card"><h4>Nivel ${lvl}</h4><ul class="lb-top-list"><li class="lb-top-item"><span>🥇 1. Estudiante Top</span><strong>1450 Pts</strong></li></ul></div>`;
+          const p1 = leaderboardDatos[`${m}-${lvl}-1`] || { name: "Estudiante Top 1", score: 1450 };
+          const p2 = leaderboardDatos[`${m}-${lvl}-2`] || { name: "Estudiante Top 2", score: 1280 };
+          const p3 = leaderboardDatos[`${m}-${lvl}-3`] || { name: "Estudiante Top 3", score: 1100 };
+          html += `
+            <div class="level-lb-card">
+              <h4>Nivel ${lvl}</h4>
+              <ul class="lb-top-list">
+                <li class="lb-top-item"><span>🥇 1. ${p1.name}</span><strong>${p1.score} Pts</strong></li>
+                <li class="lb-top-item"><span>🥈 2. ${p2.name}</span><strong>${p2.score} Pts</strong></li>
+                <li class="lb-top-item"><span>🥉 3. ${p3.name}</span><strong>${p3.score} Pts</strong></li>
+              </ul>
+            </div>`;
         });
         html += `</div></div></div>`;
         container.innerHTML += html;
@@ -373,7 +533,7 @@
       const key = `${m}-${lvl}`;
       if(!datosClases[key]) datosClases[key] = {};
       datosClases[key].pass = document.getElementById('teacher-mod-pass').value;
-      alert(`Contraseña guardada para Módulo ${m} - Nivel ${lvl}`);
+      alert(`¡Contraseña guardada para Módulo ${m} - Nivel ${lvl}!`);
     }
 
     function guardarMeetClase() {
@@ -383,16 +543,21 @@
       if(!datosClases[key]) datosClases[key] = {};
       datosClases[key].meet = document.getElementById('teacher-meet-url').value;
       renderizarModulos();
-      alert(`Link de Meet guardado para Módulo ${m} - Nivel ${lvl}`);
+      alert(`¡Link de Meet guardado para Módulo ${m} - Nivel ${lvl}!`);
     }
 
-    function guardarVideoHistorial() {
+    function subirVideoHistorialArchivo() {
       const m = document.getElementById('teacher-mod-select').value;
       const lvl = document.getElementById('teacher-lvl-select').value;
       const key = `${m}-${lvl}`;
-      if(!datosClases[key]) datosClases[key] = {};
-      datosClases[key].video = document.getElementById('teacher-video-url').value;
-      alert(`Video cargado al historial de Módulo ${m} - Nivel ${lvl}`);
+      const fileInput = document.getElementById('teacher-class-file');
+      if(fileInput.files && fileInput.files[0]) {
+        if(!datosClases[key]) datosClases[key] = {};
+        datosClases[key].videoName = fileInput.files[0].name;
+        alert(`¡Video "${fileInput.files[0].name}" publicado correctamente en el Historial del Módulo ${m} - Nivel ${lvl}!`);
+      } else {
+        alert('Por favor selecciona un archivo de video de tu galería.');
+      }
     }
 
     function verificarClase(m, lvl) {
@@ -401,13 +566,61 @@
       if(document.getElementById(`pass-${key}`).value === conf.pass) {
         document.getElementById(`content-${key}`).style.display = 'block';
         alert('¡Acceso concedido a la clase!');
-      } else alert('Contraseña incorrecta.');
+      } else alert('Contraseña de clase incorrecta.');
     }
 
     function verHistorial(key) {
       const conf = datosClases[key];
-      if(conf && conf.video) alert(`📺 Historial de Clase (${key}):\n${conf.video}`);
-      else alert('Aún no hay clases grabadas disponibles en este nivel.');
+      if(conf && conf.videoName) alert(`📺 Historial de Clase Grabada (${key}):\nArchivo: ${conf.videoName}`);
+      else alert('Aún no hay clases grabadas publicadas en este nivel.');
+    }
+
+    function seleccionarModuloOwner(modNum, btnEl) {
+      moduloOwnerSeleccionado = modNum;
+      document.querySelectorAll('#portal-owner .tab-btn').forEach(b => b.classList.remove('active'));
+      if(btnEl) btnEl.classList.add('active');
+    }
+
+    function actualizarLeaderboardOwner() {
+      const lvl = document.getElementById('lb-owner-lvl').value;
+      const pos = document.getElementById('lb-owner-pos').value;
+      const name = document.getElementById('lb-student-name').value;
+      const score = document.getElementById('lb-student-score').value;
+      if(name && score) {
+        leaderboardDatos[`${moduloOwnerSeleccionado}-${lvl}-${pos}`] = { name, score };
+        renderizarLeaderboards();
+        alert(`¡Leaderboard del Módulo ${moduloOwnerSeleccionado} (${lvl}) actualizada con éxito!`);
+      } else {
+        alert('Ingresa el nombre y los puntos.');
+      }
+    }
+
+    function abrirConfigPerfil() {
+      document.getElementById('input-edit-name').value = perfilUsuario.nombre;
+      document.getElementById('input-edit-desc').value = perfilUsuario.desc;
+      document.getElementById('configPerfilModal').style.display = 'flex';
+    }
+
+    function guardarPerfilEstudiante() {
+      const name = document.getElementById('input-edit-name').value;
+      const desc = document.getElementById('input-edit-desc').value;
+      const photoInput = document.getElementById('input-edit-photo');
+      if(name) perfilUsuario.nombre = name;
+      if(desc) perfilUsuario.desc = desc;
+
+      document.getElementById('profile-name-display').innerText = perfilUsuario.nombre;
+      document.getElementById('profile-desc-display').innerText = perfilUsuario.desc;
+      document.getElementById('profile-initial').innerText = perfilUsuario.nombre.charAt(0).toUpperCase();
+
+      if(photoInput.files && photoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.getElementById('profile-photo-container').innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+        };
+        reader.readAsDataURL(photoInput.files[0]);
+      }
+      document.getElementById('configPerfilModal').style.display = 'none';
+      alert('¡Perfil actualizado con éxito!');
     }
 
     function iniciarContador() {
@@ -426,7 +639,7 @@
     function detenerContador() { 
       if(timerInterval) clearInterval(timerInterval); 
       document.getElementById('week-timer-display').innerText = "OFFLINE (00d : 00h : 00m : 00s)"; 
-      alert('Contador detenido y reseteado.');
+      alert('Contador detenido.');
     }
 
     function actualizarClaveCertificado() { 
@@ -440,7 +653,7 @@
       } else alert('Clave de certificado inválida.');
     }
 
-    // BANCO PREGUNTAS Y SISTEMA ACUMULATIVO 24 PTS (2 QUIZZES)
+    // BANCO PREGUNTAS Y SISTEMA ACUMULATIVO 24 PTS
     const bancoPreguntas = [
       { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
       { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
@@ -471,7 +684,7 @@
         let totalAcumulado = Math.min(24, prev + scoreActual);
         localStorage.setItem('user_quiz_score', totalAcumulado);
         cargarPerfil();
-        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3>Quiz Finalizado</h3><p>Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
+        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:var(--primary);">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
         return;
       }
       const q = bancoPreguntas[indice];
@@ -485,9 +698,9 @@
           const fb = document.getElementById('feedbackBox');
           if(opt === q.correct) {
             scoreActual++;
-            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Felicidades! 🎉</strong><br>${q.reason}`;
+            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Felicidades, Respuesta Correcta! 🎉</strong><br>${q.reason}`;
           } else {
-            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Incorrecto ❌</strong><br>Correcta: ${q.correct}. ${q.reason}`;
+            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>Correcta: ${q.correct}. ${q.reason}`;
           }
           fb.style.display = 'block'; document.getElementById('btnNextQuestion').style.display = 'block';
         };
@@ -514,7 +727,7 @@
     }
 
     function enviarTarea(tipo) {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Entrega de ' + tipo + ': ' + document.getElementById('speaking-text-msg').value)}`, '_blank');
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Opinión enviada desde Speaking Zone ('+tipo+'): ' + document.getElementById('speaking-text-msg').value)}`, '_blank');
     }
   </script>
 </body>
