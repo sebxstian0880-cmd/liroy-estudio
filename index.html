@@ -16,56 +16,74 @@
       --gray: #64748b;
       --success: #16a34a;
       --danger: #dc2626;
-      --owner-gold: #b45309;
       --radius: 12px;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
+    body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
+
+    /* ANIMACIÓN DE ENTRADA PROFESIONAL (5 SEGUNDOS EXACTOS) */
+    #welcome-splash {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
+      z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: white; transition: opacity 0.8s ease, visibility 0.8s; padding: 2rem;
+    }
+    .splash-icon {
+      font-size: 5rem; color: #f59e0b; margin-bottom: 1.5rem;
+      animation: splashBounce 2s infinite alternate ease-in-out;
+    }
+    @keyframes splashBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-10px) scale(1.05); } }
+    .splash-title { font-size: 2.8rem; font-weight: 800; color: #f8fafc; letter-spacing: 1px; margin-bottom: 0.5rem; }
+    .splash-subtitle { font-size: 1.25rem; color: #cbd5e1; font-weight: 400; max-width: 600px; }
+    .splash-loader { width: 220px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; margin-top: 2.5rem; overflow: hidden; }
+    .splash-bar { width: 100%; height: 100%; background: #f59e0b; animation: loadLine 5s linear forwards; }
+    @keyframes loadLine { 0% { transform: translateX(-100%); } 100% { transform: translateX(0); } }
 
     /* BANNER PROMO */
     #promo-banner {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a, #d97706);
+      background: linear-gradient(135deg, #090d16, #1e3a8a, #d97706);
       color: white; padding: 0.75rem 1.5rem; font-weight: 600; font-size: 0.92rem;
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
-    .timer-badge { background: rgba(15, 23, 42, 0.75); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.25); }
+    .timer-badge { background: rgba(15, 23, 42, 0.85); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
 
     /* HEADER */
     header {
-      background: linear-gradient(135deg, #090d16, #0f172a);
-      color: white; padding: 1.1rem 2.5rem; display: flex; justify-content: space-between; align-items: center;
+      background: #090d16; color: white; padding: 1.1rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
       box-shadow: var(--shadow); flex-wrap: wrap; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .logo { font-size: 1.45rem; font-weight: 800; display: flex; align-items: center; gap: 12px; }
     .logo i { color: #f59e0b; font-size: 1.6rem; }
     .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
     .tab-btn {
-      background: rgba(255, 255, 255, 0.08); color: #cbd5e1; border: none; padding: 0.65rem 1.1rem;
+      background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: none; padding: 0.65rem 1.1rem;
       border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease;
     }
     .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; }
-    .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #b45309); color: white; border: 1px solid rgba(254, 243, 199, 0.3); }
+    .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #b45309); color: white; }
 
     .container { max-width: 1240px; margin: 2.5rem auto; padding: 0 1.5rem; }
     .portal-section { display: none; }
-    .portal-section.active { display: block; }
+    .portal-section.active { display: block; animation: fadeInPortal 0.3s ease; }
+    @keyframes fadeInPortal { from { opacity: 0; } to { opacity: 1; } }
 
     .section-title {
-      font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary);
-      display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.6rem; font-weight: 700;
+      font-size: 1.5rem; margin-bottom: 1.5rem; color: #f8fafc;
+      display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #1e293b; padding-bottom: 0.6rem; font-weight: 700;
     }
 
     .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .lang-card { background: white; border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
+    .lang-card { background: #1e293b; border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow); position: relative; border: 1px solid #334155; }
     .lang-card.active { border-left: 6px solid var(--success); }
-    .lang-card.locked { opacity: 0.7; background: #f8fafc; border-left: 6px solid var(--gray); }
+    .lang-card.locked { opacity: 0.65; background: #0f172a; border-left: 6px solid var(--gray); }
     .badge-status { position: absolute; top: 18px; right: 18px; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
     .badge-active { background: #dcfce7; color: var(--success); }
-    .badge-locked { background: #e2e8f0; color: var(--gray); }
+    .badge-locked { background: #334155; color: #94a3b8; }
 
     .btn {
       display: inline-block; width: 100%; padding: 0.8rem; border: none; border-radius: 10px;
@@ -73,44 +91,54 @@
       margin-top: 1.2rem; text-decoration: none; font-size: 0.95rem; transition: background 0.2s;
     }
     .btn:hover { background: #1d4ed8; }
-    .btn-disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; }
+    .btn-disabled { background: #334155; color: #94a3b8; cursor: not-allowed; }
     .btn-history { background: #2563eb; font-size: 0.85rem; padding: 0.6rem; margin-top: 10px; }
 
     .modules-accordion { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2.5rem; }
-    .folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; box-shadow: var(--shadow); overflow: hidden; }
-    .folder-header { background: #ffffff; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; color: var(--primary); }
-    .folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .folder-card { background: #1e293b; border-radius: var(--radius); border: 1px solid #334155; box-shadow: var(--shadow); overflow: hidden; }
+    .folder-header { background: #1e293b; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; color: #f8fafc; }
+    .folder-header:hover { background: #334155; }
+    .folder-content { display: none; padding: 1.8rem; background: #0f172a; border-top: 1px solid #334155; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
     .folder-content.open { display: grid; }
-    .classroom-box { background: white; padding: 1.4rem; border-radius: 12px; border: 1px solid #cbd5e1; text-align: center; }
+    .classroom-box { background: #1e293b; padding: 1.4rem; border-radius: 12px; border: 1px solid #334155; text-align: center; }
 
-    .lb-folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; margin-bottom: 1.2rem; box-shadow: var(--shadow); overflow: hidden; }
+    .lb-folder-card { background: #1e293b; border-radius: var(--radius); border: 1px solid #334155; margin-bottom: 1.2rem; box-shadow: var(--shadow); overflow: hidden; }
     .lb-folder-header { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; }
-    .lb-folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid #cbd5e1; }
+    .lb-folder-content { display: none; padding: 1.8rem; background: #0f172a; border-top: 1px solid #334155; }
     .lb-folder-content.open { display: block; }
 
     .levels-lb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
-    .level-lb-card { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.2rem; }
+    .level-lb-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.2rem; }
     .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-    .lb-top-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 9px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 500; }
+    .lb-top-item { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 9px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 500; color: #e2e8f0; }
 
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 2000; justify-content: center; align-items: center; padding: 1.5rem; backdrop-filter: blur(4px); }
-    .modal-card { background: white; max-width: 650px; width: 100%; border-radius: 18px; padding: 2.5rem; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-    .option-btn { display: block; width: 100%; padding: 0.9rem 1rem; margin: 0.6rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; text-align: left; cursor: pointer; font-size: 0.98rem; font-weight: 500; }
-    .option-btn:hover { background: #e2e8f0; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); z-index: 2000; justify-content: center; align-items: center; padding: 1.5rem; backdrop-filter: blur(4px); }
+    .modal-card { background: #1e293b; color: #f8fafc; max-width: 650px; width: 100%; border-radius: 18px; padding: 2.5rem; max-height: 90vh; overflow-y: auto; border: 1px solid #334155; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+    .option-btn { display: block; width: 100%; padding: 0.9rem 1rem; margin: 0.6rem 0; background: #0f172a; border: 1px solid #334155; color: #f8fafc; border-radius: 10px; text-align: left; cursor: pointer; font-size: 0.98rem; font-weight: 500; }
+    .option-btn:hover { background: #334155; }
 
     .feedback-box { margin-top: 1.2rem; padding: 1.3rem; border-radius: 12px; display: none; font-size: 0.98rem; }
-    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
-    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 2px solid #fca5a5; }
+    .feedback-box.correct { background: rgba(22, 163, 74, 0.2); color: #4ade80; border: 1px solid #16a34a; }
+    .feedback-box.incorrect { background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid #dc2626; }
 
-    .input-pass, .input-text-pro { width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 10px; margin-top: 0.6rem; font-size: 0.95rem; background: #fff; }
+    .input-pass, .input-text-pro { width: 100%; padding: 0.75rem 1rem; border: 1px solid #334155; border-radius: 10px; margin-top: 0.6rem; font-size: 0.95rem; background: #0f172a; color: #fff; }
+    .input-pass:focus, .input-text-pro:focus { outline: none; border-color: var(--accent); }
 
     .cert-announcement-card {
-      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      background: linear-gradient(135deg, #1e293b, #0f172a);
       border: 2px dashed #f59e0b; border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem;
     }
   </style>
 </head>
 <body>
+
+  <!-- ANIMACIÓN DE ENTRADA (SPLASH SCREEN DE 5 SEGUNDOS) -->
+  <div id="welcome-splash">
+    <div class="splash-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1 class="splash-title">Liroy Estudio de Idiomas</h1>
+    <p class="splash-subtitle">Bienvenido a la Excelencia Académica y Global</p>
+    <div class="splash-loader"><div class="splash-bar"></div></div>
+  </div>
 
   <!-- BANNER PROMO -->
   <div id="promo-banner">
@@ -137,7 +165,7 @@
 
     <!-- PORTAL ESTUDIANTES -->
     <div id="portal-estudiantes" class="portal-section active">
-      <section style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 2.2rem; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: var(--shadow);">
+      <section style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #1e293b, #1e3a8a); color: white; padding: 2.2rem; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border: 1px solid #334155;">
         <div>
           <h3 style="font-size: 1.4rem; margin-bottom: 6px;"><i class="fa-solid fa-clipboard-question"></i> Quiz Evaluativo de Nivel (24 Puntos Totales)</h3>
           <p style="color: #cbd5e1; font-size: 0.95rem;">Evaluaciones continuas con explicaciones inmediatas y sincronización en vivo a tu perfil.</p>
@@ -151,15 +179,15 @@
           <div class="lang-card active">
             <span class="badge-status badge-active">Disponible</span>
             <h3>Inglés Liroy</h3>
-            <p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Acceso completo a módulos, historial de clases grabadas y exámenes escritos.</p>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Acceso completo a módulos, historial de clases grabadas y exámenes escritos.</p>
             <button class="btn" onclick="iniciarQuiz()">Ingresar al Curso</button>
           </div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><p style="color: #94a3b8; font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
         </div>
       </section>
 
@@ -176,32 +204,32 @@
 
     <!-- MI PERFIL -->
     <div id="portal-perfil" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; max-width: 750px; margin: auto;">
-        <div style="display: flex; align-items: center; gap: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 1.8rem; flex-wrap: wrap;">
-          <div id="profile-photo-container" style="width: 90px; height: 90px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; overflow: hidden; border: 3px solid var(--accent);">
+      <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; max-width: 750px; margin: auto;">
+        <div style="display: flex; align-items: center; gap: 24px; border-bottom: 2px solid #334155; padding-bottom: 1.8rem; flex-wrap: wrap;">
+          <div id="profile-photo-container" style="width: 90px; height: 90px; background: #0f172a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; overflow: hidden; border: 3px solid var(--accent);">
             <span id="profile-initial">U</span>
           </div>
           <div>
-            <h2 id="profile-name-display" style="font-size: 1.6rem; color: var(--primary);">Estudiante Liroy</h2>
-            <p style="color: var(--gray); margin-top: 4px;" id="profile-desc-display">Nivel A1 (Básico Initial)</p>
+            <h2 id="profile-name-display" style="font-size: 1.6rem; color: #f8fafc;">Estudiante Liroy</h2>
+            <p style="color: #94a3b8; margin-top: 4px;" id="profile-desc-display">Nivel A1 (Básico Initial)</p>
             <button class="btn" style="width: auto; padding: 0.5rem 1.2rem; font-size: 0.85rem; margin-top: 10px;" onclick="abrirConfigPerfil()"><i class="fa-solid fa-gear"></i> Configurar Perfil</button>
           </div>
         </div>
 
-        <h3 style="margin-top: 1.8rem; color: var(--primary); font-size: 1.2rem;"><i class="fa-solid fa-chart-line"></i> Progreso y Evaluaciones</h3>
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-top: 12px; border: 1px solid #cbd5e1;">
+        <h3 style="margin-top: 1.8rem; color: #f8fafc; font-size: 1.2rem;"><i class="fa-solid fa-chart-line"></i> Progreso y Evaluaciones</h3>
+        <div style="background: #0f172a; padding: 1.5rem; border-radius: 12px; margin-top: 12px; border: 1px solid #334155;">
           <p style="font-size: 1.1rem;"><strong>Puntuación Acumulada:</strong> <span id="profile-score-quiz" style="color:var(--accent); font-weight:bold;">0 / 24 Puntos</span></p>
-          <p style="font-size: 1.1rem; margin-top: 8px;"><strong>Nivel Actual:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Sin evaluación registrada</span></p>
+          <p style="font-size: 1.1rem; margin-top: 8px;"><strong>Nivel Actual:</strong> <span id="profile-level-tag" style="color:#4ade80; font-weight:bold;">Sin evaluación registrada</span></p>
         </div>
       </div>
     </div>
 
     <!-- SPEAKING ZONE -->
     <div id="portal-speaking" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; max-width: 750px; margin: auto;">
+      <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; max-width: 750px; margin: auto;">
         <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Opinión</h2>
-        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 1.5rem;">
-          <p style="color: var(--dark); font-size: 0.95rem;">
+        <div style="background: #0f172a; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 1.5rem; border: 1px solid #334155;">
+          <p style="color: #e2e8f0; font-size: 0.95rem;">
             <strong>¿Qué se hace aquí?</strong> Este espacio está diseñado para que envíes tu opinión o práctica hablada/escrita directamente al Owner de la academia desde la plataforma.
           </p>
         </div>
@@ -210,17 +238,17 @@
         
         <div style="display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap;">
           <button class="btn" style="width: auto; background: #25d366; flex: 1;" onclick="enviarTarea('Speaking WhatsApp')"><i class="fa-brands fa-whatsapp"></i> Enviar Directo al Owner (WhatsApp)</button>
-          <button class="btn btn-disabled" style="width: auto; flex: 1; background: #94a3b8; cursor: not-allowed;" disabled><i class="fa-solid fa-envelope"></i> Enviar por Correo Electrónico (Bloqueado)</button>
+          <button class="btn btn-disabled" style="width: auto; flex: 1; cursor: not-allowed;" disabled><i class="fa-solid fa-envelope"></i> Enviar por Correo Electrónico (Bloqueado)</button>
         </div>
       </div>
     </div>
 
     <!-- CERTIFICADOS -->
     <div id="portal-certificados" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; text-align: center; max-width: 650px; margin: auto;">
+      <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; text-align: center; max-width: 650px; margin: auto;">
         <i class="fa-solid fa-award" style="font-size: 3.5rem; color: #d97706; margin-bottom: 1rem;"></i>
         <h2>Solicitud de Certificado Oficial</h2>
-        <p style="color: var(--gray); margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por el Owner para validar y emitir tu diploma:</p>
+        <p style="color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por el Owner para validar y emitir tu diploma:</p>
         
         <div style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
           <label style="font-size: 0.88rem; font-weight: bold;">Clave del Certificado Activa:</label>
@@ -241,11 +269,11 @@
 
         <div id="cert-announcement-box" style="display:none;" class="cert-announcement-card">
           <div style="font-size:4rem; color:#d97706; margin-bottom:0.5rem;"><i class="fa-solid fa-certificate"></i></div>
-          <h3 style="color: #92400e; margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 ¡Certificado Solicitado con Éxito!</h3>
-          <p style="color: #78350f; font-size: 0.98rem; margin-bottom: 1rem;" id="cert-announcement-text">
+          <h3 style="color: #f59e0b; margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 ¡Certificado Solicitado con Éxito!</h3>
+          <p style="color: #e2e8f0; font-size: 0.98rem; margin-bottom: 1rem;" id="cert-announcement-text">
             Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será emitido y enviado directamente.
           </p>
-          <div style="background: #ffffff; padding: 1.1rem; border-radius: 10px; border: 2px dashed #d97706; font-size: 0.9rem; color: #451a03; text-align: left;">
+          <div style="background: #0f172a; padding: 1.1rem; border-radius: 10px; border: 2px dashed #d97706; font-size: 0.9rem; color: #f8fafc; text-align: left;">
             📷 <strong>PASO OBLIGATORIO DE COMPROBACIÓN:</strong> Toma una captura de pantalla a este recuadro y envíasela al <strong>Owner</strong> vía WhatsApp para confirmar tu solicitud de entrega.
           </div>
         </div>
@@ -254,13 +282,13 @@
 
     <!-- PANEL PROFESORES -->
     <div id="portal-profesores" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; max-width: 750px; margin: auto; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
+      <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; max-width: 750px; margin: auto; box-shadow: var(--shadow); border: 1px solid #334155;">
         <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente por Módulo y Nivel</h2>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
           <div>
             <label style="font-weight:700; font-size:0.9rem;">Seleccionar Módulo:</label>
-            <select id="teacher-mod-select" class="input-pass" style="margin-top:5px;" onchange="cargarConfigProfesor()">
+            <select id="teacher-mod-select" class="input-pass" style="margin-top:5px;">
               <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
               <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
               <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
@@ -268,28 +296,28 @@
           </div>
           <div>
             <label style="font-weight:700; font-size:0.9rem;">Seleccionar Nivel:</label>
-            <select id="teacher-lvl-select" class="input-pass" style="margin-top:5px;" onchange="cargarConfigProfesor()">
+            <select id="teacher-lvl-select" class="input-pass" style="margin-top:5px;">
               <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option>
               <option value="B2">Nivel B2</option><option value="C1">Nivel C1</option><option value="C2">Nivel C2</option>
             </select>
           </div>
         </div>
 
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
+        <div style="background: #0f172a; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 15px;">
           <label style="font-weight:700; font-size:0.9rem;">Contraseña de esta clase específica:</label>
           <input type="text" id="teacher-mod-pass" class="input-pass" placeholder="Ej: MOD3-A1-SECURE">
           <button class="btn" style="margin-top:8px;" onclick="guardarClaveClase()">Guardar Contraseña</button>
         </div>
 
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
+        <div style="background: #0f172a; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; margin-bottom: 15px;">
           <label style="font-weight:700; font-size:0.9rem;">Link de Google Meet:</label>
           <input type="text" id="teacher-meet-url" class="input-pass" placeholder="https://meet.google.com/xxx-xxxx-xxx">
           <button class="btn" style="margin-top:8px;" onclick="guardarMeetClase()">Guardar Link de Meet</button>
         </div>
 
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1;">
+        <div style="background: #0f172a; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155;">
           <label style="font-weight:700; font-size:0.9rem;">Subir Archivo de Clase Grabada (Galería / Archivo):</label>
-          <input type="file" id="teacher-class-file" accept="video/*" class="input-pass" style="margin-top:5px; background:white; padding:0.5rem;">
+          <input type="file" id="teacher-class-file" accept="video/*" class="input-pass" style="margin-top:5px; background:#1e293b; padding:0.5rem;">
           <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Archivo en Historial</button>
         </div>
       </div>
@@ -297,17 +325,17 @@
 
     <!-- OWNER -->
     <div id="portal-owner" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 2px solid #f59e0b; max-width: 900px; margin: auto;">
+      <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 2px solid #f59e0b; max-width: 900px; margin: auto;">
         <h2 class="section-title"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> Panel Owner Supremo (Control Total)</h2>
         
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 2rem;">
-          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid #cbd5e1;">
+          <div style="background:#0f172a; padding:1.2rem; border-radius:12px; border:1px solid #334155;">
             <h4>Gestión de Quizzes</h4>
             <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Actualizar Quizzes</button>
           </div>
-          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid #cbd5e1;">
+          <div style="background:#0f172a; padding:1.2rem; border-radius:12px; border:1px solid #334155;">
             <h4>Contador de Descuento</h4>
-            <input type="number" id="owner-timer-days-input" value="7" style="width: 60px; padding:4px; text-align:center; font-weight:bold;"> Días
+            <input type="number" id="owner-timer-days-input" value="7" style="width: 60px; padding:4px; text-align:center; font-weight:bold; background:#1e293b; color:#fff; border:1px solid #334155;"> Días
             <div style="display:flex; gap:6px; margin-top:8px;">
               <button class="btn" style="background:#16a34a; margin:0;" onclick="iniciarContador()">START</button>
               <button class="btn" style="background:#dc2626; margin:0;" onclick="detenerContador()">STOP</button>
@@ -316,9 +344,9 @@
         </div>
 
         <!-- LISTA DESPLEGABLE PARA INHABILITAR PROFESORES -->
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
-          <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-users-slash"></i> Inhabilitar / Bloquear Acceso a Profesores</h3>
-          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:12px;">Selecciona al profesor de la lista para revocarle todos los permisos y bloquear su acceso:</p>
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
+          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-users-slash"></i> Inhabilitar / Bloquear Acceso a Profesores</h3>
+          <p style="font-size:0.88rem; color:#94a3b8; margin-bottom:12px;">Selecciona al profesor de la lista para revocarle todos los permisos y bloquear su acceso:</p>
           
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
             <select id="owner-prof-select-list" class="input-pass" style="flex:1; margin:0; text-align:left;">
@@ -331,8 +359,8 @@
           </div>
         </div>
 
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
-          <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-key"></i> Clave Activa de Certificados</h3>
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
+          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-key"></i> Clave Activa de Certificados</h3>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <input type="text" id="owner-cert-key-input" class="input-pass" placeholder="Nueva Clave Certificados" style="flex:1; margin:0;">
             <button class="btn" style="width:auto; margin:0; background:#d97706;" onclick="actualizarClaveCertificado()">Cambiar Clave</button>
@@ -340,8 +368,8 @@
         </div>
 
         <!-- ACTUALIZAR LEADERBOARDS POR MÓDULO -->
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1;">
-          <h3 style="color:var(--primary); margin-bottom:1rem;"><i class="fa-solid fa-folder-open"></i> Actualizar Leaderboards por Módulo (1 al 9)</h3>
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155;">
+          <h3 style="color:#f8fafc; margin-bottom:1rem;"><i class="fa-solid fa-folder-open"></i> Actualizar Leaderboards por Módulo (1 al 9)</h3>
           
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
             <button class="tab-btn active" onclick="seleccionarModuloOwner(1, this)">Módulo 1</button>
@@ -376,28 +404,28 @@
   </div>
 
   <!-- MODALS LOGINS Y PERFIL -->
-  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Profesor</h3><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('loginProfesorModal').style.display='none'">Cancelar</button></div></div>
-  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Owner</h3><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('loginOwnerModal').style.display='none'">Cancelar</button></div></div>
+  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Profesor</h3><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button><button class="btn" style="background:#334155; margin-top:8px;" onclick="document.getElementById('loginProfesorModal').style.display='none'">Cancelar</button></div></div>
+  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Owner</h3><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button><button class="btn" style="background:#334155; margin-top:8px;" onclick="document.getElementById('loginOwnerModal').style.display='none'">Cancelar</button></div></div>
 
   <!-- MODAL CONFIGURAR PERFIL -->
   <div class="modal-overlay" id="configPerfilModal">
     <div class="modal-card" style="max-width:450px;">
-      <h3 style="margin-bottom:15px; color:var(--primary);"><i class="fa-solid fa-id-card"></i> Configurar mi Perfil</h3>
+      <h3 style="margin-bottom:15px; color:#f8fafc;"><i class="fa-solid fa-id-card"></i> Configurar mi Perfil</h3>
       <label style="font-weight:600; font-size:0.9rem;">Tu Nombre:</label>
       <input type="text" id="input-edit-name" class="input-pass" placeholder="Tu nombre" style="margin-top:4px; margin-bottom:12px;">
       <label style="font-weight:600; font-size:0.9rem;">Descripción Personal / Nivel:</label>
       <input type="text" id="input-edit-desc" class="input-pass" placeholder="Ej: Estudiante avanzado" style="margin-top:4px; margin-bottom:12px;">
       <label style="font-weight:600; font-size:0.9rem;">Subir Foto de Perfil:</label>
-      <input type="file" id="input-edit-photo" accept="image/*" class="input-pass" style="margin-top:4px; margin-bottom:20px; background:white; padding:0.5rem;">
+      <input type="file" id="input-edit-photo" accept="image/*" class="input-pass" style="margin-top:4px; margin-bottom:20px; background:#0f172a; padding:0.5rem;">
       <button class="btn" onclick="guardarPerfilEstudiante()">Guardar Cambios</button>
-      <button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('configPerfilModal').style.display='none'">Cancelar</button>
+      <button class="btn" style="background:#334155; margin-top:8px;" onclick="document.getElementById('configPerfilModal').style.display='none'">Cancelar</button>
     </div>
   </div>
 
   <!-- MODAL QUIZ -->
   <div class="modal-overlay" id="quizModal">
     <div class="modal-card" id="quizCard">
-      <h3 id="quizProgress" style="color:var(--primary);">Pregunta 1</h3>
+      <h3 id="quizProgress" style="color:#f8fafc;">Pregunta 1</h3>
       <p id="questionText" style="font-size: 1.1rem; margin: 1rem 0; font-weight:600;"></p>
       <div id="optionsContainer"></div>
       <div id="feedbackBox" class="feedback-box"></div>
@@ -406,6 +434,17 @@
   </div>
 
   <script>
+    // CONTROL DE LA ANIMACIÓN DE ENTRADA (SPLASH SCREEN: ~5 SEGUNDOS EXACTOS)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('welcome-splash');
+        if(splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => { splash.style.display = 'none'; }, 800);
+        }
+      }, 5000);
+    });
+
     const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
     let datosClases = {}; 
     let leaderboardDatos = {};
@@ -661,7 +700,7 @@
         let totalAcumulado = Math.min(24, prev + scoreActual);
         localStorage.setItem('user_quiz_score', totalAcumulado);
         cargarPerfil();
-        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:var(--primary);">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
+        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:#f8fafc;">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
         return;
       }
       const q = bancoPreguntas[indice];
