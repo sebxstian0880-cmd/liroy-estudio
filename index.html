@@ -23,43 +23,398 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
 
-    /* BARRA PROMO */
     #promo-banner {
       background: linear-gradient(90deg, #78350f, #d97706, #1e3a8a);
-      color: white;
-      padding: 0.6rem 1rem;
-      font-weight: bold;
-      font-size: 0.9rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      color: white; padding: 0.6rem 1rem; font-weight: bold; font-size: 0.9rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
+    .promo-tag { background: #f59e0b; color: #0f172a; padding: 2px 8px; border-radius: 4px; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; }
+    .timer-badge { background: rgba(15, 23, 42, 0.6); padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 1rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
 
-    .promo-tag {
-      background: #f59e0b;
-      color: #0f172a;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 800;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-    }
-
-    .timer-badge {
-      background: rgba(15, 23, 42, 0.6);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 1rem;
-      color: #fef08a;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    /* PANTALLA INTRO ANIMADA (ACTIVA) */
+    /* INTRO CONTROLADA */
     #welcome-screen {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(135deg, #020617 0%, #0f172a 50%,
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
+      z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: white; transition: opacity 0.5s ease, visibility 0.5s; padding: 2rem;
+    }
+    .welcome-logo-icon { font-size: 3.8rem; color: #f59e0b; margin-bottom: 1.5rem; }
+    .welcome-text { font-size: 2rem; font-weight: 800; letter-spacing: 2px; color: #f59e0b; text-transform: uppercase; }
+    .welcome-subtext { margin-top: 1rem; font-size: 1.1rem; color: #94a3b8; }
+
+    header {
+      background: linear-gradient(135deg, var(--dark), var(--primary));
+      color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+      box-shadow: var(--shadow); flex-wrap: wrap; gap: 10px;
+    }
+    .logo { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
+    .logo i { color: var(--secondary); }
+    .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-btn {
+      background: rgba(255,255,255,0.15); color: white; border: none; padding: 0.6rem 1rem;
+      border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem;
+    }
+    .tab-btn:hover, .tab-btn.active { background: var(--secondary); color: white; }
+    .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #78350f); border: 1px solid #fef3c7; }
+
+    .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    .portal-section { display: none; }
+    .portal-section.active { display: block; }
+
+    .section-title {
+      font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--primary);
+      display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;
+    }
+
+    .mod-tabs-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .mod-tab-btn { background: #e2e8f0; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; color: var(--dark); font-size: 0.88rem; }
+    .mod-tab-btn.active { background: var(--primary); color: white; }
+
+    .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .lang-card { background: white; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
+    .lang-card.active { border-left: 6px solid var(--success); }
+    .lang-card.locked { opacity: 0.75; background: #f8fafc; border-left: 6px solid var(--gray); }
+    .badge-status { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+    .badge-active { background: #dcfce7; color: var(--success); }
+    .badge-locked { background: #e2e8f0; color: var(--gray); }
+
+    .btn {
+      display: inline-block; width: 100%; padding: 0.75rem; border: none; border-radius: 8px;
+      background: var(--primary); color: white; font-weight: bold; text-align: center; cursor: pointer;
+      margin-top: 1rem; text-decoration: none; font-size: 0.95rem;
+    }
+    .btn:hover { background: var(--primary-light); }
+    .btn-disabled { background: #cbd5e1; cursor: not-allowed; }
+
+    .modules-accordion { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+    .folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; box-shadow: var(--shadow); overflow: hidden; }
+    .folder-header { background: #ffffff; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: var(--primary); }
+    .folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .folder-content.open { display: grid; }
+    .classroom-box { background: white; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center; }
+
+    .lb-folder-card { background: white; border-radius: var(--radius); border: 2px solid #cbd5e1; margin-bottom: 1rem; box-shadow: var(--shadow); overflow: hidden; }
+    .lb-folder-header { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
+    .lb-folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #cbd5e1; }
+    .lb-folder-content.open { display: block; }
+
+    .levels-lb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+    .level-lb-card { background: white; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; }
+    .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .lb-top-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
+    .modal-card { background: white; max-width: 620px; width: 100%; border-radius: var(--radius); padding: 2rem; max-height: 90vh; overflow-y: auto; }
+    .option-btn { display: block; width: 100%; padding: 0.8rem; margin: 0.5rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; text-align: left; cursor: pointer; }
+
+    .feedback-box { margin-top: 1rem; padding: 1.2rem; border-radius: 8px; display: none; font-size: 0.95rem; }
+    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
+    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 2px solid #fca5a5; }
+
+    .input-pass { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 0.5rem; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div id="promo-banner">
+    <div><span class="promo-tag">OFERTA ESPECIAL</span> 30 minutos de Clase GRATIS</div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div class="timer-badge" id="week-timer-display">OFFLINE (00d : 00h : 00m : 00s)</div>
+      <button onclick="iniciarQuiz()" style="background: #f59e0b; border: none; padding: 4px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Probar Quiz</button>
+    </div>
+  </div>
+
+  <div id="welcome-screen">
+    <div class="welcome-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1 class="welcome-text">Academia de Idiomas</h1>
+    <p class="welcome-subtext">Plataforma Oficial de Aprendizaje</p>
+  </div>
+
+  <header>
+    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Academia de Idiomas</div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="cambiarPortal('estudiantes')">Estudiantes</button>
+      <button class="tab-btn" onclick="cambiarPortal('perfil')">Mi Perfil</button>
+      <button class="tab-btn" onclick="cambiarPortal('speaking')">Speaking Zone</button>
+      <button class="tab-btn" onclick="cambiarPortal('certificados')">Certificados</button>
+      <button class="tab-btn" onclick="abrirLoginProfesor()">Profesores</button>
+      <button class="tab-btn owner-btn" onclick="abrirLoginOwner()">Owner</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ESTUDIANTES -->
+    <div id="portal-estudiantes" class="portal-section active">
+      <section style="margin-bottom: 2rem; background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.8rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <h3>Quiz Evaluativo (24 Puntos Totales)</h3>
+          <p style="color: #cbd5e1; font-size: 0.9rem;">Evaluaciones continuas con guardado automático directo en Perfil.</p>
+        </div>
+        <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.7rem 1.5rem;" onclick="iniciarQuiz()">Iniciar Quiz</button>
+      </section>
+
+      <section>
+        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos e Idiomas</h2>
+        <div class="languages-grid">
+          <div class="lang-card active">
+            <span class="badge-status badge-active">Disponible</span>
+            <h3>Inglés</h3>
+            <p>Acceso a módulos, historial de clases y exámenes con corrección.</p>
+            <button class="btn" onclick="iniciarQuiz()">Realizar Quiz</button>
+          </div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje (1 al 9)</h2>
+        <div class="modules-accordion" id="modulesContainer"></div>
+      </section>
+
+      <section>
+        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Leaderboards por Módulo</h2>
+        <div id="leaderboardsFoldersContainer"></div>
+      </section>
+    </div>
+
+    <!-- PERFIL -->
+    <div id="portal-perfil" class="portal-section">
+      <div style="background: white; border-radius: 12px; padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
+        <h2>Mi Perfil</h2>
+        <p style="color: var(--gray);" id="profile-desc-display">Cargando datos...</p>
+        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-top: 15px; border: 1px solid #cbd5e1;">
+          <p style="font-size: 1.1rem;"><strong>Puntuación Acumulada:</strong> <span id="profile-score-quiz" style="color:var(--primary); font-weight:bold;">0 / 24 Puntos</span></p>
+          <p style="font-size: 1.1rem; margin-top: 6px;"><strong>Nivel Calculado:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Sin evaluación</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPEAKING ZONE -->
+    <div id="portal-speaking" class="portal-section">
+      <div style="background: white; border-radius: 12px; padding: 2rem; border: 1px solid #cbd5e1;">
+        <h2 class="section-title">Speaking Zone</h2>
+        <textarea id="speaking-text-msg" style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;" rows="3" placeholder="Escribe tu texto..."></textarea>
+        <button class="btn" style="width: auto; background: #25d366;" onclick="enviarTarea('Speaking')">Enviar a WhatsApp</button>
+      </div>
+    </div>
+
+    <!-- CERTIFICADOS -->
+    <div id="portal-certificados" class="portal-section">
+      <div style="background: white; border-radius: 12px; padding: 2rem; border: 1px solid #cbd5e1; text-align: center; max-width: 600px; margin: auto;">
+        <h2>Emisión de Certificados</h2>
+        <input type="text" id="cert-code-input" class="input-pass" placeholder="Ingresa la clave del certificado">
+        <input type="text" id="cert-full-name" class="input-pass" placeholder="Tu nombre completo">
+        <button class="btn" style="background: #d97706; margin-top: 10px;" onclick="procesarCertificado()">Procesar Certificado</button>
+        <div id="cert-announcement-box" style="display:none; margin-top: 15px; background: #fef3c7; padding: 1rem; border-radius: 8px;">
+          🎉 ¡Certificado Solicitado! En 24 horas te llegará vía WhatsApp. Toma captura y reenvíala al Owner.
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESORES -->
+    <div id="portal-profesores" class="portal-section">
+      <div style="background: white; border-radius: 12px; padding: 2rem; max-width: 700px; margin: auto; border: 1px solid #cbd5e1;">
+        <h2 class="section-title">Panel Docente Específico</h2>
+        <label>Módulo:</label>
+        <select id="teacher-mod-select" style="width:100%; padding:0.6rem;" onchange="cargarConfigProfesor()">
+          <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
+          <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
+          <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
+        </select>
+        
+        <label style="margin-top:10px; display:block;">Nivel Específico:</label>
+        <select id="teacher-lvl-select" style="width:100%; padding:0.6rem;" onchange="cargarConfigProfesor()">
+          <option value="A1">A1</option><option value="A2">A2</option><option value="B1">B1</option>
+          <option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option>
+        </select>
+
+        <input type="text" id="teacher-mod-pass" class="input-pass" placeholder="Nueva Contraseña para esta clase">
+        <button class="btn" onclick="guardarClaveClase()">Guardar Contraseña Específica</button>
+
+        <input type="text" id="teacher-meet-url" class="input-pass" placeholder="Link de Google Meet">
+        <button class="btn" onclick="guardarMeetClase()">Guardar Meet Específico</button>
+
+        <input type="text" id="teacher-video-url" class="input-pass" placeholder="URL o Nombre de la Clase Grabada">
+        <button class="btn" style="background:#2563eb;" onclick="guardarVideoHistorial()">Publicar en Historial de esta Clase</button>
+      </div>
+    </div>
+
+    <!-- OWNER -->
+    <div id="portal-owner" class="portal-section">
+      <div style="background: white; border-radius: 12px; padding: 2rem; border: 2px solid #f59e0b;">
+        <h2 class="section-title"><i class="fa-solid fa-crown"></i> Panel Owner Supremo</h2>
+        
+        <button class="btn" style="background: #16a34a; margin-bottom: 1.5rem;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Actualizar Quizzes a Estudiantes</button>
+
+        <h3>Control de Contador</h3>
+        <input type="number" id="owner-timer-days-input" value="7" style="width: 80px; padding:0.5rem;"> Días
+        <div style="display:flex; gap:10px; margin-bottom:1.5rem;">
+          <button class="btn" style="background:#16a34a;" onclick="iniciarContador()">START</button>
+          <button class="btn" style="background:#dc2626;" onclick="detenerContador()">STOP</button>
+        </div>
+
+        <h3>Clave Certificados</h3>
+        <input type="text" id="owner-cert-key-input" class="input-pass" placeholder="Nueva Clave Certificados">
+        <button class="btn" style="background:#d97706;" onclick="actualizarClaveCertificado()">Actualizar Clave</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL LOGINS -->
+  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card"><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button></div></div>
+  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card"><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button></div></div>
+
+  <!-- MODAL QUIZ -->
+  <div class="modal-overlay" id="quizModal">
+    <div class="modal-card" id="quizCard">
+      <h3 id="quizProgress" style="color:var(--primary);">Pregunta 1</h3>
+      <p id="questionText" style="font-size: 1.1rem; margin: 1rem 0;"></p>
+      <div id="optionsContainer"></div>
+      <div id="feedbackBox" class="feedback-box"></div>
+      <button id="btnNextQuestion" class="btn" style="display:none;" onclick="siguientePregunta()">Siguiente ➔</button>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      const screen = document.getElementById('welcome-screen');
+      if (screen) { screen.style.opacity = '0'; setTimeout(() => screen.style.display = 'none', 600); }
+    }, 1500);
+
+    const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
+    let datosClases = {}; 
+    let leaderboardDatos = {};
+    let claveCertificadoOwner = "CERT-OWNER-2026";
+    let timerInterval = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderizarModulos();
+      renderizarLeaderboards();
+      cargarPerfil();
+    });
+
+    function renderizarModulos() {
+      const container = document.getElementById('modulesContainer');
+      container.innerHTML = '';
+      for (let m = 1; m <= 9; m++) {
+        let html = `<div class="folder-card"><div class="folder-header" onclick="toggleFolder('mod${m}')"><span>Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="folder-content" id="mod${m}">`;
+        niveles.forEach(lvl => {
+          const key = `${m}-${lvl}`;
+          const conf = datosClases[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', video: '' };
+          html += `
+            <div class="classroom-box">
+              <h4>Inglés - Nivel ${lvl}</h4>
+              <input type="password" id="pass-${key}" class="input-pass" placeholder="Clave de Clase">
+              <button class="btn" onclick="verificarClase(${m}, '${lvl}')">Ingresar a Clase</button>
+              <div id="content-${key}" style="display:none; margin-top:10px;">
+                <a href="${conf.meet}" target="_blank" class="btn">Entrar a Meet</a>
+                <button class="btn btn-history" onclick="verHistorial('${key}')">📺 Historial de Clases Grabadas</button>
+              </div>
+            </div>`;
+        });
+        html += `</div></div>`;
+        container.innerHTML += html;
+      }
+    }
+
+    function renderizarLeaderboards() {
+      const container = document.getElementById('leaderboardsFoldersContainer');
+      container.innerHTML = '';
+      for (let m = 1; m <= 9; m++) {
+        let html = `<div class="lb-folder-card"><div class="lb-folder-header" onclick="toggleFolder('lb-mod${m}')"><span>Leaderboard - Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="lb-folder-content" id="lb-mod${m}"><div class="levels-lb-grid">`;
+        niveles.forEach(lvl => {
+          html += `<div class="level-lb-card"><h4>Nivel ${lvl}</h4><ul class="lb-top-list"><li class="lb-top-item"><span>🥇 1. Estudiante Top 1</span><strong>1450 Pts</strong></li></ul></div>`;
+        });
+        html += `</div></div></div>`;
+        container.innerHTML += html;
+      }
+    }
+
+    function toggleFolder(id) { document.getElementById(id).classList.toggle('open'); }
+    function cambiarPortal(p) {
+      document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(`portal-${p}`).classList.add('active');
+    }
+
+    function abrirLoginProfesor() { document.getElementById('loginProfesorModal').style.display = 'flex'; }
+    function abrirLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'flex'; }
+    function loginProfesor() { if(document.getElementById('prof-pass-input').value === "PROFESOR2026") { document.getElementById('loginProfesorModal').style.display = 'none'; cambiarPortal('profesores'); } }
+    function loginOwner() { if(document.getElementById('owner-pass-input').value === "OWNER2026") { document.getElementById('loginOwnerModal').style.display = 'none'; cambiarPortal('owner'); } }
+
+    function cargarConfigProfesor() {
+      const key = `${document.getElementById('teacher-mod-select').value}-${document.getElementById('teacher-lvl-select').value}`;
+      const conf = datosClases[key] || { pass: '', meet: '', video: '' };
+      document.getElementById('teacher-mod-pass').value = conf.pass;
+      document.getElementById('teacher-meet-url').value = conf.meet;
+      document.getElementById('teacher-video-url').value = conf.video;
+    }
+
+    function guardarClaveClase() {
+      const key = `${document.getElementById('teacher-mod-select').value}-${document.getElementById('teacher-lvl-select').value}`;
+      if(!datosClases[key]) datosClases[key] = {};
+      datosClases[key].pass = document.getElementById('teacher-mod-pass').value;
+      alert(`Contraseña guardada para Módulo ${key}`);
+    }
+
+    function guardarMeetClase() {
+      const key = `${document.getElementById('teacher-mod-select').value}-${document.getElementById('teacher-lvl-select').value}`;
+      if(!datosClases[key]) datosClases[key] = {};
+      datosClases[key].meet = document.getElementById('teacher-meet-url').value;
+      renderizarModulos();
+      alert(`Link de Meet guardado para Módulo ${key}`);
+    }
+
+    function guardarVideoHistorial() {
+      const key = `${document.getElementById('teacher-mod-select').value}-${document.getElementById('teacher-lvl-select').value}`;
+      if(!datosClases[key]) datosClases[key] = {};
+      datosClases[key].video = document.getElementById('teacher-video-url').value;
+      alert(`Video cargado al historial de Módulo ${key}`);
+    }
+
+    function verificarClase(m, lvl) {
+      const key = `${m}-${lvl}`;
+      const conf = datosClases[key] || { pass: `MOD${m}-${lvl}` };
+      if(document.getElementById(`pass-${key}`).value === conf.pass) {
+        document.getElementById(`content-${key}`).style.display = 'block';
+      } else alert('Contraseña de clase incorrecta.');
+    }
+
+    function verHistorial(key) {
+      const conf = datosClases[key];
+      if(conf && conf.video) alert(`📺 Historial de Clase Grabada (${key}):\n${conf.video}`);
+      else alert('Aún no hay clases grabadas en este nivel.');
+    }
+
+    function iniciarContador() {
+      const d = parseInt(document.getElementById('owner-timer-days-input').value) || 7;
+      let seg = d * 86400;
+      if(timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if(seg <= 0) return clearInterval(timerInterval);
+        let days = Math.floor(seg/86400), h = Math.floor((seg%86400)/3600), m = Math.floor((seg%3600)/60), s = seg%60;
+        document.getElementById('week-timer-display').innerText = `${days}d : ${h}h : ${m}m : ${s}s`;
+        seg--;
+      }, 1000);
+    }
+    function detenerContador() { clearInterval(timerInterval); document.getElementById('week-timer-display').innerText = "OFFLINE (00d : 00h : 00m : 00s)"; }
+
+    function actualizarClaveCertificado() { claveCertificadoOwner = document.getElementById('owner-cert-key-input').value; alert('Clave cambiada.'); }
+    function procesarCertificado() {
+      if(document.getElementById('cert-code-input').value === claveCertificadoOwner) {
+        document.getElementById('cert-announcement-box').style.display = 'block';
+      } else alert('Clave inválida.');
+    }
+
+    // BANCO PREGUNTAS Y SISTEMA ACUMULATIVO 24 PTS
+    const bancoPreguntas = [
+      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
+      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
+      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "An antes de vocal." },
+      { q: "4. Opuesto de 'Big':
