@@ -3,36 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liroy Estudio de Idiomas</title>
+  <title>Liroy Estudio de Idiomas - Plataforma Académica</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
       --primary: #0f172a;
-      --primary-light: #1e3a8a;
+      --primary-light: #1e293b;
       --accent: #2563eb;
+      --accent-hover: #1d4ed8;
       --secondary: #d97706;
       --dark: #090d16;
       --light: #f8fafc;
       --gray: #64748b;
+      --gray-light: #e2e8f0;
       --success: #16a34a;
       --danger: #dc2626;
       --owner-gold: #b45309;
       --radius: 12px;
       --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
     body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
+
+    /* PANTALLA DE ENTRADA / WELCOME ANIMATION */
+    #welcome-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 70%, #090d16 100%);
+      color: white;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #welcome-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .welcome-card {
+      max-width: 580px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      padding: 3rem 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: welcomeEntrance 1s ease-out forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #2563eb, #d97706, #2563eb);
+      background-size: 200% 100%;
+      animation: gradientMove 3s linear infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    @keyframes welcomeEntrance {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .welcome-logo-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(217, 119, 6, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem auto;
+      font-size: 2.5rem;
+      color: #f59e0b;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .welcome-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 30%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .welcome-btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .welcome-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px -5px rgba(37, 99, 235, 0.5);
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
 
     /* BANNER PROMO */
     #promo-banner {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a, #d97706);
+      background: linear-gradient(135deg, #0f172a, #1e3a8a, #0f172a);
       color: white; padding: 0.75rem 1.5rem; font-weight: 600; font-size: 0.92rem;
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
-    .timer-badge { background: rgba(15, 23, 42, 0.75); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.25); }
+    .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+    .timer-badge { background: rgba(15, 23, 42, 0.8); padding: 5px 14px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
 
     /* HEADER */
     header {
@@ -40,27 +152,34 @@
       color: white; padding: 1.1rem 2.5rem; display: flex; justify-content: space-between; align-items: center;
       box-shadow: var(--shadow); flex-wrap: wrap; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .logo { font-size: 1.45rem; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+    .logo { font-size: 1.45rem; font-weight: 800; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px; }
     .logo i { color: #f59e0b; font-size: 1.6rem; }
     .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
     .tab-btn {
       background: rgba(255, 255, 255, 0.08); color: #cbd5e1; border: none; padding: 0.65rem 1.1rem;
-      border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease;
+      border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition);
+      display: inline-flex; align-items: center; gap: 8px;
     }
     .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; }
     .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #b45309); color: white; border: 1px solid rgba(254, 243, 199, 0.3); }
 
     .container { max-width: 1240px; margin: 2.5rem auto; padding: 0 1.5rem; }
     .portal-section { display: none; }
-    .portal-section.active { display: block; }
+    .portal-section.active { display: block; animation: fadeIn 0.4s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .section-title {
-      font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary);
-      display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.6rem; font-weight: 700;
+      font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--primary);
+      display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--gray-light); padding-bottom: 0.6rem; font-weight: 700;
     }
 
     .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .lang-card { background: white; border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
+    .lang-card { background: white; border-radius: var(--radius); padding: 1.8rem; box-shadow: var(--shadow); position: relative; border: 1px solid var(--gray-light); transition: var(--transition); }
+    .lang-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(0,0,0,0.12); }
     .lang-card.active { border-left: 6px solid var(--success); }
     .lang-card.locked { opacity: 0.7; background: #f8fafc; border-left: 6px solid var(--gray); }
     .badge-status { position: absolute; top: 18px; right: 18px; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
@@ -68,53 +187,73 @@
     .badge-locked { background: #e2e8f0; color: var(--gray); }
 
     .btn {
-      display: inline-block; width: 100%; padding: 0.8rem; border: none; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 0.8rem 1.2rem; border: none; border-radius: 10px;
       background: var(--accent); color: white; font-weight: 700; text-align: center; cursor: pointer;
-      margin-top: 1.2rem; text-decoration: none; font-size: 0.95rem; transition: background 0.2s;
+      margin-top: 1.2rem; text-decoration: none; font-size: 0.95rem; transition: var(--transition);
     }
-    .btn:hover { background: #1d4ed8; }
+    .btn:hover { background: var(--accent-hover); }
     .btn-disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; }
     .btn-history { background: #2563eb; font-size: 0.85rem; padding: 0.6rem; margin-top: 10px; }
 
     .modules-accordion { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2.5rem; }
-    .folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; box-shadow: var(--shadow); overflow: hidden; }
-    .folder-header { background: #ffffff; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; color: var(--primary); }
-    .folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .folder-card { background: white; border-radius: var(--radius); border: 1px solid var(--gray-light); box-shadow: var(--shadow); overflow: hidden; }
+    .folder-header { background: #ffffff; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.1rem; color: var(--primary); transition: var(--transition); }
+    .folder-header:hover { background: #f8fafc; }
+    .folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid var(--gray-light); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
     .folder-content.open { display: grid; }
-    .classroom-box { background: white; padding: 1.4rem; border-radius: 12px; border: 1px solid #cbd5e1; text-align: center; }
+    .classroom-box { background: white; padding: 1.4rem; border-radius: 12px; border: 1px solid var(--gray-light); text-align: left; }
 
-    .lb-folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; margin-bottom: 1.2rem; box-shadow: var(--shadow); overflow: hidden; }
-    .lb-folder-header { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.15rem; }
-    .lb-folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid #cbd5e1; }
+    .lb-folder-card { background: white; border-radius: var(--radius); border: 1px solid var(--gray-light); margin-bottom: 1.2rem; box-shadow: var(--shadow); overflow: hidden; }
+    .lb-folder-header { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 1.1rem; }
+    .lb-folder-content { display: none; padding: 1.8rem; background: #f8fafc; border-top: 1px solid var(--gray-light); }
     .lb-folder-content.open { display: block; }
 
     .levels-lb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
-    .level-lb-card { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.2rem; }
+    .level-lb-card { background: white; border: 1px solid var(--gray-light); border-radius: 12px; padding: 1.2rem; }
     .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-    .lb-top-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 9px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 500; }
+    .lb-top-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 9px 12px; display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600; }
 
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 2000; justify-content: center; align-items: center; padding: 1.5rem; backdrop-filter: blur(4px); }
-    .modal-card { background: white; max-width: 650px; width: 100%; border-radius: 18px; padding: 2.5rem; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-    .option-btn { display: block; width: 100%; padding: 0.9rem 1rem; margin: 0.6rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; text-align: left; cursor: pointer; font-size: 0.98rem; font-weight: 500; }
-    .option-btn:hover { background: #e2e8f0; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); z-index: 2000; justify-content: center; align-items: center; padding: 1.5rem; backdrop-filter: blur(4px); }
+    .modal-card { background: white; max-width: 650px; width: 100%; border-radius: 18px; padding: 2.2rem; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); border: 1px solid var(--gray-light); }
+    .option-btn { display: block; width: 100%; padding: 0.9rem 1rem; margin: 0.6rem 0; background: #f1f5f9; border: 1px solid var(--gray-light); border-radius: 10px; text-align: left; cursor: pointer; font-size: 0.98rem; font-weight: 500; transition: var(--transition); }
+    .option-btn:hover { background: #e2e8f0; border-color: #cbd5e1; }
 
     .feedback-box { margin-top: 1.2rem; padding: 1.3rem; border-radius: 12px; display: none; font-size: 0.98rem; }
-    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
-    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 2px solid #fca5a5; }
+    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
 
-    .input-pass, .input-text-pro { width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 10px; margin-top: 0.6rem; font-size: 0.95rem; background: #fff; }
+    .input-pass, .input-text-pro { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--gray-light); border-radius: 10px; margin-top: 0.6rem; font-size: 0.95rem; background: #fff; transition: var(--transition); }
+    .input-pass:focus, .input-text-pro:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
 
     .cert-announcement-card {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 2px dashed #f59e0b; border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem;
     }
+
+    video { max-width: 100%; border-radius: 10px; margin-top: 10px; background: #000; }
   </style>
 </head>
 <body>
 
+  <!-- PANTALLA DE ENTRADA ELEGANTE Y CORPORATIVA -->
+  <div id="welcome-screen">
+    <div class="welcome-card">
+      <div class="welcome-logo-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <h1 class="welcome-title">Liroy Estudio de Idiomas</h1>
+      <p class="welcome-subtitle">Bienvenido al Portal Académico Oficial. Plataforma integral para el aprendizaje interactivo de idiomas.</p>
+      <button class="welcome-btn" onclick="ingresarPlataforma()">
+        <span>Ingresar a la Plataforma</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
   <!-- BANNER PROMO -->
   <div id="promo-banner">
-    <div><span class="promo-tag">OFERTA ESPECIAL</span> 30 minutos de Clase GRATIS</div>
+    <div><span class="promo-tag">PROMOCIÓN ESPECIAL</span> 30 minutos de Clase GRATIS</div>
     <div style="display: flex; align-items: center; gap: 12px;">
       <div class="timer-badge" id="week-timer-display">OFFLINE (00d : 00h : 00m : 00s)</div>
       <button onclick="iniciarQuiz()" style="background: #f59e0b; color: #0f172a; border: none; padding: 6px 14px; border-radius: 8px; font-weight: 700; cursor: pointer;">Probar Quiz</button>
@@ -140,7 +279,7 @@
       <section style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 2.2rem; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: var(--shadow);">
         <div>
           <h3 style="font-size: 1.4rem; margin-bottom: 6px;"><i class="fa-solid fa-clipboard-question"></i> Quiz Evaluativo de Nivel (24 Puntos Totales)</h3>
-          <p style="color: #cbd5e1; font-size: 0.95rem;">Evaluaciones continuas con explicaciones inmediatas y sincronización en vivo a tu perfil.</p>
+          <p style="color: #cbd5e1; font-size: 0.95rem;">Evaluaciones continuas con explicaciones inmediatas y actualización directa a tu perfil académico.</p>
         </div>
         <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.8rem 1.8rem;" onclick="iniciarQuiz()"><i class="fa-solid fa-play"></i> Iniciar Quiz</button>
       </section>
@@ -151,15 +290,15 @@
           <div class="lang-card active">
             <span class="badge-status badge-active">Disponible</span>
             <h3>Inglés Liroy</h3>
-            <p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Acceso completo a módulos, historial de clases grabadas y exámenes escritos.</p>
+            <p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Acceso completo a módulos, historial de clases grabadas y evaluaciones.</p>
             <button class="btn" onclick="iniciarQuiz()">Ingresar al Curso</button>
           </div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Portugués</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente disponible.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Italiano</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente disponible.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Ruso</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente disponible.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Francés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente disponible.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Chino Mandarín</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente disponible.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Japonés</h3><p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Próximamente disponible.</p><button class="btn btn-disabled" disabled>Bloqueado</button></div>
         </div>
       </section>
 
@@ -176,10 +315,10 @@
 
     <!-- MI PERFIL -->
     <div id="portal-perfil" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; max-width: 750px; margin: auto;">
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); max-width: 750px; margin: auto;">
         <div style="display: flex; align-items: center; gap: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 1.8rem; flex-wrap: wrap;">
           <div id="profile-photo-container" style="width: 90px; height: 90px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; overflow: hidden; border: 3px solid var(--accent);">
-            <span id="profile-initial">U</span>
+            <span id="profile-initial">E</span>
           </div>
           <div>
             <h2 id="profile-name-display" style="font-size: 1.6rem; color: var(--primary);">Estudiante Liroy</h2>
@@ -189,45 +328,45 @@
         </div>
 
         <h3 style="margin-top: 1.8rem; color: var(--primary); font-size: 1.2rem;"><i class="fa-solid fa-chart-line"></i> Progreso y Evaluaciones</h3>
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-top: 12px; border: 1px solid #cbd5e1;">
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-top: 12px; border: 1px solid var(--gray-light);">
           <p style="font-size: 1.1rem;"><strong>Puntuación Acumulada:</strong> <span id="profile-score-quiz" style="color:var(--accent); font-weight:bold;">0 / 24 Puntos</span></p>
-          <p style="font-size: 1.1rem; margin-top: 8px;"><strong>Nivel Actual:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Sin evaluación registrada</span></p>
+          <p style="font-size: 1.1rem; margin-top: 8px;"><strong>Nivel Determinado:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Sin evaluación registrada</span></p>
         </div>
       </div>
     </div>
 
     <!-- SPEAKING ZONE -->
     <div id="portal-speaking" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; max-width: 750px; margin: auto;">
-        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Opinión</h2>
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); max-width: 750px; margin: auto;">
+        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Envíos de Tareas</h2>
         <div style="background: #f8fafc; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 1.5rem;">
           <p style="color: var(--dark); font-size: 0.95rem;">
-            <strong>¿Qué se hace aquí?</strong> Este espacio está diseñado para que envíes tu opinión o práctica hablada/escrita directamente al Owner de la academia desde la plataforma.
+            <strong>Plataforma Directa:</strong> Envía tu opinión o tarea escrita/hablada directamente al Owner de la academia.
           </p>
         </div>
 
-        <textarea id="speaking-text-msg" class="input-text-pro" rows="4" placeholder="Escribe tu opinión o tarea aquí para enviarla al Owner..."></textarea>
+        <textarea id="speaking-text-msg" class="input-text-pro" rows="4" placeholder="Escribe tu tarea o consulta aquí..."></textarea>
         
         <div style="display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap;">
-          <button class="btn" style="width: auto; background: #25d366; flex: 1;" onclick="enviarTarea('Speaking WhatsApp')"><i class="fa-brands fa-whatsapp"></i> Enviar Directo al Owner (WhatsApp)</button>
-          <button class="btn btn-disabled" style="width: auto; flex: 1; background: #94a3b8; cursor: not-allowed;" disabled><i class="fa-solid fa-envelope"></i> Enviar por Correo Electrónico (Bloqueado)</button>
+          <button class="btn" style="width: auto; background: #25d366; flex: 1;" onclick="enviarTarea('Speaking WhatsApp')"><i class="fa-brands fa-whatsapp"></i> Enviar Directo por WhatsApp</button>
+          <button class="btn btn-disabled" style="width: auto; flex: 1; background: #94a3b8; cursor: not-allowed;" disabled><i class="fa-solid fa-envelope"></i> Enviar por Correo Electrónico (Inhabilitado)</button>
         </div>
       </div>
     </div>
 
     <!-- CERTIFICADOS -->
     <div id="portal-certificados" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; text-align: center; max-width: 650px; margin: auto;">
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid var(--gray-light); text-align: center; max-width: 650px; margin: auto;">
         <i class="fa-solid fa-award" style="font-size: 3.5rem; color: #d97706; margin-bottom: 1rem;"></i>
-        <h2>Solicitud de Certificado Oficial</h2>
-        <p style="color: var(--gray); margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por el Owner para validar y emitir tu diploma:</p>
+        <h2>Emisión de Certificados Oficiales</h2>
+        <p style="color: var(--gray); margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por la dirección académica para validar tu diploma:</p>
         
         <div style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
-          <label style="font-size: 0.88rem; font-weight: bold;">Clave del Certificado Activa:</label>
+          <label style="font-size: 0.88rem; font-weight: bold;">Clave de Verificación Activa:</label>
           <input type="text" id="cert-code-input" class="input-pass" placeholder="Ej: CERT-OWNER-2026" style="margin:0;">
 
           <label style="font-size: 0.88rem; font-weight: bold; margin-top: 6px;">Nombre Completo del Estudiante:</label>
-          <input type="text" id="cert-full-name" class="input-pass" placeholder="Tu nombre para el diploma" style="margin:0;">
+          <input type="text" id="cert-full-name" class="input-pass" placeholder="Tu nombre para el certificado" style="margin:0;">
 
           <label style="font-size: 0.88rem; font-weight: bold; margin-top: 6px;">Módulo Aprobado:</label>
           <select id="cert-mod-select" class="input-pass" style="margin:0; text-align:left;">
@@ -241,12 +380,12 @@
 
         <div id="cert-announcement-box" style="display:none;" class="cert-announcement-card">
           <div style="font-size:4rem; color:#d97706; margin-bottom:0.5rem;"><i class="fa-solid fa-certificate"></i></div>
-          <h3 style="color: #92400e; margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 ¡Certificado Solicitado con Éxito!</h3>
+          <h3 style="color: #92400e; margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 ¡Solicitud Procesada Exitosamente!</h3>
           <p style="color: #78350f; font-size: 0.98rem; margin-bottom: 1rem;" id="cert-announcement-text">
-            Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será emitido y enviado directamente.
+            Su diploma está siendo procesado por el departamento académico.
           </p>
           <div style="background: #ffffff; padding: 1.1rem; border-radius: 10px; border: 2px dashed #d97706; font-size: 0.9rem; color: #451a03; text-align: left;">
-            📷 <strong>PASO OBLIGATORIO DE COMPROBACIÓN:</strong> Toma una captura de pantalla a este recuadro y envíasela al <strong>Owner</strong> vía WhatsApp para confirmar tu solicitud de entrega.
+            📷 <strong>COMPROBANTE VISUAL DE SOLICITUD:</strong> Guarde esta confirmación y envíela a la dirección para la firma digital final.
           </div>
         </div>
       </div>
@@ -254,12 +393,12 @@
 
     <!-- PANEL PROFESORES -->
     <div id="portal-profesores" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; max-width: 750px; margin: auto; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
-        <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente por Módulo y Nivel</h2>
+      <div style="background: white; border-radius: var(--radius); padding: 2.5rem; max-width: 750px; margin: auto; box-shadow: var(--shadow); border: 1px solid var(--gray-light);">
+        <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente de Administración de Clases</h2>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
           <div>
-            <label style="font-weight:700; font-size:0.9rem;">Seleccionar Módulo:</label>
+            <label style="font-weight:700; font-size:0.9rem;">Módulo Académico:</label>
             <select id="teacher-mod-select" class="input-pass" style="margin-top:5px;" onchange="cargarConfigProfesor()">
               <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
               <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
@@ -267,7 +406,7 @@
             </select>
           </div>
           <div>
-            <label style="font-weight:700; font-size:0.9rem;">Seleccionar Nivel:</label>
+            <label style="font-weight:700; font-size:0.9rem;">Nivel Correspondiente:</label>
             <select id="teacher-lvl-select" class="input-pass" style="margin-top:5px;" onchange="cargarConfigProfesor()">
               <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option>
               <option value="B2">Nivel B2</option><option value="C1">Nivel C1</option><option value="C2">Nivel C2</option>
@@ -275,73 +414,73 @@
           </div>
         </div>
 
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
-          <label style="font-weight:700; font-size:0.9rem;">Contraseña de esta clase específica:</label>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--gray-light); margin-bottom: 15px;">
+          <label style="font-weight:700; font-size:0.9rem;">Contraseña de acceso a esta clase:</label>
           <input type="text" id="teacher-mod-pass" class="input-pass" placeholder="Ej: MOD3-A1-SECURE">
-          <button class="btn" style="margin-top:8px;" onclick="guardarClaveClase()">Guardar Contraseña</button>
+          <button class="btn" style="margin-top:8px;" onclick="guardarClaveClase()">Guardar Contraseña de Clase</button>
         </div>
 
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
-          <label style="font-weight:700; font-size:0.9rem;">Link de Google Meet:</label>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--gray-light); margin-bottom: 15px;">
+          <label style="font-weight:700; font-size:0.9rem;">Enlace a Google Meet / Sala Virtual:</label>
           <input type="text" id="teacher-meet-url" class="input-pass" placeholder="https://meet.google.com/xxx-xxxx-xxx">
-          <button class="btn" style="margin-top:8px;" onclick="guardarMeetClase()">Guardar Link de Meet</button>
+          <button class="btn" style="margin-top:8px;" onclick="guardarMeetClase()">Actualizar Enlace de Meet</button>
         </div>
 
-        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #cbd5e1;">
-          <label style="font-weight:700; font-size:0.9rem;">Subir Archivo de Clase Grabada (Galería / Archivo):</label>
+        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--gray-light);">
+          <label style="font-weight:700; font-size:0.9rem;">Subir Grabación de Clase (Galería o Archivo Local):</label>
           <input type="file" id="teacher-class-file" accept="video/*" class="input-pass" style="margin-top:5px; background:white; padding:0.5rem;">
-          <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Archivo en Historial</button>
+          <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Clase Grabada en Historial</button>
         </div>
       </div>
     </div>
 
-    <!-- OWNER -->
+    <!-- PANEL OWNER -->
     <div id="portal-owner" class="portal-section">
       <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 2px solid #f59e0b; max-width: 900px; margin: auto;">
-        <h2 class="section-title"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> Panel Owner Supremo (Control Total)</h2>
+        <h2 class="section-title"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> Panel de Administración Owner (Control Total)</h2>
         
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 2rem;">
-          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid #cbd5e1;">
-            <h4>Gestión de Quizzes</h4>
-            <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Actualizar Quizzes</button>
+          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid var(--gray-light);">
+            <h4>Gestión de Quizzes Académicos</h4>
+            <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Reiniciar Quizzes</button>
           </div>
-          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid #cbd5e1;">
-            <h4>Contador de Descuento</h4>
+          <div style="background:#f8fafc; padding:1.2rem; border-radius:12px; border:1px solid var(--gray-light);">
+            <h4>Temporizador de Promoción</h4>
             <input type="number" id="owner-timer-days-input" value="7" style="width: 60px; padding:4px; text-align:center; font-weight:bold;"> Días
             <div style="display:flex; gap:6px; margin-top:8px;">
-              <button class="btn" style="background:#16a34a; margin:0;" onclick="iniciarContador()">START</button>
-              <button class="btn" style="background:#dc2626; margin:0;" onclick="detenerContador()">STOP</button>
+              <button class="btn" style="background:#16a34a; margin:0;" onclick="iniciarContador()">ACTIVAR</button>
+              <button class="btn" style="background:#dc2626; margin:0;" onclick="detenerContador()">DETENER</button>
             </div>
           </div>
         </div>
 
-        <!-- LISTA DESPLEGABLE PARA INHABILITAR PROFESORES -->
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
-          <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-users-slash"></i> Inhabilitar / Bloquear Acceso a Profesores</h3>
-          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:12px;">Selecciona al profesor de la lista para revocarle todos los permisos y bloquear su acceso:</p>
+        <!-- MENÚ DESPLEGABLE PARA INHABILITAR PROFESORES -->
+        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid var(--gray-light); margin-bottom: 2rem;">
+          <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-user-xmark"></i> Inhabilitar Accesos Docentes</h3>
+          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:12px;">Selecciona el docente registrado para bloquear su acceso a la plataforma:</p>
           
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
             <select id="owner-prof-select-list" class="input-pass" style="flex:1; margin:0; text-align:left;">
               <option value="Profesor Principal (PROFESOR2026)">Profesor Principal (PROFESOR2026) - ACTIVO</option>
-              <option value="Profesor Auxiliar (Inglés A1-A2)">Profesor Auxiliar (Inglés A1-A2) - ACTIVO</option>
+              <option value="Profesor Adjunto A1-A2">Profesor Adjunto A1-A2 - ACTIVO</option>
               <option value="Profesor Suplente">Profesor Suplente - ACTIVO</option>
             </select>
 
-            <button class="btn" style="width:auto; margin:0; background:#dc2626;" onclick="inhabilitarProfesorSeleccionado()"><i class="fa-solid fa-user-xmark"></i> Inhabilitar / Bloquear Acceso</button>
+            <button class="btn" style="width:auto; margin:0; background:#dc2626;" onclick="inhabilitarProfesorSeleccionado()"><i class="fa-solid fa-ban"></i> Inhabilitar Acceso</button>
           </div>
         </div>
 
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
+        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid var(--gray-light); margin-bottom: 2rem;">
           <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-key"></i> Clave Activa de Certificados</h3>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <input type="text" id="owner-cert-key-input" class="input-pass" placeholder="Nueva Clave Certificados" style="flex:1; margin:0;">
-            <button class="btn" style="width:auto; margin:0; background:#d97706;" onclick="actualizarClaveCertificado()">Cambiar Clave</button>
+            <button class="btn" style="width:auto; margin:0; background:#d97706;" onclick="actualizarClaveCertificado()">Actualizar Clave</button>
           </div>
         </div>
 
-        <!-- ACTUALIZAR LEADERBOARDS POR MÓDULO -->
-        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1;">
-          <h3 style="color:var(--primary); margin-bottom:1rem;"><i class="fa-solid fa-folder-open"></i> Actualizar Leaderboards por Módulo (1 al 9)</h3>
+        <!-- LEADERBOARDS EDITABLES -->
+        <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid var(--gray-light);">
+          <h3 style="color:var(--primary); margin-bottom:1rem;"><i class="fa-solid fa-folder-open"></i> Edición de Leaderboards por Módulo (1 al 9)</h3>
           
           <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
             <button class="tab-btn active" onclick="seleccionarModuloOwner(1, this)">Módulo 1</button>
@@ -361,13 +500,13 @@
               <option value="B2">Nivel B2</option><option value="C1">Nivel C1</option><option value="C2">Nivel C2</option>
             </select>
             <select id="lb-owner-pos" class="input-pass" style="margin:0;">
-              <option value="1">Top 1 (🥇)</option><option value="2">Top 2 (🥈)</option><option value="3">Top 3 (🥉)</option>
+              <option value="1">Puesto 1 (🥇)</option><option value="2">Puesto 2 (🥈)</option><option value="3">Puesto 3 (🥉)</option>
             </select>
           </div>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <input type="text" id="lb-student-name" placeholder="Nombre Estudiante" class="input-pass" style="flex:1; margin:0;">
             <input type="number" id="lb-student-score" placeholder="Puntos" class="input-pass" style="width:120px; margin:0;">
-            <button class="btn" style="width:auto; margin:0;" onclick="actualizarLeaderboardOwner()">Guardar en Leaderboard</button>
+            <button class="btn" style="width:auto; margin:0;" onclick="actualizarLeaderboardOwner()">Guardar Registro</button>
           </div>
         </div>
       </div>
@@ -375,33 +514,33 @@
 
   </div>
 
-  <!-- MODALS LOGINS Y PERFIL -->
-  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Profesor</h3><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('loginProfesorModal').style.display='none'">Cancelar</button></div></div>
-  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Owner</h3><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('loginOwnerModal').style.display='none'">Cancelar</button></div></div>
+  <!-- MODALS DE ACCESO -->
+  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Acceso Docente</h3><p style="font-size:0.88rem; color:var(--gray); margin-bottom:10px;">Ingresa tus credenciales autorizadas</p><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Ingresar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="cerrarModal('loginProfesorModal')">Cancelar</button></div></div>
+  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Acceso Owner</h3><p style="font-size:0.88rem; color:var(--gray); margin-bottom:10px;">Control total de la dirección</p><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Ingresar</button><button class="btn" style="background:var(--gray); margin-top:8px;" onclick="cerrarModal('loginOwnerModal')">Cancelar</button></div></div>
 
-  <!-- MODAL CONFIGURAR PERFIL -->
+  <!-- MODAL CONFIGURACIÓN DE PERFIL -->
   <div class="modal-overlay" id="configPerfilModal">
     <div class="modal-card" style="max-width:450px;">
-      <h3 style="margin-bottom:15px; color:var(--primary);"><i class="fa-solid fa-id-card"></i> Configurar mi Perfil</h3>
-      <label style="font-weight:600; font-size:0.9rem;">Tu Nombre:</label>
+      <h3 style="margin-bottom:15px; color:var(--primary);"><i class="fa-solid fa-id-card"></i> Configuración de Perfil</h3>
+      <label style="font-weight:600; font-size:0.9rem;">Nombre Completo:</label>
       <input type="text" id="input-edit-name" class="input-pass" placeholder="Tu nombre" style="margin-top:4px; margin-bottom:12px;">
-      <label style="font-weight:600; font-size:0.9rem;">Descripción Personal / Nivel:</label>
-      <input type="text" id="input-edit-desc" class="input-pass" placeholder="Ej: Estudiante avanzado" style="margin-top:4px; margin-bottom:12px;">
-      <label style="font-weight:600; font-size:0.9rem;">Subir Foto de Perfil:</label>
+      <label style="font-weight:600; font-size:0.9rem;">Descripción Personal:</label>
+      <input type="text" id="input-edit-desc" class="input-pass" placeholder="Ej: Estudiante de Inglés" style="margin-top:4px; margin-bottom:12px;">
+      <label style="font-weight:600; font-size:0.9rem;">Fotografía de Perfil:</label>
       <input type="file" id="input-edit-photo" accept="image/*" class="input-pass" style="margin-top:4px; margin-bottom:20px; background:white; padding:0.5rem;">
       <button class="btn" onclick="guardarPerfilEstudiante()">Guardar Cambios</button>
-      <button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('configPerfilModal').style.display='none'">Cancelar</button>
+      <button class="btn" style="background:var(--gray); margin-top:8px;" onclick="cerrarModal('configPerfilModal')">Cancelar</button>
     </div>
   </div>
 
   <!-- MODAL QUIZ -->
   <div class="modal-overlay" id="quizModal">
     <div class="modal-card" id="quizCard">
-      <h3 id="quizProgress" style="color:var(--primary);">Pregunta 1</h3>
+      <h3 id="quizProgress" style="color:var(--primary);">Evaluación de Nivel</h3>
       <p id="questionText" style="font-size: 1.1rem; margin: 1rem 0; font-weight:600;"></p>
       <div id="optionsContainer"></div>
       <div id="feedbackBox" class="feedback-box"></div>
-      <button id="btnNextQuestion" class="btn" style="display:none;" onclick="siguientePregunta()">Siguiente ➔</button>
+      <button id="btnNextQuestion" class="btn" style="display:none;" onclick="siguientePregunta()">Siguiente Pregunta ➔</button>
     </div>
   </div>
 
@@ -421,23 +560,36 @@
       cargarPerfil();
     });
 
+    function ingresarPlataforma() {
+      const welcome = document.getElementById('welcome-screen');
+      welcome.classList.add('fade-out');
+      setTimeout(() => {
+        welcome.style.display = 'none';
+      }, 800);
+    }
+
+    function cerrarModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
     function renderizarModulos() {
       const container = document.getElementById('modulesContainer');
       if(!container) return;
       container.innerHTML = '';
       for (let m = 1; m <= 9; m++) {
-        let html = `<div class="folder-card"><div class="folder-header" onclick="toggleFolder('mod${m}')"><span><i class="fa-solid fa-folder"></i> Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="folder-content" id="mod${m}">`;
+        let html = `<div class="folder-card"><div class="folder-header" onclick="toggleFolder('mod${m}')"><span><i class="fa-solid fa-folder" style="color:var(--accent);"></i> Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="folder-content" id="mod${m}">`;
         niveles.forEach(lvl => {
           const key = `${m}-${lvl}`;
-          const conf = datosClases[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', videoName: '' };
+          const conf = datosClases[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', videoUrl: '' };
           html += `
             <div class="classroom-box">
-              <h4>Nivel ${lvl}</h4>
-              <input type="password" id="pass-${key}" class="input-pass" placeholder="Clave de Clase">
-              <button class="btn" onclick="verificarClase(${m}, '${lvl}')">Ingresar a Clase</button>
-              <div id="content-${key}" style="display:none; margin-top:10px;">
-                <a href="${conf.meet}" target="_blank" class="btn">Entrar a Meet</a>
-                <button class="btn btn-history" onclick="verHistorial('${key}')">📺 Historial de Clases</button>
+              <h4 style="color:var(--primary); margin-bottom:8px;"><i class="fa-solid fa-book-bookmark"></i> Nivel ${lvl}</h4>
+              <input type="password" id="pass-${key}" class="input-pass" placeholder="Clave de acceso">
+              <button class="btn" onclick="verificarClase(${m}, '${lvl}')">Acceder a Clase</button>
+              <div id="content-${key}" style="display:none; margin-top:12px; padding-top:10px; border-top:1px dashed #cbd5e1;">
+                <a href="${conf.meet}" target="_blank" class="btn" style="background:#16a34a;"><i class="fa-solid fa-video"></i> Entrar a Google Meet</a>
+                <button class="btn btn-history" onclick="verHistorial('${key}')"><i class="fa-solid fa-film"></i> Historial de Grabaciones</button>
+                <div id="video-player-container-${key}" style="display:none; margin-top:10px;"></div>
               </div>
             </div>`;
         });
@@ -451,14 +603,14 @@
       if(!container) return;
       container.innerHTML = '';
       for (let m = 1; m <= 9; m++) {
-        let html = `<div class="lb-folder-card"><div class="lb-folder-header" onclick="toggleFolder('lb-mod${m}')"><span><i class="fa-solid fa-trophy"></i> Leaderboard - Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="lb-folder-content" id="lb-mod${m}"><div class="levels-lb-grid">`;
+        let html = `<div class="lb-folder-card"><div class="lb-folder-header" onclick="toggleFolder('lb-mod${m}')"><span><i class="fa-solid fa-trophy" style="color:#f59e0b;"></i> Leaderboard - Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="lb-folder-content" id="lb-mod${m}"><div class="levels-lb-grid">`;
         niveles.forEach(lvl => {
-          const p1 = leaderboardDatos[`${m}-${lvl}-1`] || { name: "Estudiante Top 1", score: 1450 };
-          const p2 = leaderboardDatos[`${m}-${lvl}-2`] || { name: "Estudiante Top 2", score: 1280 };
-          const p3 = leaderboardDatos[`${m}-${lvl}-3`] || { name: "Estudiante Top 3", score: 1100 };
+          const p1 = leaderboardDatos[`${m}-${lvl}-1`] || { name: "Estudiante Destacado 1", score: 1450 };
+          const p2 = leaderboardDatos[`${m}-${lvl}-2`] || { name: "Estudiante Destacado 2", score: 1280 };
+          const p3 = leaderboardDatos[`${m}-${lvl}-3`] || { name: "Estudiante Destacado 3", score: 1100 };
           html += `
             <div class="level-lb-card">
-              <h4>Nivel ${lvl}</h4>
+              <h4 style="color:var(--primary); font-size:0.95rem;">Nivel ${lvl}</h4>
               <ul class="lb-top-list">
                 <li class="lb-top-item"><span>🥇 1. ${p1.name}</span><strong>${p1.score} Pts</strong></li>
                 <li class="lb-top-item"><span>🥈 2. ${p2.name}</span><strong>${p2.score} Pts</strong></li>
@@ -474,34 +626,42 @@
     function toggleFolder(id) { document.getElementById(id).classList.toggle('open'); }
     function cambiarPortal(p) {
       document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(`portal-${p}`).classList.add('active');
     }
 
     function abrirLoginProfesor() { 
       if(profesorBloqueado) {
-        alert('❌ Este acceso de profesor ha sido INHABILITADO por el Owner.');
+        alert('❌ Este acceso docente ha sido inhabilitado por la dirección.');
         return;
       }
       document.getElementById('loginProfesorModal').style.display = 'flex'; 
     }
     function abrirLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'flex'; }
+    
     function loginProfesor() { 
       if(profesorBloqueado) {
-        alert('❌ Tu usuario ha sido inhabilitado por el Owner.');
+        alert('❌ Tu acceso docente se encuentra inhabilitado.');
         return;
       }
       if(document.getElementById('prof-pass-input').value === "PROFESOR2026") { 
-        document.getElementById('loginProfesorModal').style.display = 'none'; 
+        cerrarModal('loginProfesorModal'); 
         cambiarPortal('profesores'); 
-      } else alert('Clave incorrecta'); 
+      } else alert('Clave docente incorrecta'); 
     }
-    function loginOwner() { if(document.getElementById('owner-pass-input').value === "OWNER2026") { document.getElementById('loginOwnerModal').style.display = 'none'; cambiarPortal('owner'); } else alert('Clave incorrecta'); }
+    
+    function loginOwner() { 
+      if(document.getElementById('owner-pass-input').value === "OWNER2026") { 
+        cerrarModal('loginOwnerModal'); 
+        cambiarPortal('owner'); 
+      } else alert('Clave de acceso incorrecta'); 
+    }
 
     function inhabilitarProfesorSeleccionado() {
       const select = document.getElementById('owner-prof-select-list');
       const profNombre = select.value;
       profesorBloqueado = true;
-      alert(`⛔ ¡${profNombre} ha sido INHABILITADO! Se le han revocado todos los permisos y no podrá ingresar a la plataforma.`);
+      alert(`⛔ ${profNombre} ha sido inhabilitado correctamente.`);
     }
 
     function guardarClaveClase() {
@@ -510,7 +670,7 @@
       const key = `${m}-${lvl}`;
       if(!datosClases[key]) datosClases[key] = {};
       datosClases[key].pass = document.getElementById('teacher-mod-pass').value;
-      alert(`¡Contraseña guardada para Módulo ${m} - Nivel ${lvl}!`);
+      alert(`Clave actualizada para Módulo ${m} - Nivel ${lvl}`);
     }
 
     function guardarMeetClase() {
@@ -520,7 +680,7 @@
       if(!datosClases[key]) datosClases[key] = {};
       datosClases[key].meet = document.getElementById('teacher-meet-url').value;
       renderizarModulos();
-      alert(`¡Link de Meet guardado para Módulo ${m} - Nivel ${lvl}!`);
+      alert(`Enlace de clase actualizado para Módulo ${m} - Nivel ${lvl}`);
     }
 
     function subirVideoHistorialArchivo() {
@@ -529,11 +689,14 @@
       const key = `${m}-${lvl}`;
       const fileInput = document.getElementById('teacher-class-file');
       if(fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const videoURL = URL.createObjectURL(file);
         if(!datosClases[key]) datosClases[key] = {};
-        datosClases[key].videoName = fileInput.files[0].name;
-        alert(`¡Video "${fileInput.files[0].name}" publicado correctamente en el Historial del Módulo ${m} - Nivel ${lvl}!`);
+        datosClases[key].videoName = file.name;
+        datosClases[key].videoUrl = videoURL;
+        alert(`Clase grabada "${file.name}" cargada correctamente para Módulo ${m} - Nivel ${lvl}`);
       } else {
-        alert('Por favor selecciona un archivo de video de tu galería.');
+        alert('Seleccione un archivo de video válido.');
       }
     }
 
@@ -542,14 +705,18 @@
       const conf = datosClases[key] || { pass: `MOD${m}-${lvl}` };
       if(document.getElementById(`pass-${key}`).value === conf.pass) {
         document.getElementById(`content-${key}`).style.display = 'block';
-        alert('¡Acceso concedido a la clase!');
-      } else alert('Contraseña de clase incorrecta.');
+      } else alert('Contraseña de acceso incorrecta.');
     }
 
     function verHistorial(key) {
       const conf = datosClases[key];
-      if(conf && conf.videoName) alert(`📺 Historial de Clase Grabada (${key}):\nArchivo: ${conf.videoName}`);
-      else alert('Aún no hay clases grabadas publicadas en este nivel.');
+      const playerContainer = document.getElementById(`video-player-container-${key}`);
+      if(conf && conf.videoUrl) {
+        playerContainer.style.display = 'block';
+        playerContainer.innerHTML = `<p style="font-size:0.85rem; font-weight:bold; margin-top:5px;">Reproduciendo: ${conf.videoName}</p><video controls src="${conf.videoUrl}"></video>`;
+      } else {
+        alert('No hay grabaciones de video publicadas aún para este nivel.');
+      }
     }
 
     function seleccionarModuloOwner(modNum, btnEl) {
@@ -566,9 +733,9 @@
       if(name && score) {
         leaderboardDatos[`${moduloOwnerSeleccionado}-${lvl}-${pos}`] = { name, score };
         renderizarLeaderboards();
-        alert(`¡Leaderboard del Módulo ${moduloOwnerSeleccionado} (${lvl}) actualizada con éxito!`);
+        alert(`Leaderboard del Módulo ${moduloOwnerSeleccionado} (${lvl}) actualizada.`);
       } else {
-        alert('Ingresa el nombre y los puntos.');
+        alert('Complete todos los campos requeridos.');
       }
     }
 
@@ -596,8 +763,7 @@
         };
         reader.readAsDataURL(photoInput.files[0]);
       }
-      document.getElementById('configPerfilModal').style.display = 'none';
-      alert('¡Perfil actualizado con éxito!');
+      cerrarModal('configPerfilModal');
     }
 
     function iniciarContador() {
@@ -610,40 +776,41 @@
         document.getElementById('week-timer-display').innerText = `${days}d : ${h}h : ${m}m : ${s}s`;
         seg--;
       }, 1000);
-      alert(`¡Contador iniciado por ${d} días!`);
+      alert(`Temporizador configurado para ${d} días.`);
     }
 
     function detenerContador() { 
       if(timerInterval) clearInterval(timerInterval); 
       document.getElementById('week-timer-display').innerText = "OFFLINE (00d : 00h : 00m : 00s)"; 
-      alert('Contador detenido.');
     }
 
     function actualizarClaveCertificado() { 
-      claveCertificadoOwner = document.getElementById('owner-cert-key-input').value; 
-      alert('¡Clave de certificados actualizada!'); 
+      const newKey = document.getElementById('owner-cert-key-input').value;
+      if(newKey) {
+        claveCertificadoOwner = newKey; 
+        alert('Clave de validación de certificados actualizada.'); 
+      }
     }
 
     function procesarCertificado() {
       if(document.getElementById('cert-code-input').value === claveCertificadoOwner) {
         document.getElementById('cert-announcement-box').style.display = 'block';
-      } else alert('Clave de certificado inválida.');
+      } else alert('Clave de verificación inválida.');
     }
 
-    // BANCO PREGUNTAS Y SISTEMA ACUMULATIVO 24 PTS
     const bancoPreguntas = [
-      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
-      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
-      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "An antes de vocal." },
-      { q: "4. Opuesto de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "Small es pequeño." },
-      { q: "5. 'If I ___ time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Pasado simple en condicional II." },
-      { q: "6. 'She has been working here ___ 2020.'", options: ["since", "for", "during"], correct: "since", reason: "Since para punto de inicio." },
-      { q: "7. 'The report ___ by the manager.'", options: ["was written", "wrote", "is written"], correct: "was written", reason: "Voz pasiva en pasado." },
-      { q: "8. 'He studied, ___ he passed.'", options: ["therefore", "because", "although"], correct: "therefore", reason: "Conector de consecuencia." },
-      { q: "9. 'Hardly ___ entered when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión por adverbio negativo." },
-      { q: "10. 'Seldom ___ such a show.'", options: ["have I seen", "I saw", "saw I"], correct: "have I seen", reason: "Inversión formal." },
-      { q: "11. 'Were it not for you, I ___ in time.'", options: ["wouldn't have finished", "finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional invertido." },
-      { q: "12. 'To bite the bullet':", options: ["Face a tough situation", "Delay", "Get angry"], correct: "Face a tough situation", reason: "Afrontar algo difícil." }
+      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "Uso de tercera persona singular en presente simple." },
+      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "Sujeto 'you' requiere verbo 'were' en pasado." },
+      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "Artículo 'an' precede sonidos vocálicos." },
+      { q: "4. Opuesto gramatical de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "'Small' es el antónimo correspondiente." },
+      { q: "5. 'If I ___ time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Segundo condicional requiere pasado simple." },
+      { q: "6. 'She has been working here ___ 2020.'", options: ["since", "for", "during"], correct: "since", reason: "'Since' se utiliza para un punto específico en el tiempo." },
+      { q: "7. 'The report ___ by the manager.'", options: ["was written", "wrote", "is written"], correct: "was written", reason: "Estructura de voz pasiva en pasado simple." },
+      { q: "8. 'He studied, ___ he passed.'", options: ["therefore", "because", "although"], correct: "therefore", reason: "Conector consecutivo." },
+      { q: "9. 'Hardly ___ entered when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión formal con adverbios negativos." },
+      { q: "10. 'Seldom ___ such a show.'", options: ["have I seen", "I saw", "saw I"], correct: "have I seen", reason: "Estructura invertida formal." },
+      { q: "11. 'Were it not for you, I ___ in time.'", options: ["wouldn't have finished", "finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional en forma invertida." },
+      { q: "12. 'To bite the bullet' significa:", options: ["Enfrentar una situación difícil", "Retrasar algo", "Enojarse"], correct: "Enfrentar una situación difícil", reason: "Modismo idiomático referente a afrontar adversidades." }
     ];
 
     let indice = 0, scoreActual = 0;
@@ -661,11 +828,17 @@
         let totalAcumulado = Math.min(24, prev + scoreActual);
         localStorage.setItem('user_quiz_score', totalAcumulado);
         cargarPerfil();
-        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:var(--primary);">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
+        document.getElementById('quizCard').innerHTML = `
+          <div style="text-align:center;">
+            <h3 style="color:var(--primary);">Evaluación Completada</h3>
+            <p style="margin:10px 0;">Puntuación de esta sesión: <strong>${scoreActual} puntos</strong>.</p>
+            <p style="margin:10px 0;">Puntuación Acumulada en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p>
+            <button class="btn" onclick="location.reload()">Aceptar y Salir</button>
+          </div>`;
         return;
       }
       const q = bancoPreguntas[indice];
-      document.getElementById('quizProgress').innerText = `Pregunta ${indice + 1} de 12`;
+      document.getElementById('quizProgress').innerText = `Pregunta ${indice + 1} de ${bancoPreguntas.length}`;
       document.getElementById('questionText').innerText = q.q;
       const c = document.getElementById('optionsContainer'); c.innerHTML = '';
       q.options.forEach(opt => {
@@ -675,9 +848,9 @@
           const fb = document.getElementById('feedbackBox');
           if(opt === q.correct) {
             scoreActual++;
-            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Felicidades, Respuesta Correcta! 🎉</strong><br>${q.reason}`;
+            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Respuesta Correcta!</strong><br>${q.reason}`;
           } else {
-            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>Correcta: ${q.correct}. ${q.reason}`;
+            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Respuesta Incorrecta</strong><br>Opción correcta: ${q.correct}. ${q.reason}`;
           }
           fb.style.display = 'block'; document.getElementById('btnNextQuestion').style.display = 'block';
         };
@@ -700,11 +873,13 @@
     function actualizarQuizzesEstudiantes() {
       localStorage.setItem('user_quiz_score', '0');
       cargarPerfil();
-      alert('¡Quizzes reseteados/actualizados para remediación por el Owner!');
+      alert('Las evaluaciones han sido reiniciadas para los estudiantes.');
     }
 
     function enviarTarea(tipo) {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Opinión enviada desde Speaking Zone ('+tipo+'): ' + document.getElementById('speaking-text-msg').value)}`, '_blank');
+      const msg = document.getElementById('speaking-text-msg').value;
+      if(!msg.trim()) { alert('Por favor escribe tu mensaje antes de enviar.'); return; }
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Entrega de tarea ('+tipo+'): ' + msg)}`, '_blank');
     }
   </script>
 </body>
