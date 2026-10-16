@@ -58,7 +58,7 @@
       border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* INTRO ANIMADA (OPTIMIZADA) */
+    /* PANTALLA INTRO ANIMADA (SEGURA) */
     #welcome-screen {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -83,7 +83,7 @@
     }
     .welcome-subtext { margin-top: 1rem; font-size: 1.1rem; color: #94a3b8; }
     .loading-bar-box { width: 220px; height: 4px; background: rgba(255, 255, 255, 0.15); border-radius: 4px; margin-top: 2.5rem; overflow: hidden; }
-    .loading-bar-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #f59e0b, #3b82f6); animation: loadProgress 1.8s forwards; }
+    .loading-bar-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #f59e0b, #3b82f6); animation: loadProgress 1.2s forwards; }
 
     @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
     @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
@@ -104,4 +104,217 @@
     .tab-btn:hover, .tab-btn.active { background: var(--secondary); color: white; }
     .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #78350f); border: 1px solid #fef3c7; }
 
-    .container { max-width: 1200px; margin: 2rem auto; padding: 0
+    .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    .portal-section { display: none; }
+    .portal-section.active { display: block; }
+
+    .section-title {
+      font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--primary);
+      display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;
+    }
+
+    /* TABS DE MÓDULOS EN OWNER */
+    .mod-tabs-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .mod-tab-btn {
+      background: #e2e8f0; border: none; padding: 0.5rem 1rem; border-radius: 6px;
+      font-weight: bold; cursor: pointer; color: var(--dark); font-size: 0.88rem;
+    }
+    .mod-tab-btn.active { background: var(--primary); color: white; }
+
+    .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .lang-card { background: white; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
+    .lang-card.active { border-left: 6px solid var(--success); }
+    .lang-card.locked { opacity: 0.75; background: #f8fafc; border-left: 6px solid var(--gray); }
+    .badge-status { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+    .badge-active { background: #dcfce7; color: var(--success); }
+    .badge-locked { background: #e2e8f0; color: var(--gray); }
+
+    .btn {
+      display: inline-block; width: 100%; padding: 0.75rem; border: none; border-radius: 8px;
+      background: var(--primary); color: white; font-weight: bold; text-align: center; cursor: pointer;
+      margin-top: 1rem; text-decoration: none; font-size: 0.95rem;
+    }
+    .btn:hover { background: var(--primary-light); }
+    .btn-disabled { background: #cbd5e1; cursor: not-allowed; }
+
+    /* MÓDULOS ACCORDION */
+    .modules-accordion { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+    .folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; box-shadow: var(--shadow); overflow: hidden; }
+    .folder-header { background: #ffffff; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: var(--primary); }
+    .folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .folder-content.open { display: grid; }
+    .classroom-box { background: white; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center; position: relative; }
+
+    .capacity-tag { font-size: 0.75rem; font-weight: bold; color: var(--secondary); background: #fef3c7; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-top: 4px; }
+    .input-pass { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 0.8rem; text-align: center; }
+
+    /* LEADERBOARD */
+    .module-lb-block { background: white; border: 2px solid #cbd5e1; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
+    .module-lb-title { font-size: 1.2rem; color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; border-bottom: 2px dashed #e2e8f0; padding-bottom: 0.5rem; }
+    .levels-lb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+    .level-lb-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; }
+    .level-lb-header { font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
+    .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .lb-top-item { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; font-size: 0.88rem; }
+
+    .owner-header-card { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border: 2px solid #f59e0b; }
+
+    /* MODALES */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
+    .modal-card { background: white; max-width: 620px; width: 100%; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); max-height: 90vh; overflow-y: auto; }
+    .option-btn { display: block; width: 100%; padding: 0.8rem; margin: 0.5rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; text-align: left; cursor: pointer; font-size: 0.95rem; }
+    .option-btn:hover { background: #e2e8f0; }
+
+    .feedback-box { margin-top: 1rem; padding: 1.2rem; border-radius: 8px; display: none; font-size: 0.95rem; }
+    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
+    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 2px solid #fca5a5; }
+
+    .cert-announcement {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 2px dashed #f59e0b;
+      border-radius: 12px;
+      padding: 1.8rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .cert-badge-img { font-size: 5rem; color: #d97706; margin-bottom: 0.5rem; animation: pulseGlow 1.5s infinite alternate; }
+  </style>
+</head>
+<body>
+
+  <!-- BANNER PROMO -->
+  <div id="promo-banner">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="promo-tag">SEMANA DE DESCUENTO</span>
+      <span>¡Inscríbete hoy y obtén <strong>30 minutos de Clase GRATIS</strong>!</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div class="timer-badge" id="week-timer-display">STOPPED (07d : 00h : 00m)</div>
+      <button onclick="iniciarQuiz()" style="background: #f59e0b; color: #0f172a; border: none; padding: 4px 12px; border-radius: 6px; font-weight: 800; cursor: pointer;">Probar Gratis</button>
+    </div>
+  </div>
+
+  <!-- INTRO ANIMADA AUTOREPARABLE -->
+  <div id="welcome-screen">
+    <div class="welcome-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1 class="welcome-text">¡Bienvenido a la Academia de Idiomas!</h1>
+    <p class="welcome-subtext">Plataforma Oficial de Aprendizaje Modular y Evaluativo</p>
+    <div class="loading-bar-box"><div class="loading-bar-progress"></div></div>
+  </div>
+
+  <header>
+    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Academia de Idiomas</div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="cambiarPortal('estudiantes')"><i class="fa-solid fa-user-graduate"></i> Estudiantes</button>
+      <button class="tab-btn" onclick="cambiarPortal('perfil')"><i class="fa-solid fa-id-card"></i> Mi Perfil</button>
+      <button class="tab-btn" onclick="cambiarPortal('speaking')"><i class="fa-solid fa-comments"></i> Speaking Zone</button>
+      <button class="tab-btn" onclick="cambiarPortal('certificados')"><i class="fa-solid fa-award"></i> Certificados</button>
+      <button class="tab-btn" onclick="abrirLoginProfesor()"><i class="fa-solid fa-chalkboard-teacher"></i> Profesores</button>
+      <button class="tab-btn owner-btn" onclick="abrirLoginOwner()"><i class="fa-solid fa-crown"></i> Owner</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- PORTAL ESTUDIANTES -->
+    <div id="portal-estudiantes" class="portal-section active">
+
+      <section style="margin-bottom: 2rem;">
+        <div style="background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.8rem; border-radius: var(--radius); border-left: 6px solid #f59e0b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+          <div>
+            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-compass"></i> Quiz Evaluativo de Nivel (12 Preguntas)</h3>
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin-top: 4px;">4 Básicas, 4 Intermedias y 4 Avanzadas. Explicación inmediata de errores y felicitaciones por acierto.</p>
+          </div>
+          <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.7rem 1.5rem;" onclick="iniciarQuiz()"><i class="fa-solid fa-play"></i> Iniciar Quiz Ahora</button>
+        </div>
+      </section>
+
+      <!-- IDIOMAS PLANIFICADOS -->
+      <section>
+        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos e Idiomas</h2>
+        <div class="languages-grid">
+          <div class="lang-card active">
+            <span class="badge-status badge-active">Inglés Libre</span>
+            <h3><i class="fa-solid fa-flag-usa"></i> Curso de Inglés</h3>
+            <p>Acceso a módulos, exámenes escritos con corrección y clases en vivo.</p>
+            <button class="btn" onclick="iniciarQuiz()"><i class="fa-solid fa-pen-to-square"></i> Realizar Quiz Evaluativo</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Portugués</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Francés</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Chino Mandarín</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Alemán</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Ruso</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Italiano</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MÓDULOS DE APRENDIZAJE -->
+      <section>
+        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje (Módulos 1 al 9)</h2>
+        <div class="modules-accordion" id="modulesContainer"></div>
+      </section>
+
+      <!-- LEADERBOARD -->
+      <section class="leaderboard-section">
+        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Clasificación Semanal por Módulo</h2>
+        <div id="leaderboardsContainer"></div>
+      </section>
+
+    </div>
+
+    <!-- PESTAÑA PERFIL DE ALUMNO -->
+    <div id="portal-perfil" class="portal-section">
+      <div style="background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; gap: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 1.5rem; flex-wrap: wrap;">
+          <div id="profile-photo-container" style="width: 80px; height: 80px; background: #1e3a8a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; overflow: hidden;">
+            <span id="profile-initial">?</span>
+          </div>
+          <div>
+            <h2 id="profile-name-display">Usuario Sin Nombre</h2>
+            <p style="color: var(--gray);" id="profile-desc-display">Nivel 0 - Sin completar evaluación</p>
+            <button class="btn" style="width: auto; padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 8px;" onclick="abrirConfigPerfil()"><i class="fa-solid fa-gear"></i> Configurar Perfil</button>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 1.5rem; color: var(--primary);"><i class="fa-solid fa-chart-simple"></i> Resultado Actualizado del Quiz</h3>
+        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-top: 10px; border: 1px solid #cbd5e1;">
+          <p style="font-size: 1.1rem;"><strong>Última Puntuación Sumada:</strong> <span id="profile-score-quiz" style="color:var(--primary); font-weight:bold;">0 / 12 Puntos</span></p>
+          <p style="font-size: 1.1rem; margin-top: 6px;"><strong>Nivel Calculado:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Nivel 0 (Completa un quiz para registrar)</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPEAKING ZONE -->
+    <div id="portal-speaking" class="portal-section">
+      <div style="background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
+        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Práctica Escrita</h2>
