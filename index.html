@@ -15,202 +15,239 @@
       --gray: #64748b;
       --success: #16a34a;
       --danger: #dc2626;
-      --owner-gold: #b45309;
       --radius: 12px;
       --shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
+    body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; }
 
-    /* BARRA PROMO */
-    #promo-banner {
-      background: linear-gradient(90deg, #78350f, #d97706, #1e3a8a);
+    header {
+      background: linear-gradient(135deg, var(--dark), var(--primary));
       color: white;
-      padding: 0.6rem 1rem;
-      font-weight: bold;
-      font-size: 0.9rem;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: var(--shadow);
       flex-wrap: wrap;
       gap: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
 
-    .promo-tag {
-      background: #f59e0b;
-      color: #0f172a;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-weight: 800;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-    }
-
-    .timer-badge {
-      background: rgba(15, 23, 42, 0.6);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 1rem;
-      color: #fef08a;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    /* PANTALLA INTRO ANIMADA (SEGURA) */
-    #welcome-screen {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      transition: opacity 0.5s ease, visibility 0.5s;
-      padding: 2rem;
-    }
-
-    .welcome-logo-icon { font-size: 3.5rem; color: #f59e0b; margin-bottom: 1.5rem; animation: pulseGlow 1.5s infinite alternate; }
-    .welcome-text {
-      font-size: 2.2rem; font-weight: 800; letter-spacing: 2px;
-      background: linear-gradient(90deg, #ffffff, #f59e0b, #60a5fa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      text-transform: uppercase; max-width: 900px;
-    }
-    .welcome-subtext { margin-top: 1rem; font-size: 1.1rem; color: #94a3b8; }
-    .loading-bar-box { width: 220px; height: 4px; background: rgba(255, 255, 255, 0.15); border-radius: 4px; margin-top: 2.5rem; overflow: hidden; }
-    .loading-bar-progress { width: 0%; height: 100%; background: linear-gradient(90deg, #f59e0b, #3b82f6); animation: loadProgress 1.2s forwards; }
-
-    @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-    @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
-
-    /* HEADER */
-    header {
-      background: linear-gradient(135deg, var(--dark), var(--primary));
-      color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
-      box-shadow: var(--shadow); flex-wrap: wrap; gap: 10px;
-    }
     .logo { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 10px; }
     .logo i { color: var(--secondary); }
-    .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .nav-tabs { display: flex; gap: 10px; }
     .tab-btn {
-      background: rgba(255,255,255,0.15); color: white; border: none; padding: 0.6rem 1rem;
-      border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 0.9rem;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
     }
     .tab-btn:hover, .tab-btn.active { background: var(--secondary); color: white; }
-    .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #78350f); border: 1px solid #fef3c7; }
 
     .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
     .portal-section { display: none; }
     .portal-section.active { display: block; }
 
     .section-title {
-      font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--primary);
-      display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
     }
 
-    /* TABS DE MÓDULOS EN OWNER */
-    .mod-tabs-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
-    .mod-tab-btn {
-      background: #e2e8f0; border: none; padding: 0.5rem 1rem; border-radius: 6px;
-      font-weight: bold; cursor: pointer; color: var(--dark); font-size: 0.88rem;
+    /* TARJETAS DE IDIOMAS */
+    .languages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
     }
-    .mod-tab-btn.active { background: var(--primary); color: white; }
 
-    .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .lang-card { background: white; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
+    .lang-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      border: 1px solid #e2e8f0;
+    }
     .lang-card.active { border-left: 6px solid var(--success); }
     .lang-card.locked { opacity: 0.75; background: #f8fafc; border-left: 6px solid var(--gray); }
-    .badge-status { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+
+    .badge-status {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
     .badge-active { background: #dcfce7; color: var(--success); }
     .badge-locked { background: #e2e8f0; color: var(--gray); }
 
     .btn {
-      display: inline-block; width: 100%; padding: 0.75rem; border: none; border-radius: 8px;
-      background: var(--primary); color: white; font-weight: bold; text-align: center; cursor: pointer;
-      margin-top: 1rem; text-decoration: none; font-size: 0.95rem;
+      display: inline-block;
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 1rem;
+      text-decoration: none;
     }
     .btn:hover { background: var(--primary-light); }
     .btn-disabled { background: #cbd5e1; cursor: not-allowed; }
+    .btn-live { background: var(--danger); animation: pulse 2s infinite; }
 
-    /* MÓDULOS ACCORDION */
-    .modules-accordion { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
-    .folder-card { background: white; border-radius: var(--radius); border: 1px solid #cbd5e1; box-shadow: var(--shadow); overflow: hidden; }
-    .folder-header { background: #ffffff; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: bold; font-size: 1.1rem; color: var(--primary); }
-    .folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+
+    /* MÓDULOS Y CARPETAS */
+    .modules-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .folder-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid #cbd5e1;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .folder-header {
+      background: #ffffff;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary);
+      transition: background 0.2s;
+    }
+    .folder-header:hover { background: #f8fafc; }
+
+    .folder-content {
+      display: none;
+      padding: 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
     .folder-content.open { display: grid; }
-    .classroom-box { background: white; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center; position: relative; }
 
-    .capacity-tag { font-size: 0.75rem; font-weight: bold; color: var(--secondary); background: #fef3c7; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-top: 4px; }
-    .input-pass { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 0.8rem; text-align: center; }
+    .classroom-box {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      text-align: center;
+      position: relative;
+    }
 
-    /* LEADERBOARD */
-    .module-lb-block { background: white; border: 2px solid #cbd5e1; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
-    .module-lb-title { font-size: 1.2rem; color: var(--primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; border-bottom: 2px dashed #e2e8f0; padding-bottom: 0.5rem; }
-    .levels-lb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
-    .level-lb-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; }
-    .level-lb-header { font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
-    .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .lb-top-item { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; font-size: 0.88rem; }
+    .capacity-tag {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: var(--secondary);
+      background: #fef3c7;
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 4px;
+    }
 
-    .owner-header-card { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border: 2px solid #f59e0b; }
+    .input-pass {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      margin-top: 0.8rem;
+      text-align: center;
+    }
 
-    /* MODALES */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
-    .modal-card { background: white; max-width: 620px; width: 100%; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); max-height: 90vh; overflow-y: auto; }
-    .option-btn { display: block; width: 100%; padding: 0.8rem; margin: 0.5rem 0; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; text-align: left; cursor: pointer; font-size: 0.95rem; }
+    /* MODALES Y ALERTAS */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: white;
+      max-width: 580px;
+      width: 100%;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .option-btn {
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
     .option-btn:hover { background: #e2e8f0; }
 
-    .feedback-box { margin-top: 1rem; padding: 1.2rem; border-radius: 8px; display: none; font-size: 0.95rem; }
-    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 2px solid #86efac; }
-    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 2px solid #fca5a5; }
-
-    .cert-announcement {
-      background: linear-gradient(135deg, #fffbeb, #fef3c7);
-      border: 2px dashed #f59e0b;
-      border-radius: 12px;
-      padding: 1.8rem;
-      text-align: center;
-      margin-top: 1.5rem;
+    .feedback-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
     }
-    .cert-badge-img { font-size: 5rem; color: #d97706; margin-bottom: 0.5rem; animation: pulseGlow 1.5s infinite alternate; }
+    .feedback-box.correct { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
   </style>
 </head>
 <body>
 
-  <!-- BANNER PROMO -->
-  <div id="promo-banner">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span class="promo-tag">SEMANA DE DESCUENTO</span>
-      <span>¡Inscríbete hoy y obtén <strong>30 minutos de Clase GRATIS</strong>!</span>
-    </div>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <div class="timer-badge" id="week-timer-display">STOPPED (07d : 00h : 00m)</div>
-      <button onclick="iniciarQuiz()" style="background: #f59e0b; color: #0f172a; border: none; padding: 4px 12px; border-radius: 6px; font-weight: 800; cursor: pointer;">Probar Gratis</button>
-    </div>
-  </div>
-
-  <!-- INTRO ANIMADA AUTOREPARABLE -->
-  <div id="welcome-screen">
-    <div class="welcome-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-    <h1 class="welcome-text">¡Bienvenido a la Academia de Idiomas!</h1>
-    <p class="welcome-subtext">Plataforma Oficial de Aprendizaje Modular y Evaluativo</p>
-    <div class="loading-bar-box"><div class="loading-bar-progress"></div></div>
-  </div>
-
   <header>
-    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Academia de Idiomas</div>
+    <div class="logo">
+      <i class="fa-solid fa-graduation-cap"></i> Academia de Idiomas
+    </div>
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="cambiarPortal('estudiantes')"><i class="fa-solid fa-user-graduate"></i> Estudiantes</button>
-      <button class="tab-btn" onclick="cambiarPortal('perfil')"><i class="fa-solid fa-id-card"></i> Mi Perfil</button>
-      <button class="tab-btn" onclick="cambiarPortal('speaking')"><i class="fa-solid fa-comments"></i> Speaking Zone</button>
-      <button class="tab-btn" onclick="cambiarPortal('certificados')"><i class="fa-solid fa-award"></i> Certificados</button>
       <button class="tab-btn" onclick="abrirLoginProfesor()"><i class="fa-solid fa-chalkboard-teacher"></i> Profesores</button>
-      <button class="tab-btn owner-btn" onclick="abrirLoginOwner()"><i class="fa-solid fa-crown"></i> Owner</button>
     </div>
   </header>
 
@@ -218,103 +255,289 @@
 
     <!-- PORTAL ESTUDIANTES -->
     <div id="portal-estudiantes" class="portal-section active">
-
-      <section style="margin-bottom: 2rem;">
-        <div style="background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.8rem; border-radius: var(--radius); border-left: 6px solid #f59e0b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-          <div>
-            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-compass"></i> Quiz Evaluativo de Nivel (12 Preguntas)</h3>
-            <p style="color: #cbd5e1; font-size: 0.95rem; margin-top: 4px;">4 Básicas, 4 Intermedias y 4 Avanzadas. Explicación inmediata de errores y felicitaciones por acierto.</p>
-          </div>
-          <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.7rem 1.5rem;" onclick="iniciarQuiz()"><i class="fa-solid fa-play"></i> Iniciar Quiz Ahora</button>
-        </div>
-      </section>
-
-      <!-- IDIOMAS PLANIFICADOS -->
+      
+      <!-- SECCIÓN IDIOMAS (7 IDIOMAS) -->
       <section>
-        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos e Idiomas</h2>
+        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos Disponibles</h2>
         <div class="languages-grid">
           <div class="lang-card active">
-            <span class="badge-status badge-active">Inglés Libre</span>
+            <span class="badge-status badge-active">Activo</span>
             <h3><i class="fa-solid fa-flag-usa"></i> Curso de Inglés</h3>
-            <p>Acceso a módulos, exámenes escritos con corrección y clases en vivo.</p>
-            <button class="btn" onclick="iniciarQuiz()"><i class="fa-solid fa-pen-to-square"></i> Realizar Quiz Evaluativo</button>
+            <p>Prueba diagnóstica evaluativa con corrección e instrucciones gramaticales inmediatas.</p>
+            <button class="btn" onclick="iniciarQuiz()"><i class="fa-solid fa-pen-to-square"></i> Iniciar Quiz Evaluativo</button>
           </div>
-          <div class="lang-card locked">
-            <span class="badge-status badge-locked">Próximamente</span>
-            <h3><i class="fa-solid fa-flag"></i> Portugués</h3>
-            <p>Próximamente disponible.</p>
-            <button class="btn btn-disabled" disabled>Bloqueado</button>
-          </div>
-          <div class="lang-card locked">
-            <span class="badge-status badge-locked">Próximamente</span>
-            <h3><i class="fa-solid fa-flag"></i> Francés</h3>
-            <p>Próximamente disponible.</p>
-            <button class="btn btn-disabled" disabled>Bloqueado</button>
-          </div>
-          <div class="lang-card locked">
-            <span class="badge-status badge-locked">Próximamente</span>
-            <h3><i class="fa-solid fa-flag"></i> Chino Mandarín</h3>
-            <p>Próximamente disponible.</p>
-            <button class="btn btn-disabled" disabled>Bloqueado</button>
-          </div>
-          <div class="lang-card locked">
-            <span class="badge-status badge-locked">Próximamente</span>
-            <h3><i class="fa-solid fa-flag"></i> Alemán</h3>
-            <p>Próximamente disponible.</p>
-            <button class="btn btn-disabled" disabled>Bloqueado</button>
-          </div>
-          <div class="lang-card locked">
-            <span class="badge-status badge-locked">Próximamente</span>
-            <h3><i class="fa-solid fa-flag"></i> Ruso</h3>
-            <p>Próximamente disponible.</p>
-            <button class="btn btn-disabled" disabled>Bloqueado</button>
-          </div>
-          <div class="lang-card locked">
-            <span class="badge-status badge-locked">Próximamente</span>
-            <h3><i class="fa-solid fa-flag"></i> Italiano</h3>
-            <p>Próximamente disponible.</p>
-            <button class="btn btn-disabled" disabled>Bloqueado</button>
-          </div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Portugués</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Francés</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Chino Mandarín</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Alemán</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Ruso</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Italiano</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
         </div>
       </section>
 
-      <!-- MÓDULOS DE APRENDIZAJE -->
+      <!-- CARPETAS MÓDULOS 1 AL 9 CON NIVELES A1, A2, B1, B2, C1, C2 -->
       <section>
-        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje (Módulos 1 al 9)</h2>
-        <div class="modules-accordion" id="modulesContainer"></div>
-      </section>
-
-      <!-- LEADERBOARD -->
-      <section class="leaderboard-section">
-        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Clasificación Semanal por Módulo</h2>
-        <div id="leaderboardsContainer"></div>
+        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--gray);">Abre un módulo e ingresa la contraseña para ir directo a la clase en vivo en Google Meet:</p>
+        
+        <div class="modules-accordion" id="modulesContainer">
+          <!-- Generado dinámicamente con JavaScript para limpieza del código -->
+        </div>
       </section>
 
     </div>
 
-    <!-- PESTAÑA PERFIL DE ALUMNO -->
-    <div id="portal-perfil" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; margin-bottom: 2rem;">
-        <div style="display: flex; align-items: center; gap: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 1.5rem; flex-wrap: wrap;">
-          <div id="profile-photo-container" style="width: 80px; height: 80px; background: #1e3a8a; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; overflow: hidden;">
-            <span id="profile-initial">?</span>
-          </div>
-          <div>
-            <h2 id="profile-name-display">Usuario Sin Nombre</h2>
-            <p style="color: var(--gray);" id="profile-desc-display">Nivel 0 - Sin completar evaluación</p>
-            <button class="btn" style="width: auto; padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 8px;" onclick="abrirConfigPerfil()"><i class="fa-solid fa-gear"></i> Configurar Perfil</button>
-          </div>
+    <!-- PANEL DE PROFESORES -->
+    <div id="portal-profesores" class="portal-section">
+      <div class="modal-card" style="max-width: 650px; margin: auto;">
+        <h2 class="section-title"><i class="fa-solid fa-sliders"></i> Panel de Configuración Docente</h2>
+        
+        <div style="margin-bottom: 2rem; background: #f8fafc; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1;">
+          <h4 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-link"></i> Enlace de Clase (Google Meet)</h4>
+          <input type="text" id="meet-url-input" style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:6px;" placeholder="https://meet.google.com/xxx-xxxx-xxx">
+          <button class="btn" onclick="actualizarEnlaceMeet()"><i class="fa-solid fa-arrows-rotate"></i> Guardar Nuevo Enlace</button>
         </div>
 
-        <h3 style="margin-top: 1.5rem; color: var(--primary);"><i class="fa-solid fa-chart-simple"></i> Resultado Actualizado del Quiz</h3>
-        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-top: 10px; border: 1px solid #cbd5e1;">
-          <p style="font-size: 1.1rem;"><strong>Última Puntuación Sumada:</strong> <span id="profile-score-quiz" style="color:var(--primary); font-weight:bold;">0 / 12 Puntos</span></p>
-          <p style="font-size: 1.1rem; margin-top: 6px;"><strong>Nivel Calculado:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Nivel 0 (Completa un quiz para registrar)</span></p>
+        <div style="margin-bottom: 2rem; background: #f8fafc; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1;">
+          <h4 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-key"></i> Gestionar Contraseñas por Módulo</h4>
+          <select id="select-modulo-change" style="width:100%; padding:0.6rem; margin-bottom: 8px; border-radius: 6px;">
+            <option value="1">Módulo 1</option>
+            <option value="2">Módulo 2</option>
+            <option value="3">Módulo 3</option>
+            <option value="4">Módulo 4</option>
+            <option value="5">Módulo 5</option>
+            <option value="6">Módulo 6</option>
+            <option value="7">Módulo 7</option>
+            <option value="8">Módulo 8</option>
+            <option value="9">Módulo 9</option>
+          </select>
+          <input type="text" id="new-modulo-pass" placeholder="Nueva Contraseña para este Módulo" style="width:100%; padding:0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
+          <button class="btn" onclick="cambiarClaveModulo()"><i class="fa-solid fa-floppy-disk"></i> Cambiar Contraseña</button>
         </div>
       </div>
     </div>
 
-    <!-- SPEAKING ZONE -->
-    <div id="portal-speaking" class="portal-section">
-      <div style="background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
-        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Práctica Escrita</h2>
+  </div>
+
+  <!-- LOGIN DOCENTE -->
+  <div class="modal-overlay" id="loginProfesorModal">
+    <div class="modal-card" style="max-width: 400px; text-align: center;">
+      <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fa-solid fa-lock"></i> Login de Profesor</h3>
+      <input type="password" id="prof-pass-input" class="input-pass" placeholder="Ingresa clave docente" style="margin-bottom: 1rem;">
+      <button class="btn" onclick="validarLoginProfesor()">Acceder</button>
+      <button class="btn" style="background:var(--gray); margin-top:5px;" onclick="cerrarLoginProfesor()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- MODAL QUIZ EVALUATIVO -->
+  <div class="modal-overlay" id="quizModal">
+    <div class="modal-card" id="quizCard">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 id="quizProgress" style="color: var(--primary);"><i class="fa-solid fa-circle-question"></i> Pregunta 1 de 5</h3>
+        <button onclick="cerrarQuiz()" style="background:none; border:none; font-size: 1.3rem; cursor:pointer;">✖</button>
+      </div>
+      <p id="questionText" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;"></p>
+
+      <div id="optionsContainer"></div>
+
+      <div id="feedbackBox" class="feedback-box"></div>
+      <button id="btnNextQuestion" class="btn" style="display:none;" onclick="siguientePregunta()">Siguiente Pregunta ➔</button>
+    </div>
+  </div>
+
+  <script>
+    const CLAVE_PROFESOR = "PROFESOR2026";
+    let clavesModulos = {
+      1: "MOD1-2026",
+      2: "MOD2-2026",
+      3: "MOD3-2026",
+      4: "MOD4-2026",
+      5: "MOD5-2026",
+      6: "MOD6-2026",
+      7: "MOD7-2026",
+      8: "MOD8-2026",
+      9: "MOD9-2026"
+    };
+
+    let enlaceMeetGlobal = "https://meet.google.com/";
+    const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
+
+    // RENDERIZAR MÓDULOS DEL 1 AL 9 CON NIVELES A1-C2
+    function renderizarModulos() {
+      const container = document.getElementById('modulesContainer');
+      container.innerHTML = '';
+
+      for (let m = 1; m <= 9; m++) {
+        let folderHTML = `
+          <div class="folder-card">
+            <div class="folder-header" onclick="toggleFolder('mod${m}')">
+              <span><i class="fa-solid fa-folder"></i> Módulo ${m}</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="folder-content" id="mod${m}">
+        `;
+
+        niveles.forEach(lvl => {
+          folderHTML += `
+            <div class="classroom-box">
+              <h4>Clase Inglés Nivel ${lvl}</h4>
+              <span class="capacity-tag"><i class="fa-solid fa-users"></i> Cupo: Máx. 10 personas</span>
+              <input type="password" id="pass-m${m}-${lvl}" class="input-pass" placeholder="Clave Módulo ${m}">
+              <button class="btn" onclick="verificarAcceso(${m}, '${lvl}')">Ingresar</button>
+              <div id="content-m${m}-${lvl}" style="display:none; margin-top:1rem;">
+                <a href="${enlaceMeetGlobal}" class="btn btn-live meet-link" target="_blank"><i class="fa-solid fa-video"></i> Entrar a Google Meet</a>
+              </div>
+            </div>
+          `;
+        });
+
+        folderHTML += `
+            </div>
+          </div>
+        `;
+        container.innerHTML += folderHTML;
+      }
+    }
+
+    function toggleFolder(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    function cambiarPortal(portal) {
+      document.querySelectorAll('.portal-section').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      if (portal === 'estudiantes') {
+        document.getElementById('portal-estudiantes').classList.add('active');
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+      } else if (portal === 'profesores') {
+        document.getElementById('portal-profesores').classList.add('active');
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+      }
+    }
+
+    function abrirLoginProfesor() { document.getElementById('loginProfesorModal').style.display = 'flex'; }
+    function cerrarLoginProfesor() { document.getElementById('loginProfesorModal').style.display = 'none'; }
+
+    function validarLoginProfesor() {
+      const pass = document.getElementById('prof-pass-input').value;
+      if (pass === CLAVE_PROFESOR) {
+        cerrarLoginProfesor();
+        cambiarPortal('profesores');
+      } else {
+        alert('Contraseña docente incorrecta.');
+      }
+    }
+
+    function verificarAcceso(moduloNum, nivelStr) {
+      const passInput = document.getElementById(`pass-m${moduloNum}-${nivelStr}`).value;
+      if (passInput === clavesModulos[moduloNum]) {
+        document.getElementById(`content-m${moduloNum}-${nivelStr}`).style.display = 'block';
+        alert(`¡Acceso Concedido! Haz clic en el botón rojo para ir directo a la clase de Google Meet.`);
+      } else {
+        alert('Contraseña incorrecta para este Módulo.');
+      }
+    }
+
+    function actualizarEnlaceMeet() {
+      const url = document.getElementById('meet-url-input').value;
+      if (url) {
+        enlaceMeetGlobal = url;
+        document.querySelectorAll('.meet-link').forEach(link => link.href = enlaceMeetGlobal);
+        alert('¡Enlace de Google Meet actualizado correctamente para todas las aulas!');
+      }
+    }
+
+    function cambiarClaveModulo() {
+      const mod = document.getElementById('select-modulo-change').value;
+      const nuevaClave = document.getElementById('new-modulo-pass').value;
+      if (nuevaClave) {
+        clavesModulos[mod] = nuevaClave;
+        alert(`¡Contraseña del Módulo ${mod} actualizada con éxito a: ${nuevaClave}!`);
+      }
+    }
+
+    // QUIZ
+    const bancoPreguntas = [
+      { q: "¿Cuál es la forma correcta del verbo To Be para 'She'?", options: ["is", "are", "am", "be"], correct: "is", reason: "Para la 3.ª persona del singular (She, He, It) se utiliza 'is'." },
+      { q: "Elige la traducción de 'Yesterday':", options: ["Ayer", "Hoy", "Mañana", "Anoche"], correct: "Ayer", reason: "'Yesterday' significa ayer." },
+      { q: "¿Cuál es el pasado simple de 'Go'?", options: ["Went", "Goes", "Gone", "Going"], correct: "Went", reason: "'Went' es la forma irregular en pasado simple de 'Go'." },
+      { q: "Completa: 'I have ___ apple.'", options: ["an", "a", "the", "some"], correct: "an", reason: "Se usa 'an' delante de palabras que inician con sonido vocálico." },
+      { q: "Selecciona el opuesto de 'Fast':", options: ["Slow", "Big", "Tall", "Hard"], correct: "Slow", reason: "'Slow' (Lento) es el opuesto de 'Fast' (Rápido)." }
+    ];
+
+    let preguntasExamen = [];
+    let indiceActual = 0;
+    let puntaje = 0;
+
+    function iniciarQuiz() {
+      preguntasExamen = [...bancoPreguntas].sort(() => Math.random() - 0.5);
+      indiceActual = 0;
+      puntaje = 0;
+      document.getElementById('quizModal').style.display = 'flex';
+      mostrarPregunta();
+    }
+
+    function mostrarPregunta() {
+      document.getElementById('feedbackBox').style.display = 'none';
+      document.getElementById('btnNextQuestion').style.display = 'none';
+
+      if (indiceActual >= preguntasExamen.length) {
+        document.getElementById('quizCard').innerHTML = `
+          <div style="text-align: center;">
+            <h2 style="color: var(--primary); margin-bottom: 0.5rem;">🎉 Quiz Finalizado</h2>
+            <p style="font-size: 1.2rem; margin: 1rem 0;">Puntuación obtenida: <strong>${puntaje} / ${preguntasExamen.length}</strong></p>
+            <button class="btn" onclick="location.reload()">Regresar a las Aulas</button>
+          </div>
+        `;
+        return;
+      }
+
+      const q = preguntasExamen[indiceActual];
+      document.getElementById('quizProgress').innerHTML = `<i class="fa-solid fa-circle-question"></i> Pregunta ${indiceActual + 1} de ${preguntasExamen.length}`;
+      document.getElementById('questionText').innerText = q.q;
+
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => evaluarRespuesta(opt, q.correct, q.reason);
+        container.appendChild(btn);
+      });
+    }
+
+    function evaluarRespuesta(opcionSeleccionada, correcta, explicacion) {
+      const feedback = document.getElementById('feedbackBox');
+      const botones = document.querySelectorAll('.option-btn');
+      
+      botones.forEach(b => b.disabled = true);
+
+      if (opcionSeleccionada === correcta) {
+        puntaje++;
+        feedback.className = 'feedback-box correct';
+        feedback.innerHTML = `<strong>¡Respuesta Correcta! 🎉</strong><br>${explicacion}`;
+      } else {
+        feedback.className = 'feedback-box incorrect';
+        feedback.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>La opción correcta era: <strong>${correcta}</strong>.<br><em>Explicación:</em> ${explicacion}`;
+      }
+
+      feedback.style.display = 'block';
+      document.getElementById('btnNextQuestion').style.display = 'block';
+    }
+
+    function siguientePregunta() {
+      indiceActual++;
+      mostrarPregunta();
+    }
+
+    function cerrarQuiz() { document.getElementById('quizModal').style.display = 'none'; }
+
+    // Inicializar la vista
+    renderizarModulos();
+  </script>
+
+</body>
+</html>
