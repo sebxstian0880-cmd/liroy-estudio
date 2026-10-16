@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
 
-    /* BARRA DE DESCUENTO SEMANAL */
+    /* BARRA PROMO CON CONTROL OWNER */
     #promo-banner {
       background: linear-gradient(90deg, #78350f, #d97706, #1e3a8a);
       color: white;
@@ -58,7 +58,7 @@
       border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* PANTALLA INTRO ANIMADA */
+    /* INTRO ANIMADA */
     #welcome-screen {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -88,7 +88,7 @@
     @keyframes pulseGlow { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
     @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
 
-    /* HEADER & NAV */
+    /* HEADER */
     header {
       background: linear-gradient(135deg, var(--dark), var(--primary));
       color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
@@ -113,8 +113,15 @@
       display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;
     }
 
-    /* IDIOMAS */
-    .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    /* CARPETAS Y TABS OWNER PARA MÓDULOS */
+    .mod-tabs-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .mod-tab-btn {
+      background: #e2e8f0; border: none; padding: 0.5rem 1rem; border-radius: 6px;
+      font-weight: bold; cursor: pointer; color: var(--dark); font-size: 0.88rem;
+    }
+    .mod-tab-btn.active { background: var(--primary); color: white; }
+
+    .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
     .lang-card { background: white; border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); position: relative; border: 1px solid #e2e8f0; }
     .lang-card.active { border-left: 6px solid var(--success); }
     .lang-card.locked { opacity: 0.75; background: #f8fafc; border-left: 6px solid var(--gray); }
@@ -129,8 +136,6 @@
     }
     .btn:hover { background: var(--primary-light); }
     .btn-disabled { background: #cbd5e1; cursor: not-allowed; }
-    .btn-live { background: var(--danger); animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
 
     /* MÓDULOS */
     .modules-accordion { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
@@ -140,7 +145,6 @@
     .folder-content { display: none; padding: 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
     .folder-content.open { display: grid; }
     .classroom-box { background: white; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; text-align: center; position: relative; }
-    .classroom-box.blocked-class { opacity: 0.5; pointer-events: none; background: #fee2e2; }
 
     .capacity-tag { font-size: 0.75rem; font-weight: bold; color: var(--secondary); background: #fef3c7; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-top: 4px; }
     .input-pass { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 0.8rem; text-align: center; }
@@ -152,16 +156,10 @@
     .level-lb-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; }
     .level-lb-header { font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center; }
     .lb-top-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .lb-top-item { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; align-size: 0.88rem; }
+    .lb-top-item { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; font-size: 0.88rem; }
 
-    /* TABLAS OWNER */
+    /* OWNER HEADER */
     .owner-header-card { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border: 2px solid #f59e0b; }
-    .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: white; border-radius: 8px; overflow: hidden; }
-    .data-table th { background: #1e3a8a; color: white; text-align: left; padding: 0.8rem 1rem; }
-    .data-table td { padding: 0.8rem 1rem; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
-    .btn-action-small { border: none; padding: 5px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-weight: bold; }
-    .btn-disable { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
-    .btn-enable { background: #dcfce7; color: #16a34a; border: 1px solid #86efac; }
 
     /* MODALES */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; }
@@ -171,23 +169,39 @@
     .feedback-box { margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; }
     .feedback-box.correct { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
     .feedback-box.incorrect { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+    /* DIBUJO Y ANUNCIO ANIMADO CERTIFICADO */
+    .cert-announcement {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 2px dashed #f59e0b;
+      border-radius: 12px;
+      padding: 1.8rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .cert-badge-img {
+      font-size: 5rem;
+      color: #d97706;
+      margin-bottom: 0.5rem;
+      animation: pulseGlow 1.5s infinite alternate;
+    }
   </style>
 </head>
 <body>
 
-  <!-- BANNER PROMO -->
+  <!-- BANNER PROMO CON CONTROL START/STOP OWNER -->
   <div id="promo-banner">
     <div style="display: flex; align-items: center; gap: 8px;">
       <span class="promo-tag">SEMANA DE DESCUENTO</span>
       <span>¡Inscríbete hoy y obtén <strong>30 minutos de Clase GRATIS</strong>!</span>
     </div>
     <div style="display: flex; align-items: center; gap: 10px;">
-      <div class="timer-badge" id="week-timer-display">06d : 23h : 59m : 59s</div>
+      <div class="timer-badge" id="week-timer-display">STOPPED (07d : 00h : 00m)</div>
       <button onclick="iniciarPlacementTest()" style="background: #f59e0b; color: #0f172a; border: none; padding: 4px 12px; border-radius: 6px; font-weight: 800; cursor: pointer;">Probar Gratis</button>
     </div>
   </div>
 
-  <!-- INTRO ANIMADA -->
+  <!-- INTRO ANIMADA DE BIENVENIDA -->
   <div id="welcome-screen">
     <div class="welcome-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
     <h1 class="welcome-text">¡Bienvenido a la Academia de Idiomas!</h1>
@@ -215,34 +229,71 @@
       <section style="margin-bottom: 2rem;">
         <div style="background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 1.8rem; border-radius: var(--radius); border-left: 6px solid #f59e0b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
           <div>
-            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-compass"></i> Placement Test Completo (16 Ejercicios)</h3>
-            <p style="color: #cbd5e1; font-size: 0.95rem; margin-top: 4px;">4 ejercicios A1-A2, 4 ejercicios B1-B2, 4 ejercicios C1-C2 y 4 pruebas de voz con micrófono directo.</p>
+            <h3 style="font-size: 1.3rem;"><i class="fa-solid fa-compass"></i> Placement Test Escrito (12 Preguntas)</h3>
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin-top: 4px;">4 Básicas, 4 Intermedias y 4 Avanzadas. Explicación detallada en cada respuesta.</p>
           </div>
           <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.7rem 1.5rem;" onclick="iniciarPlacementTest()"><i class="fa-solid fa-play"></i> Iniciar Placement Test</button>
         </div>
       </section>
 
+      <!-- SECCIÓN DE IDIOMAS PLANIFICADOS -->
       <section>
-        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos Disponibles</h2>
+        <h2 class="section-title"><i class="fa-solid fa-language"></i> Cursos e Idiomas</h2>
         <div class="languages-grid">
           <div class="lang-card active">
-            <span class="badge-status badge-active">Activo</span>
+            <span class="badge-status badge-active">Inglés Libre</span>
             <h3><i class="fa-solid fa-flag-usa"></i> Curso de Inglés</h3>
-            <p>Prueba evaluativa con 6 preguntas aleatorias por nivel.</p>
+            <p>Acceso total a módulos, evaluaciones escritas y clases en vivo.</p>
             <button class="btn" onclick="iniciarQuiz()"><i class="fa-solid fa-pen-to-square"></i> Iniciar Quiz Evaluativo</button>
           </div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Portugués</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
-          <div class="lang-card locked"><span class="badge-status badge-locked">Próximamente</span><h3>Curso de Francés</h3><button class="btn btn-disabled" disabled>Bloqueado</button></div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Portugués</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Francés</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Chino Mandarín</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Alemán</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Ruso</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
+          <div class="lang-card locked">
+            <span class="badge-status badge-locked">Próximamente</span>
+            <h3><i class="fa-solid fa-flag"></i> Italiano</h3>
+            <p>Próximamente disponible.</p>
+            <button class="btn btn-disabled" disabled>Bloqueado</button>
+          </div>
         </div>
       </section>
 
+      <!-- MÓDULOS DEL 1 AL 9 -->
       <section>
         <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Aprendizaje (Módulos 1 al 9)</h2>
         <div class="modules-accordion" id="modulesContainer"></div>
       </section>
 
+      <!-- LEADERBOARD -->
       <section class="leaderboard-section">
-        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Clasificación Semanal por Módulo y Nivel</h2>
+        <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Clasificación Semanal por Módulo</h2>
         <div id="leaderboardsContainer"></div>
       </section>
 
@@ -257,691 +308,92 @@
           </div>
           <div>
             <h2 id="profile-name-display">Usuario Sin Nombre</h2>
-            <p style="color: var(--gray);" id="profile-desc-display">Nivel 0 - Sin descripción agregada</p>
+            <p style="color: var(--gray);" id="profile-desc-display">Nivel 0 - Sin completar evaluación</p>
             <button class="btn" style="width: auto; padding: 0.4rem 1rem; font-size: 0.8rem; margin-top: 8px;" onclick="abrirConfigPerfil()"><i class="fa-solid fa-gear"></i> Configurar Perfil</button>
           </div>
         </div>
 
-        <h3 style="margin-top: 1.5rem; color: var(--primary);"><i class="fa-solid fa-chart-simple"></i> Mis Puntuaciones y Nivel Actual</h3>
-        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-top: 10px; border: 1px solid #cbd5e1;">
-          <p><strong>Resultado Quiz:</strong> <span id="profile-score-quiz">0 / 6</span></p>
-          <p><strong>Nivel Asignado:</strong> <span id="profile-level-tag">Nivel 0 (Completa un examen)</span></p>
+        <h3 style="margin-top: 1.5rem; color: var(--primary);"><i class="fa-solid fa-chart-simple"></i> Puntuación y Nivel del Quiz</h3>
+        <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-top: 10px; border: 1px solid #cbd5e1;">
+          <p style="font-size: 1.1rem;"><strong>Última Nota Obtenida:</strong> <span id="profile-score-quiz" style="color:var(--primary); font-weight:bold;">0 / 12 Puntos</span></p>
+          <p style="font-size: 1.1rem; margin-top: 6px;"><strong>Nivel Asignado:</strong> <span id="profile-level-tag" style="color:var(--success); font-weight:bold;">Nivel 0 (Completa un quiz para registrar)</span></p>
         </div>
       </div>
     </div>
 
-    <!-- PESTAÑA SPEAKING ZONE / FORO -->
+    <!-- PESTAÑA SPEAKING ZONE -->
     <div id="portal-speaking" class="portal-section">
       <div style="background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1;">
-        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Práctica Semanal</h2>
+        <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Práctica Escrita</h2>
         <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 1.5rem;">
           <h4><i class="fa-solid fa-bullhorn"></i> Tema de la Semana: "Introduce Yourself and Your Hobbies"</h4>
         </div>
 
         <div style="margin-bottom: 1.5rem;">
-          <textarea id="speaking-text-msg" style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;" rows="3" placeholder="Escribe tu mensaje o transcripción aquí..."></textarea>
+          <textarea id="speaking-text-msg" style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px;" rows="3" placeholder="Escribe tu respuesta aquí..."></textarea>
           
           <div style="margin-top: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <button class="btn" style="width: auto; padding: 0.6rem 1.2rem; background: #25d366;" onclick="enviarTareaCanalDirecto('Speaking Zone')"><i class="fa-brands fa-whatsapp"></i> Enviar a WhatsApp Profesor/Owner</button>
-            <button class="btn btn-disabled" style="width: auto; padding: 0.6rem 1.2rem;" disabled><i class="fa-solid fa-lock"></i> Correo Gmail (Bloqueado Temporalmente)</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PESTAÑA VERIFICADOR DE CERTIFICADOS -->
+    <!-- PESTAÑA CERTIFICADOS CON CONTRASEÑA VENCIBLE DE 24 HORAS Y ANUNCIO ANIMADO -->
     <div id="portal-certificados" class="portal-section">
       <div style="background: white; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; text-align: center; max-width: 650px; margin: auto;">
-        <i class="fa-solid fa-shield-halved" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-        <h2>Verificador Oficial de Certificados</h2>
-        <input type="text" id="cert-code-input" class="input-pass" placeholder="Ingresa tu código de certificado" style="font-size: 1.1rem; padding: 0.8rem; margin-bottom: 1rem;">
-        <button class="btn" onclick="verificarCertificadoCode()"><i class="fa-solid fa-magnifying-glass"></i> Validar Certificado</button>
-        <div id="cert-result-box" style="margin-top: 1.5rem; display: none; padding: 1.2rem; border-radius: 8px; text-align: left;"></div>
+        <i class="fa-solid fa-award" style="font-size: 3.5rem; color: #d97706; margin-bottom: 1rem;"></i>
+        <h2>Solicitud y Emisión de Certificado</h2>
+        <p style="color: var(--gray); margin-bottom: 1.5rem;">Ingresa la clave única otorgada por el Owner para validar tu diploma:</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; text-align: left;">
+          <label style="font-size: 0.85rem; font-weight: bold;">Clave o Código de Certificación Activo:</label>
+          <input type="text" id="cert-code-input" class="input-pass" placeholder="Ingresa clave actual del certificado" style="text-align: left; margin: 0; padding: 0.7rem;">
+
+          <label style="font-size: 0.85rem; font-weight: bold; margin-top: 8px;">Nombre Completo del Estudiante:</label>
+          <input type="text" id="cert-full-name" class="input-pass" placeholder="Tu nombre exacto para el diploma" style="text-align: left; margin: 0; padding: 0.7rem;">
+
+          <label style="font-size: 0.85rem; font-weight: bold; margin-top: 8px;">Módulo Aprobado:</label>
+          <select id="cert-mod-select" style="padding: 0.7rem; border-radius: 6px; border: 1px solid #cbd5e1;">
+            <option value="Módulo 1">Módulo 1</option><option value="Módulo 2">Módulo 2</option>
+            <option value="Módulo 3">Módulo 3</option><option value="Módulo 4">Módulo 4</option>
+            <option value="Módulo 5">Módulo 5</option><option value="Módulo 6">Módulo 6</option>
+            <option value="Módulo 7">Módulo 7</option><option value="Módulo 8">Módulo 8</option>
+            <option value="Módulo 9">Módulo 9</option>
+          </select>
+
+          <button class="btn" style="background: #d97706; margin-top: 15px;" onclick="procesarSolicitudCertificado()"><i class="fa-solid fa-paper-plane"></i> Procesar Certificado</button>
+        </div>
+
+        <!-- COMPROBANTE CON DIBUJO ANIMADO -->
+        <div id="cert-announcement-box" style="display: none;" class="cert-announcement">
+          <div class="cert-badge-img"><i class="fa-solid fa-certificate"></i></div>
+          <h3 style="color: #92400e; margin-bottom: 0.5rem;">🎉 ¡Certificado Solicitado con Éxito!</h3>
+          <p style="color: #78350f; font-size: 1rem; margin-bottom: 1rem;" id="cert-announcement-text">
+            Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será enviado directamente vía WhatsApp.
+          </p>
+          <div style="background: #ffffff; padding: 1rem; border-radius: 8px; border: 2px dashed #d97706; font-size: 0.9rem; color: #451a03;">
+            📷 <strong>PASO OBLIGATORIO:</strong> Toma una captura de pantalla a este recuadro con el dibujo de comprobación y envíasela al <strong>Owner</strong> vía WhatsApp para confirmar tu entrega.
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- PANEL DE PROFESORES -->
+    <!-- PANEL DE PROFESORES: MÓDULO POR MÓDULO -->
     <div id="portal-profesores" class="portal-section">
       <div style="max-width: 750px; margin: auto;">
         <div style="background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid #cbd5e1; margin-bottom: 2rem;">
-          <h2 class="section-title"><i class="fa-solid fa-sliders"></i> Panel Docente</h2>
+          <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel de Configuración Docente por Módulo</h2>
           
           <div style="margin-bottom: 1.5rem; background: #f8fafc; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1;">
-            <h4 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-link"></i> Enlace de Clase (Google Meet)</h4>
-            <input type="text" id="meet-url-input" style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:6px;" placeholder="https://meet.google.com/xxx-xxxx-xxx">
-            <button class="btn" onclick="actualizarEnlaceMeet()"><i class="fa-solid fa-arrows-rotate"></i> Guardar Nuevo Enlace</button>
+            <label style="font-weight: bold; color: var(--primary); display: block; margin-bottom: 6px;">1. Selecciona el Módulo a Dictar:</label>
+            <select id="teacher-mod-select" style="width:100%; padding:0.7rem; border-radius:6px; border:1px solid #cbd5e1;" onchange="cargarDatosModuloProfesor()">
+              <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
+              <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
+              <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
+            </select>
           </div>
 
-          <!-- BOTÓN SUBIR CLASE DE HASTA 2 HORAS -->
-          <div style="background: #f8fafc; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 1.5rem;">
-            <h4 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-cloud-arrow-up"></i> Subir Clase Grabada (Máx 2 Horas)</h4>
-            <input type="file" id="teacher-class-file" accept="video/*,audio/*" style="width: 100%; padding: 0.5rem; margin-bottom: 8px;">
-            <button class="btn" onclick="subirClaseGrabadaProfesor()"><i class="fa-solid fa-upload"></i> Publicar Clase en Repositorio</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL OWNER COMPLETO -->
-    <div id="portal-owner" class="portal-section">
-      <div class="owner-header-card">
-        <div>
-          <h2><i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Panel de Control Owner (Creador Supremo)</h2>
-          <p style="color: #cbd5e1; font-size: 0.95rem;">Administración de módulos, habilitación de profesores y actualización semanal.</p>
-        </div>
-        <span class="owner-badge"><i class="fa-solid fa-shield-halved"></i> Owner</span>
-      </div>
-
-      <!-- INHABILITAR / HABILITAR MÓDULOS Y CLASES -->
-      <section style="margin-bottom: 2rem; background: white; padding: 1.5rem; border-radius: var(--radius); border: 1px solid #cbd5e1;">
-        <h3 class="section-title"><i class="fa-solid fa-lock"></i> Habilitar / Inhabilitar Módulos y Clases</h3>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-          <select id="owner-mod-select" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-            <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
-            <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
-            <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
-          </select>
-          <button class="btn-action-small btn-disable" onclick="toggleBloqueoModuloOwner(true)">Bloquear Módulo</button>
-          <button class="btn-action-small btn-enable" onclick="toggleBloqueoModuloOwner(false)">Desbloquear Módulo</button>
-        </div>
-      </section>
-
-      <!-- AGREGAR Y GESTIONAR PROFESORES -->
-      <section style="margin-bottom: 2rem; background: white; padding: 1.5rem; border-radius: var(--radius); border: 1px solid #cbd5e1;">
-        <h3 class="section-title"><i class="fa-solid fa-user-plus"></i> Registrar Nuevo Profesor</h3>
-        <div style="display: flex; flex-direction: column; gap: 10px; max-width: 500px;">
-          <input type="text" id="new-prof-name" placeholder="Nombre Completo del Profesor" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-          <input type="email" id="new-prof-email" placeholder="Correo Gmail del Profesor" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-          <input type="password" id="new-prof-pass" placeholder="Clave Asignada al Profesor" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-          <button class="btn" onclick="agregarProfesorSistema()"><i class="fa-solid fa-plus"></i> Dar Permisos de Profesor</button>
-        </div>
-
-        <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Profesores Registrados</h4>
-        <table class="data-table">
-          <thead><tr><th>Nombre</th><th>Gmail</th><th>Estado Permiso</th><th>Acción</th></tr></thead>
-          <tbody id="profesoresTableBody">
-            <tr><td>Profesor Raúl</td><td>raul@gmail.com</td><td><span style="color:var(--success); font-weight:bold;">Habilitado</span></td><td><button class="btn-action-small btn-disable" onclick="alert('Profesor Inhabilitado')">Quitar Permisos</button></td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <!-- ACTUALIZAR LEADERBOARD SEMANAL MANUALLY -->
-      <section style="margin-bottom: 2rem; background: white; padding: 1.5rem; border-radius: var(--radius); border: 1px solid #cbd5e1;">
-        <h3 class="section-title"><i class="fa-solid fa-trophy"></i> Actualizar Leaderboard Semanal</h3>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <input type="text" id="lb-student-top" placeholder="Nombre Estudiante Top" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-          <input type="number" id="lb-score-top" placeholder="Puntaje" style="padding: 0.6rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-          <button class="btn" style="width: auto;" onclick="alert('Leaderboard actualizada manualmente por el Owner')">Actualizar Tabla</button>
-        </div>
-      </section>
-    </div>
-
-  </div>
-
-  <!-- MODALES DE LOGIN -->
-  <div class="modal-overlay" id="loginProfesorModal">
-    <div class="modal-card" style="max-width: 400px; text-align: center;">
-      <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fa-solid fa-lock"></i> Login de Profesor</h3>
-      <input type="password" id="prof-pass-input" class="input-pass" placeholder="Ingresa clave docente" style="margin-bottom: 1rem;">
-      <button class="btn" onclick="validarLoginProfesor()">Acceder</button>
-      <button class="btn" style="background:var(--gray); margin-top:5px;" onclick="cerrarLoginProfesor()">Cancelar</button>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="loginOwnerModal">
-    <div class="modal-card" style="max-width: 400px; text-align: center;">
-      <h3 style="color: var(--owner-gold); margin-bottom: 1rem;"><i class="fa-solid fa-crown"></i> Acceso Owner</h3>
-      <input type="password" id="owner-pass-input" class="input-pass" placeholder="Ingresa clave de Owner" style="margin-bottom: 1rem;">
-      <button class="btn" style="background: var(--owner-gold);" onclick="validarLoginOwner()">Ingresar</button>
-      <button class="btn" style="background:var(--gray); margin-top:5px;" onclick="cerrarLoginOwner()">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- MODAL CONFIGURAR PERFIL -->
-  <div class="modal-overlay" id="configPerfilModal">
-    <div class="modal-card" style="max-width: 450px;">
-      <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fa-solid fa-user-gear"></i> Configuración de Perfil</h3>
-      <input type="text" id="input-edit-name" class="input-pass" placeholder="Ingresa tu nombre" style="text-align:left; margin-bottom:10px;">
-      <input type="text" id="input-edit-desc" class="input-pass" placeholder="Añadir descripción personal" style="text-align:left; margin-bottom:10px;">
-      <label style="font-size:0.85rem; font-weight:bold;">Subir foto de perfil:</label>
-      <input type="file" id="input-edit-photo" accept="image/*" style="margin-top:4px; margin-bottom:15px; width:100%;">
-      <button class="btn" onclick="guardarPerfilEstudiante()">Guardar Cambios</button>
-      <button class="btn" style="background:var(--gray); margin-top:5px;" onclick="document.getElementById('configPerfilModal').style.display='none'">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- MODAL ENTREGAS CON MICRÓFONO INTEGRADO -->
-  <div class="modal-overlay" id="uploadTaskModal">
-    <div class="modal-card" style="max-width: 520px;">
-      <h3 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-upload"></i> Entregar Tarea / Audio</h3>
-      <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem;" id="uploadTaskTitle">Módulo Asignado</p>
-
-      <textarea id="task-student-msg" style="width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px;" rows="3" placeholder="Escribe tu tarea o habla al micrófono..."></textarea>
-      
-      <button class="btn" style="background:#dc2626; margin-bottom:10px;" onclick="grabarAudioTareaLive()"><i class="fa-solid fa-microphone"></i> Dictar por Micrófono</button>
-
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn" style="background: #25d366; flex: 1;" onclick="enviarTareaCanalDirecto('Tarea de Módulo')"><i class="fa-brands fa-whatsapp"></i> Enviar a WhatsApp</button>
-        <button class="btn btn-disabled" style="flex: 1;" disabled><i class="fa-solid fa-lock"></i> Gmail (Bloqueado)</button>
-      </div>
-      <button class="btn" style="background:var(--gray); margin-top:8px;" onclick="document.getElementById('uploadTaskModal').style.display='none'">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- MODAL PLACEMENT TEST ADAPTATIVO -->
-  <div class="modal-overlay" id="placementTestModal">
-    <div class="modal-card" id="placementCard">
-      <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fa-solid fa-compass"></i> Placement Test Adaptativo</h3>
-      <p id="placementQuestionText" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;"></p>
-      <div id="placementOptionsContainer"></div>
-    </div>
-  </div>
-
-  <!-- MODAL QUIZ EVALUATIVO -->
-  <div class="modal-overlay" id="quizModal">
-    <div class="modal-card" id="quizCard">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <h3 id="quizProgress" style="color: var(--primary);"><i class="fa-solid fa-circle-question"></i> Pregunta 1</h3>
-        <button onclick="cerrarQuiz()" style="background:none; border:none; font-size: 1.3rem; cursor:pointer;">✖</button>
-      </div>
-      <p id="questionText" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;"></p>
-      <div id="optionsContainer"></div>
-      <div id="feedbackBox" class="feedback-box"></div>
-      <button id="btnNextQuestion" class="btn" style="display:none;" onclick="siguientePregunta()">Siguiente Pregunta ➔</button>
-    </div>
-  </div>
-
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const welcomeScreen = document.getElementById('welcome-screen');
-        welcomeScreen.style.opacity = '0';
-        welcomeScreen.style.visibility = 'hidden';
-      }, 3000);
-
-      iniciarCuentaRegresivaSemanal();
-    });
-
-    function iniciarCuentaRegresivaSemanal() {
-      let segundosRestantes = (7 * 24 * 60 * 60) - 1200;
-      const display = document.getElementById('week-timer-display');
-
-      setInterval(() => {
-        if (segundosRestantes <= 0) { display.innerHTML = "¡EXPIRED!"; return; }
-        const d = Math.floor(segundosRestantes / (3600 * 24));
-        const h = Math.floor((segundosRestantes % (3600 * 24)) / 3600);
-        const m = Math.floor((segundosRestantes % 3600) / 60);
-        const s = segundosRestantes % 60;
-        display.innerHTML = `${d < 10 ? '0'+d : d}d : ${h < 10 ? '0'+h : h}h : ${m < 10 ? '0'+m : m}m : ${s < 10 ? '0'+s : s}s`;
-        segundosRestantes--;
-      }, 1000);
-    }
-
-    const CLAVE_PROFESOR = "PROFESOR2026";
-    const CLAVE_OWNER = "OWNER2026";
-
-    let perfilUsuario = { nombre: "Usuario Sin Nombre", desc: "Nivel 0", foto: null };
-    let modulosBloqueadosOwner = {};
-
-    let clavesModulos = {
-      1: "MOD1-2026", 2: "MOD2-2026", 3: "MOD3-2026",
-      4: "MOD4-2026", 5: "MOD5-2026", 6: "MOD6-2026",
-      7: "MOD7-2026", 8: "MOD8-2026", 9: "MOD9-2026"
-    };
-
-    let enlaceMeetGlobal = "https://meet.google.com/";
-    const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
-
-    function mezclarAleatorio(arreglo) { return [...arreglo].sort(() => Math.random() - 0.5); }
-
-    function renderizarModulos() {
-      const container = document.getElementById('modulesContainer');
-      container.innerHTML = '';
-
-      for (let m = 1; m <= 9; m++) {
-        let isBlocked = modulosBloqueadosOwner[m] ? 'blocked-module' : '';
-        let folderHTML = `
-          <div class="folder-card ${isBlocked}" id="folder-mod-${m}">
-            <div class="folder-header" onclick="toggleFolder('mod${m}')">
-              <span><i class="fa-solid fa-folder"></i> Módulo ${m} ${modulosBloqueadosOwner[m] ? '(BLOQUEADO POR OWNER)' : ''}</span>
-              <i class="fa-solid fa-chevron-down"></i>
-            </div>
-            <div class="folder-content" id="mod${m}">
-        `;
-
-        niveles.forEach(lvl => {
-          folderHTML += `
-            <div class="classroom-box">
-              <h4>Clase Inglés Nivel ${lvl}</h4>
-              <span class="capacity-tag"><i class="fa-solid fa-users"></i> Cupo: Máx. 10</span>
-              <input type="password" id="pass-m${m}-${lvl}" class="input-pass" placeholder="Clave Módulo ${m}">
-              <button class="btn" onclick="verificarAcceso(${m}, '${lvl}')">Ingresar a Clase</button>
-              
-              <div style="margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 8px;">
-                <button class="btn" style="background:#64748b; font-size:0.8rem; padding:0.4rem;" onclick="abrirModalTarea(${m}, '${lvl}')"><i class="fa-solid fa-upload"></i> Subir Tarea / Audio</button>
-                <button class="btn" style="background:#0284c7; font-size:0.8rem; padding:0.4rem; margin-top:4px;" onclick="abrirCarpetaClasesGrabadas(${m}, '${lvl}')"><i class="fa-solid fa-circle-play"></i> Ver Clases Grabadas</button>
-              </div>
-
-              <div id="content-m${m}-${lvl}" style="display:none; margin-top:1rem;">
-                <a href="${enlaceMeetGlobal}" class="btn btn-live meet-link" target="_blank"><i class="fa-solid fa-video"></i> Entrar a Google Meet</a>
-              </div>
-            </div>
-          `;
-        });
-
-        folderHTML += `</div></div>`;
-        container.innerHTML += folderHTML;
-      }
-    }
-
-    function renderizarLeaderboards() {
-      const container = document.getElementById('leaderboardsContainer');
-      container.innerHTML = '';
-
-      for (let m = 1; m <= 9; m++) {
-        let blockHTML = `
-          <div class="module-lb-block">
-            <h3 class="module-lb-title"><i class="fa-solid fa-award"></i> Leaderboard - Módulo ${m}</h3>
-            <div class="levels-lb-grid">
-        `;
-
-        niveles.forEach(lvl => {
-          blockHTML += `
-            <div class="level-lb-card">
-              <div class="level-lb-header"><span>Nivel ${lvl}</span></div>
-              <ul class="lb-top-list">
-                <li class="lb-top-item"><span>🥇 1. Estudiante Top</span><strong>1450 Pts</strong></li>
-                <li class="lb-top-item"><span>🥈 2. Estudiante Top</span><strong>1280 Pts</strong></li>
-              </ul>
-            </div>
-          `;
-        });
-
-        blockHTML += `</div></div>`;
-        container.innerHTML += blockHTML;
-      }
-    }
-
-    function toggleFolder(id) { document.getElementById(id).classList.toggle('open'); }
-
-    function cambiarPortal(portal) {
-      document.querySelectorAll('.portal-section').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
-      const map = { estudiantes: 0, perfil: 1, speaking: 2, certificados: 3, profesores: 4, owner: 5 };
-      document.getElementById(`portal-${portal}`).classList.add('active');
-      if (map[portal] !== undefined && document.querySelectorAll('.tab-btn')[map[portal]]) {
-        document.querySelectorAll('.tab-btn')[map[portal]].classList.add('active');
-      }
-    }
-
-    function abrirLoginProfesor() { document.getElementById('loginProfesorModal').style.display = 'flex'; }
-    function cerrarLoginProfesor() { document.getElementById('loginProfesorModal').style.display = 'none'; }
-    function abrirLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'flex'; }
-    function cerrarLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'none'; }
-
-    function validarLoginProfesor() {
-      if (document.getElementById('prof-pass-input').value === CLAVE_PROFESOR) {
-        cerrarLoginProfesor(); cambiarPortal('profesores');
-      } else alert('Contraseña incorrecta.');
-    }
-
-    function validarLoginOwner() {
-      if (document.getElementById('owner-pass-input').value === CLAVE_OWNER) {
-        cerrarLoginOwner(); cambiarPortal('owner');
-      } else alert('Contraseña incorrecta.');
-    }
-
-    function abrirConfigPerfil() { document.getElementById('configPerfilModal').style.display = 'flex'; }
-
-    function guardarPerfilEstudiante() {
-      const name = document.getElementById('input-edit-name').value;
-      const desc = document.getElementById('input-edit-desc').value;
-      const fileInput = document.getElementById('input-edit-photo');
-
-      if (name) perfilUsuario.nombre = name;
-      if (desc) perfilUsuario.desc = desc;
-
-      document.getElementById('profile-name-display').innerText = perfilUsuario.nombre;
-      document.getElementById('profile-desc-display').innerText = perfilUsuario.desc;
-      document.getElementById('profile-initial').innerText = perfilUsuario.nombre.charAt(0).toUpperCase();
-
-      if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('profile-photo-container').innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-      }
-
-      document.getElementById('configPerfilModal').style.display = 'none';
-    }
-
-    function verificarAcceso(moduloNum, nivelStr) {
-      if (modulosBloqueadosOwner[moduloNum]) { alert('Este Módulo ha sido bloqueado temporalmente por el Owner.'); return; }
-      const passInput = document.getElementById(`pass-m${moduloNum}-${nivelStr}`).value;
-      if (passInput === clavesModulos[moduloNum]) {
-        document.getElementById(`content-m${moduloNum}-${nivelStr}`).style.display = 'block';
-        alert('¡Acceso Concedido!');
-      } else alert('Contraseña incorrecta.');
-    }
-
-    function actualizarEnlaceMeet() {
-      const url = document.getElementById('meet-url-input').value;
-      if (url) {
-        enlaceMeetGlobal = url;
-        document.querySelectorAll('.meet-link').forEach(link => link.href = enlaceMeetGlobal);
-        alert('¡Enlace actualizado!');
-      }
-    }
-
-    function subirClaseGrabadaProfesor() {
-      const file = document.getElementById('teacher-class-file').files[0];
-      if (file) {
-        alert(`¡Clase grabada "${file.name}" de hasta 2 horas subida con éxito al repositorio!`);
-      } else alert('Selecciona un archivo de video de la clase.');
-    }
-
-    function abrirCarpetaClasesGrabadas(m, lvl) {
-      alert(`Abriendo carpeta de archivos guardados del Módulo ${m} - Nivel ${lvl}...`);
-    }
-
-    let moduloTareaActual = "";
-    function abrirModalTarea(m, lvl) {
-      moduloTareaActual = `Módulo ${m} - Nivel ${lvl}`;
-      document.getElementById('uploadTaskTitle').innerText = `Entregando para: ${moduloTareaActual}`;
-      document.getElementById('uploadTaskModal').style.display = 'flex';
-    }
-
-    function enviarTareaCanalDirecto(origen) {
-      const nombre = perfilUsuario.nombre;
-      const msg = document.getElementById('task-student-msg')?.value || document.getElementById('speaking-text-msg')?.value || 'Sin texto';
-      
-      const textoMensaje = `Hola Profesor/Owner, soy (${nombre}).\nEnvío mi entrega de ${origen} [${moduloTareaActual}]:\n"${msg}"`;
-      const urlWhatsApp = `https://api.whatsapp.com/send?text=${encodeURIComponent(textoMensaje)}`;
-      window.open(urlWhatsApp, '_blank');
-    }
-
-    function grabarAudioTareaLive() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) { alert("Micrófono no disponible en este navegador."); return; }
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.start();
-      recognition.onresult = function(e) {
-        document.getElementById('task-student-msg').value += " " + e.results[0][0].transcript;
-      };
-    }
-
-    function toggleBloqueoModuloOwner(bloquear) {
-      const mod = document.getElementById('owner-mod-select').value;
-      modulosBloqueadosOwner[mod] = bloquear;
-      renderizarModulos();
-      alert(`Módulo ${mod} ${bloquear ? 'bloqueado' : 'desbloqueado'} con éxito.`);
-    }
-
-    function agregarProfesorSistema() {
-      const name = document.getElementById('new-prof-name').value;
-      const email = document.getElementById('new-prof-email').value;
-      if (name && email) {
-        const tbody = document.getElementById('profesoresTableBody');
-        tbody.innerHTML += `<tr><td>${name}</td><td>${email}</td><td><span style="color:var(--success); font-weight:bold;">Habilitado</span></td><td><button class="btn-action-small btn-disable" onclick="alert('Profesor Inhabilitado')">Quitar Permisos</button></td></tr>`;
-        alert(`¡Profesor ${name} agregado al sistema!`);
-      }
-    }
-
-    function verificarCertificadoCode() {
-      const code = document.getElementById('cert-code-input').value.trim();
-      const resultBox = document.getElementById('cert-result-box');
-      resultBox.style.display = 'block';
-
-      if (code.length > 3) {
-        resultBox.style.background = "#dcfce7"; resultBox.style.color = "#15803d";
-        resultBox.innerHTML = `<strong>✅ CERTIFICADO VÁLIDO</strong><br>Código Registrado: ${code}<br>Estado: Emitido Oficialmente`;
-      } else {
-        resultBox.style.background = "#fee2e2"; resultBox.style.color = "#b91c1c";
-        resultBox.innerHTML = `<strong>❌ Certificado No Valido</strong>`;
-      }
-    }
-
-    // BANCO BANCO DE PREGUNTAS PLACEMENT TEST (ALEATORIAS)
-    const bancoPlacement = {
-      A1_A2: [
-        { q: "1. Completa: 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular requiere 'goes'." },
-        { q: "2. Selecciona: 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "Con 'you' en pasado se utiliza 'were'." },
-        { q: "3. Completa: 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "'an' ante sonido vocálico." },
-        { q: "4. Opuesto de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "'Small' es pequeño." }
-      ],
-      B1_B2: [
-        { q: "5. Completa: 'If I ___ more time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Segundo condicional usa pasado simple." },
-        { q: "6. Selecciona: 'She has been working here ___ 2020.'", options: ["since", "for", "during"], correct: "since", reason: "'since' punto específico de tiempo." },
-        { q: "7. Pasiva: 'The report ___ by the manager yesterday.'", options: ["was written", "wrote", "is written"], correct: "was written", reason: "Voz pasiva en pasado." },
-        { q: "8. Conector: 'He studied hard, ___ he passed.'", options: ["therefore", "although", "because"], correct: "therefore", reason: "Indica consecuencia." }
-      ],
-      C1_C2: [
-        { q: "9. Completa: 'Hardly ___ entered the room when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión formal." },
-        { q: "10. Selecciona: 'Seldom ___ such a breathtaking performance.'", options: ["have I seen", "I have seen", "saw I"], correct: "have I seen", reason: "Inversión gramatical." },
-        { q: "11. Completa: 'Were it not for your help, I ___ in time.'", options: ["wouldn't have finished", "wouldn't finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional invertido." },
-        { q: "12. 'To bite the bullet' significa:", options: ["To face a difficult situation", "To delay something", "To get angry"], correct: "To face a difficult situation", reason: "Afrontar algo difícil con valentía." }
-      ]
-    };
-
-    const ejerciciosSpeaking = [
-      { frase: "The people is great here", palabrasClave: ["the", "people", "is", "great", "here"], explicacion: "Pronuncia las palabras exactas." },
-      { frase: "Apple is great", palabrasClave: ["apple", "is", "great"], explicacion: "Enfatiza 'Apple'." },
-      { frase: "Learning English is fun", palabrasClave: ["learning", "english", "is", "fun"], explicacion: "Atención a 'learning'." },
-      { frase: "Practice makes perfect", palabrasClave: ["practice", "makes", "perfect"], explicacion: "Pronuncia 'makes'." }
-    ];
-
-    let examenPlacementGenerado = [], pasoPlacement = 0, scorePlacementGrammar = 0, scorePlacementSpeaking = 0;
-
-    function iniciarPlacementTest() {
-      const p1 = mezclarAleatorio(bancoPlacement.A1_A2).slice(0, 4);
-      const p2 = mezclarAleatorio(bancoPlacement.B1_B2).slice(0, 4);
-      const p3 = mezclarAleatorio(bancoPlacement.C1_C2).slice(0, 4);
-
-      examenPlacementGenerado = [...p1, ...p2, ...p3];
-      pasoPlacement = 0; scorePlacementGrammar = 0; scorePlacementSpeaking = 0;
-
-      document.getElementById('placementTestModal').style.display = 'flex';
-      mostrarPasoPlacement();
-    }
-
-    function mostrarPasoPlacement() {
-      const card = document.getElementById('placementCard');
-
-      if (pasoPlacement < 12) {
-        const q = examenPlacementGenerado[pasoPlacement];
-        const opcionesMezcladas = mezclarAleatorio(q.options);
-
-        card.innerHTML = `
-          <h3 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-compass"></i> Placement Test (${pasoPlacement + 1}/16)</h3>
-          <p style="font-size: 1.1rem; font-weight: 600; margin: 1rem 0;">${q.q}</p>
-          <div id="placementOptionsContainer"></div>
-        `;
-
-        const container = document.getElementById('placementOptionsContainer');
-        opcionesMezcladas.forEach(opt => {
-          const btn = document.createElement('button');
-          btn.className = 'option-btn';
-          btn.innerText = opt;
-          btn.onclick = () => {
-            if (opt === q.correct) scorePlacementGrammar++;
-            pasoPlacement++;
-            mostrarPasoPlacement();
-          };
-          container.appendChild(btn);
-        });
-      }
-      else if (pasoPlacement >= 12 && pasoPlacement < 16) {
-        const indexSp = pasoPlacement - 12;
-        const itemSp = ejerciciosSpeaking[indexSp];
-
-        card.innerHTML = `
-          <h3 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-microphone"></i> Speaking (${indexSp + 1}/4)</h3>
-          <p style="margin-top: 0.5rem; color: var(--gray);">Lee la frase. El micrófono se apaga automáticamente al detectar las palabras exactas:</p>
-          
-          <div style="background: #f1f5f9; padding: 1.2rem; border-radius: 8px; margin: 1rem 0; text-align: center; border: 2px dashed #3b82f6;">
-            <h2 style="color: #1e3a8a;">"${itemSp.frase}"</h2>
-          </div>
-
-          <button id="btnGrabarLive" class="btn" style="background: #dc2626;" onclick="escucharMicrofonoInstantaneo('${itemSp.frase}', ${JSON.stringify(itemSp.palabrasClave)}, '${itemSp.explicacion}')">
-            <i class="fa-solid fa-microphone"></i> Activar Micrófono
-          </button>
-
-          <div id="statusLiveBox" style="margin-top: 1rem; font-weight: bold; text-align: center;"></div>
-        `;
-      }
-      else {
-        let nivelFinal = "A1 (Básico Inicial)";
-        const total = scorePlacementGrammar + scorePlacementSpeaking;
-
-        if (total >= 14) nivelFinal = "C1 - C2 (Avanzado)";
-        else if (total >= 9) nivelFinal = "B1 - B2 (Intermedio)";
-        else if (total >= 5) nivelFinal = "A2 (Básico Elemental)";
-
-        card.innerHTML = `
-          <div style="text-align: center;">
-            <h2 style="color: var(--primary);">🎉 Resultado Placement Test</h2>
-            <p style="margin: 0.5rem 0;">Gramática: <strong>${scorePlacementGrammar}/12</strong> | Speaking: <strong>${scorePlacementSpeaking}/4</strong></p>
-            <div style="background: #dcfce7; padding: 1rem; border-radius: 8px; margin: 1.2rem 0;">
-              <h3 style="color: #15803d;">Nivel Asignado: ${nivelFinal}</h3>
-            </div>
-            <button class="btn" onclick="document.getElementById('placementTestModal').style.display='none'">Ir a los Módulos</button>
-          </div>
-        `;
-      }
-    }
-
-    // MICRÓFONO REPARADO CON DETECCIÓN Y APAGADO AUTOMÁTICO
-    function escucharMicrofonoInstantaneo(fraseObjetivo, palabrasClave, explicacionError) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-      if (!SpeechRecognition) {
-        alert("Navegador sin micrófono directo. Avanzando...");
-        scorePlacementSpeaking++; pasoPlacement++; mostrarPasoPlacement();
-        return;
-      }
-
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.continuous = true;
-      recognition.interimResults = true;
-
-      const btn = document.getElementById('btnGrabarLive');
-      const statusBox = document.getElementById('statusLiveBox');
-
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Escuchando en vivo...`;
-      statusBox.innerHTML = `<span style="color: #3b82f6;">Habla ahora...</span>`;
-
-      recognition.start();
-
-      recognition.onresult = function(event) {
-        let transcriptActual = "";
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          transcriptActual += event.results[i][0].transcript;
-        }
-        transcriptActual = transcriptActual.toLowerCase();
-        statusBox.innerHTML = `Escuchado: <em>"${transcriptActual}"</em>`;
-
-        let coincidencia = 0;
-        palabrasClave.forEach(p => {
-          if (transcriptActual.includes(p.toLowerCase())) coincidencia++;
-        });
-
-        if (coincidencia >= palabrasClave.length) {
-          recognition.stop();
-          scorePlacementSpeaking++;
-          statusBox.innerHTML = `<span style="color: #16a34a;">¡Palabras detectadas correctamente! Apagando micrófono... 🎉</span>`;
-          setTimeout(() => { pasoPlacement++; mostrarPasoPlacement(); }, 1000);
-        }
-      };
-
-      recognition.onerror = function(event) {
-        statusBox.innerHTML = `<span style="color: #dc2626;">Error al detectar: ${event.error}. ${explicacionError}</span>`;
-        btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-microphone"></i> Reintentar Micrófono`;
-      };
-    }
-
-    // QUIZ EVALUATIVO 6 PREGUNTAS (2 de A1A2, 2 de B1B2, 2 de C1C2)
-    function iniciarQuiz() {
-      const q1 = mezclarAleatorio(bancoPlacement.A1_A2).slice(0, 2);
-      const q2 = mezclarAleatorio(bancoPlacement.B1_B2).slice(0, 2);
-      const q3 = mezclarAleatorio(bancoPlacement.C1_C2).slice(0, 2);
-
-      quizGenerado = mezclarAleatorio([...q1, ...q2, ...q3]);
-      indiceQuiz = 0; puntajeQuiz = 0;
-      document.getElementById('quizModal').style.display = 'flex';
-      mostrarPreguntaQuiz();
-    }
-
-    let quizGenerado = [], indiceQuiz = 0, puntajeQuiz = 0;
-
-    function mostrarPreguntaQuiz() {
-      document.getElementById('feedbackBox').style.display = 'none';
-      document.getElementById('btnNextQuestion').style.display = 'none';
-
-      if (indiceQuiz >= quizGenerado.length) {
-        document.getElementById('profile-score-quiz').innerText = `${puntajeQuiz} / ${quizGenerado.length}`;
-        let levelTag = "A1 (Básico)";
-        if (puntajeQuiz >= 5) levelTag = "C1 (Avanzado)";
-        else if (puntajeQuiz >= 3) levelTag = "B1 (Intermedio)";
-        document.getElementById('profile-level-tag').innerText = levelTag;
-
-        document.getElementById('quizCard').innerHTML = `
-          <div style="text-align: center;">
-            <h2>🎉 Quiz Finalizado</h2>
-            <p style="font-size: 1.2rem; margin: 1rem 0;">Puntuación obtenida: <strong>${puntajeQuiz} / ${quizGenerado.length}</strong></p>
-            <p style="color:var(--gray);">Tu resultado se ha actualizado automáticamente en tu Perfil.</p>
-            <button class="btn" onclick="location.reload()">Regresar</button>
-          </div>
-        `;
-        return;
-      }
-
-      const q = quizGenerado[indiceQuiz];
-      const opcionesMezcladas = mezclarAleatorio(q.options);
-
-      document.getElementById('quizProgress').innerText = `Pregunta ${indiceQuiz + 1} de ${quizGenerado.length}`;
-      document.getElementById('questionText').innerText = q.q;
-
-      const container = document.getElementById('optionsContainer');
-      container.innerHTML = '';
-
-      opcionesMezcladas.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerText = opt;
-        btn.onclick = () => evaluarQuiz(opt, q.correct, q.reason);
-        container.appendChild(btn);
-      });
-    }
-
-    function evaluarQuiz(opcionSeleccionada, correcta, explicacion) {
-      const feedback = document.getElementById('feedbackBox');
-      document.querySelectorAll('#optionsContainer .option-btn').forEach(b => b.disabled = true);
-
-      if (opcionSeleccionada === correcta) {
-        puntajeQuiz++;
-        feedback.className = 'feedback-box correct';
-        feedback.innerHTML = `<strong>¡Respuesta Correcta! 🎉</strong><br>${explicacion}`;
-      } else {
-        feedback.className = 'feedback-box incorrect';
-        feedback.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>Opción correcta: <strong>${correcta}</strong>.<br><em>Motivo:</em> ${explicacion}`;
-      }
-
-      feedback.style.display = 'block';
-      document.getElementById('btnNextQuestion').style.display = 'block';
-    }
-
-    function siguientePregunta() { indiceQuiz++; mostrarPreguntaQuiz(); }
-    function cerrarQuiz() { document.getElementById('quizModal').style.display = 'none'; }
-
-    renderizarModulos();
-    renderizarLeaderboards();
-  </script>
-
-</body>
-</html>
+          <div style="margin-bottom: 1.5rem; background: #f8fafc; padding: 1.2rem; border-radius: 8px; border: 1px solid #cbd5e1;">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-key"></i> Configurar Contraseña de Acceso al Módulo</h4>
+            <input type="text" id="teacher-mod-pass" placeholder="Clave para que los alumnos ingresen" style="width:100%; padding:0.6rem; border-radius: 6px; border:
