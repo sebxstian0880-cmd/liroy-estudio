@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academia de Idiomas Leroy Estudo</title>
+  <title>Liroy Estudio de Idiomas</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
@@ -17,12 +17,12 @@
       --success: #16a34a;
       --danger: #dc2626;
       --owner-gold: #b45309;
-      --radius: 14px;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; }
-    body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; position: relative; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f1f5f9; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
 
     /* BANNER PROMO */
     #promo-banner {
@@ -31,37 +31,8 @@
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+    .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
     .timer-badge { background: rgba(15, 23, 42, 0.75); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.25); }
-
-    /* PANTALLA DE BIENVENIDA CON EL MUÑEQUITO */
-    #welcome-screen {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-      z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; color: white; transition: opacity 0.6s ease, visibility 0.6s; padding: 2rem;
-    }
-    .mascot-img-intro {
-      width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.6); animation: mascotFloat 2s infinite alternate ease-in-out;
-      margin-bottom: 1.5rem; border: 4px solid #f59e0b; background: white;
-    }
-    @keyframes mascotFloat { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-12px) scale(1.04); } }
-    .welcome-title { font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin-bottom: 0.5rem; }
-    .welcome-subtitle { font-size: 1.15rem; color: #cbd5e1; max-width: 600px; font-weight: 400; }
-    .loading-progress-pill { width: 180px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; margin-top: 2.5rem; overflow: hidden; }
-    .loading-progress-bar { width: 100%; height: 100%; background: #f59e0b; animation: loadProgressLine 1.5s infinite linear; }
-    @keyframes loadProgressLine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-    /* MUÑEQUITO FLOTANTE EN ESQUINA SUPERIOR DERECHA */
-    .top-right-mascot {
-      position: fixed; top: 75px; right: 20px; z-index: 900;
-      display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.95);
-      padding: 6px 12px; border-radius: 30px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-      border: 2px solid #f59e0b; backdrop-filter: blur(4px); animation: mascotFloat 3s infinite alternate ease-in-out;
-    }
-    .top-right-mascot img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1px solid #d97706; }
-    .top-right-mascot span { font-size: 0.8rem; font-weight: 700; color: var(--primary); }
 
     /* HEADER */
     header {
@@ -74,15 +45,14 @@
     .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
     .tab-btn {
       background: rgba(255, 255, 255, 0.08); color: #cbd5e1; border: none; padding: 0.65rem 1.1rem;
-      border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.25s ease;
+      border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease;
     }
-    .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; transform: translateY(-1px); }
+    .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; }
     .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #b45309); color: white; border: 1px solid rgba(254, 243, 199, 0.3); }
 
     .container { max-width: 1240px; margin: 2.5rem auto; padding: 0 1.5rem; }
     .portal-section { display: none; }
-    .portal-section.active { display: block; animation: fadeInPortal 0.4s ease; }
-    @keyframes fadeInPortal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .portal-section.active { display: block; }
 
     .section-title {
       font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary);
@@ -151,22 +121,8 @@
     </div>
   </div>
 
-  <!-- MUÑEQUITO FLOTANTE EN ESQUINA SUPERIOR DERECHA -->
-  <div class="top-right-mascot">
-    <img src="https://i.imgur.com/8Q9Z5bS.png" alt="Profesor Leroy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3429/3429402.png'">
-    <span>¡Hola! Bienvenido</span>
-  </div>
-
-  <!-- MUÑEQUITO Y PANTALLA INTRO -->
-  <div id="welcome-screen">
-    <img src="https://i.imgur.com/8Q9Z5bS.png" class="mascot-img-intro" alt="Mascota Leroy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3429/3429402.png'">
-    <h1 class="welcome-title">Bienvenido a Academia Leroy Estudo</h1>
-    <p class="welcome-subtitle">Plataforma Oficial de Estudio y Certificación de Idiomas</p>
-    <div class="loading-progress-pill"><div class="loading-progress-bar"></div></div>
-  </div>
-
   <header>
-    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Academia Leroy Estudo</div>
+    <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Liroy Estudio de Idiomas</div>
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="cambiarPortal('estudiantes')"><i class="fa-solid fa-user-graduate"></i> Estudiantes</button>
       <button class="tab-btn" onclick="cambiarPortal('perfil')"><i class="fa-solid fa-id-card"></i> Mi Perfil</button>
@@ -194,7 +150,7 @@
         <div class="languages-grid">
           <div class="lang-card active">
             <span class="badge-status badge-active">Disponible</span>
-            <h3>Inglés Leroy</h3>
+            <h3>Inglés Liroy</h3>
             <p style="color: var(--gray); font-size: 0.9rem; margin-top: 6px;">Acceso completo a módulos, historial de clases grabadas y exámenes escritos.</p>
             <button class="btn" onclick="iniciarQuiz()">Ingresar al Curso</button>
           </div>
@@ -226,7 +182,7 @@
             <span id="profile-initial">U</span>
           </div>
           <div>
-            <h2 id="profile-name-display" style="font-size: 1.6rem; color: var(--primary);">Estudiante Leroy</h2>
+            <h2 id="profile-name-display" style="font-size: 1.6rem; color: var(--primary);">Estudiante Liroy</h2>
             <p style="color: var(--gray); margin-top: 4px;" id="profile-desc-display">Nivel A1 (Básico Initial)</p>
             <button class="btn" style="width: auto; padding: 0.5rem 1.2rem; font-size: 0.85rem; margin-top: 10px;" onclick="abrirConfigPerfil()"><i class="fa-solid fa-gear"></i> Configurar Perfil</button>
           </div>
@@ -362,7 +318,7 @@
         <!-- LISTA DESPLEGABLE PARA INHABILITAR PROFESORES -->
         <div style="background:#f8fafc; padding:1.5rem; border-radius:12px; border:1px solid #cbd5e1; margin-bottom: 2rem;">
           <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-users-slash"></i> Inhabilitar / Bloquear Acceso a Profesores</h3>
-          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:12px;">Selecciona al profesor que ha ingresado de la lista para revocarle todos los permisos y bloquear su acceso:</p>
+          <p style="font-size:0.88rem; color:var(--gray); margin-bottom:12px;">Selecciona al profesor de la lista para revocarle todos los permisos y bloquear su acceso:</p>
           
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
             <select id="owner-prof-select-list" class="input-pass" style="flex:1; margin:0; text-align:left;">
@@ -450,17 +406,6 @@
   </div>
 
   <script>
-    // MASCOTA DE BIENVENIDA ANTIBLOQUEO
-    function ocultarIntroSegura() {
-      const screen = document.getElementById('welcome-screen');
-      if (screen && screen.style.display !== 'none') {
-        screen.style.opacity = '0';
-        setTimeout(() => { screen.style.display = 'none'; }, 600);
-      }
-    }
-    window.addEventListener('load', () => { setTimeout(ocultarIntroSegura, 2200); });
-    setTimeout(ocultarIntroSegura, 3500);
-
     const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
     let datosClases = {}; 
     let leaderboardDatos = {};
@@ -468,7 +413,7 @@
     let claveCertificadoOwner = "CERT-OWNER-2026";
     let profesorBloqueado = false;
     let timerInterval = null;
-    let perfilUsuario = { nombre: "Estudiante Leroy", desc: "Nivel A1 (Básico Initial)" };
+    let perfilUsuario = { nombre: "Estudiante Liroy", desc: "Nivel A1 (Básico Initial)" };
 
     window.addEventListener('DOMContentLoaded', () => {
       renderizarModulos();
