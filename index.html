@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
 
-    /* ANIMACIÓN DE ENTRADA CON BOTÓN DE SALTO DE EMERGENCIA */
+    /* ANIMACIÓN DE ENTRADA (SPLASH SCREEN DE 5 SEGUNDOS) */
     #welcome-splash {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
@@ -54,7 +54,7 @@
     .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
     .timer-badge { background: rgba(15, 23, 42, 0.85); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
 
-    /* HEADER */
+    /* HEADER CON NUEVA PESTAÑA CLASES PERSONALIZADAS AL LADO DE ESTUDIANTES */
     header {
       background: #090d16; color: white; padding: 1.1rem 2.5rem;
       display: flex; justify-content: space-between; align-items: center;
@@ -68,6 +68,7 @@
       border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease;
     }
     .tab-btn:hover, .tab-btn.active { background: var(--accent); color: white; }
+    .tab-btn.custom-btn { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; }
     .tab-btn.owner-btn { background: linear-gradient(135deg, #d97706, #b45309); color: white; }
 
     .container { max-width: 1240px; margin: 2.5rem auto; padding: 0 1.5rem; }
@@ -135,7 +136,7 @@
 </head>
 <body>
 
-  <!-- ANIMACIÓN DE ENTRADA CON BOTÓN DE SALTO -->
+  <!-- ANIMACIÓN DE ENTRADA -->
   <div id="welcome-splash">
     <div class="splash-icon"><i class="fa-solid fa-graduation-cap"></i></div>
     <h1 class="splash-title">Liroy Estudio de Idiomas</h1>
@@ -157,6 +158,8 @@
     <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Liroy Estudio de Idiomas</div>
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="cambiarPortal('estudiantes')"><i class="fa-solid fa-user-graduate"></i> Estudiantes</button>
+      <!-- BOTÓN CLASES PERSONALIZADAS AL LADO DE ESTUDIANTES -->
+      <button class="tab-btn custom-btn" onclick="abrirAccesoClasesPersonalizadas()"><i class="fa-solid fa-user-lock"></i> Clases Personalizadas</button>
       <button class="tab-btn" onclick="cambiarPortal('perfil')"><i class="fa-solid fa-id-card"></i> Mi Perfil</button>
       <button class="tab-btn" onclick="cambiarPortal('speaking')"><i class="fa-solid fa-comments"></i> Speaking Zone</button>
       <button class="tab-btn" onclick="cambiarPortal('certificados')"><i class="fa-solid fa-award"></i> Certificados</button>
@@ -206,6 +209,19 @@
       </section>
     </div>
 
+    <!-- NUEVA SECCIÓN: CLASES PERSONALIZADAS (SIN LEADERBOARD) -->
+    <div id="portal-personalizadas" class="portal-section">
+      <div style="background: linear-gradient(135deg, #1e293b, #0369a1); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; border: 1px solid #334155; text-align: center;">
+        <h2 style="color: #f8fafc; font-size: 1.8rem;"><i class="fa-solid fa-user-lock"></i> Clases Personalizadas VIP</h2>
+        <p style="color: #e0f2fe; margin-top: 6px;">Espacio de clases individuales privadas sin tabla de clasificación.</p>
+      </div>
+
+      <section>
+        <h2 class="section-title"><i class="fa-solid fa-folder-tree"></i> Módulos de Clases Personalizadas (Módulos 1 al 9)</h2>
+        <div class="modules-accordion" id="customModulesContainer"></div>
+      </section>
+    </div>
+
     <!-- MI PERFIL -->
     <div id="portal-perfil" class="portal-section">
       <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; max-width: 750px; margin: auto;">
@@ -228,21 +244,20 @@
       </div>
     </div>
 
-    <!-- SPEAKING ZONE -->
+    <!-- SPEAKING ZONE DIRECTO A TU CHAT DE WHATSAPP -->
     <div id="portal-speaking" class="portal-section">
       <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; max-width: 750px; margin: auto;">
         <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Opinión</h2>
         <div style="background: #0f172a; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 1.5rem; border: 1px solid #334155;">
           <p style="color: #e2e8f0; font-size: 0.95rem;">
-            <strong>¿Qué se hace aquí?</strong> Este espacio está diseñado para que envíes tu opinión o práctica hablada/escrita directamente al Owner de la academia desde la plataforma.
+            <strong>¿Qué se hace aquí?</strong> Escribe tu tarea, duda o práctica hablada aquí. Al tocar el botón, serás redirigido directamente al chat privado de WhatsApp del Owner.
           </p>
         </div>
 
-        <textarea id="speaking-text-msg" class="input-text-pro" rows="4" placeholder="Escribe tu opinión o tarea aquí para enviarla al Owner..."></textarea>
+        <textarea id="speaking-text-msg" class="input-text-pro" rows="4" placeholder="Escribe tu práctica o mensaje para el Owner aquí..."></textarea>
         
         <div style="display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap;">
-          <button class="btn" style="width: auto; background: #25d366; flex: 1;" onclick="enviarTarea('Speaking WhatsApp')"><i class="fa-brands fa-whatsapp"></i> Enviar Directo al Owner (WhatsApp)</button>
-          <button class="btn btn-disabled" style="width: auto; flex: 1; cursor: not-allowed;" disabled><i class="fa-solid fa-envelope"></i> Enviar por Correo Electrónico (Bloqueado)</button>
+          <button class="btn" style="width: 100%; background: #25d366; font-size: 1.05rem;" onclick="enviarMensajeWhatsAppDirecto()"><i class="fa-brands fa-whatsapp"></i> Enviar Mensaje Directo al Owner (WhatsApp)</button>
         </div>
       </div>
     </div>
@@ -252,7 +267,7 @@
       <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; text-align: center; max-width: 650px; margin: auto;">
         <i class="fa-solid fa-award" style="font-size: 3.5rem; color: #d97706; margin-bottom: 1rem;"></i>
         <h2>Solicitud de Certificado Oficial</h2>
-        <p style="color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por el Owner para validar y emitir tu diploma:</p>
+        <p style="color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.95rem;">Ingresa la clave única otorgada por el Owner:</p>
         
         <div style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
           <label style="font-size: 0.88rem; font-weight: bold;">Clave del Certificado Activa:</label>
@@ -275,10 +290,10 @@
           <div style="font-size:4rem; color:#d97706; margin-bottom:0.5rem;"><i class="fa-solid fa-certificate"></i></div>
           <h3 style="color: #f59e0b; margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 ¡Certificado Solicitado con Éxito!</h3>
           <p style="color: #e2e8f0; font-size: 0.98rem; margin-bottom: 1rem;" id="cert-announcement-text">
-            Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será emitido y enviado directamente.
+            Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será emitido.
           </p>
           <div style="background: #0f172a; padding: 1.1rem; border-radius: 10px; border: 2px dashed #d97706; font-size: 0.9rem; color: #f8fafc; text-align: left;">
-            📷 <strong>PASO OBLIGATORIO DE COMPROBACIÓN:</strong> Toma una captura de pantalla a este recuadro y envíasela al <strong>Owner</strong> vía WhatsApp para confirmar tu solicitud de entrega.
+            📷 <strong>PASO OBLIGATORIO DE COMPROBACIÓN:</strong> Toma captura de pantalla y envíasela al Owner por WhatsApp.
           </div>
         </div>
       </div>
@@ -287,8 +302,16 @@
     <!-- PANEL PROFESORES -->
     <div id="portal-profesores" class="portal-section">
       <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; max-width: 750px; margin: auto; box-shadow: var(--shadow); border: 1px solid #334155;">
-        <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente por Módulo y Nivel</h2>
+        <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente</h2>
         
+        <div style="margin-bottom:15px; background:#0f172a; padding:1rem; border-radius:10px; border:1px solid #334155;">
+          <label style="font-weight:700; font-size:0.9rem; color:#f59e0b;">Selecciona qué tipo de clase vas a gestionar:</label>
+          <select id="teacher-target-type" class="input-pass" style="margin-top:5px;">
+            <option value="normal">Clases Normales Estándar</option>
+            <option value="custom">Clases Personalizadas VIP</option>
+          </select>
+        </div>
+
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
           <div>
             <label style="font-weight:700; font-size:0.9rem;">Seleccionar Módulo:</label>
@@ -320,7 +343,7 @@
         </div>
 
         <div style="background: #0f172a; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155;">
-          <label style="font-weight:700; font-size:0.9rem;">Subir Archivo de Clase Grabada (Galería / Archivo):</label>
+          <label style="font-weight:700; font-size:0.9rem;">Subir Archivo de Clase Grabada:</label>
           <input type="file" id="teacher-class-file" accept="video/*" class="input-pass" style="margin-top:5px; background:#1e293b; padding:0.5rem;">
           <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Archivo en Historial</button>
         </div>
@@ -330,12 +353,56 @@
     <!-- OWNER -->
     <div id="portal-owner" class="portal-section">
       <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 2px solid #f59e0b; max-width: 900px; margin: auto;">
-        <h2 class="section-title"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> Panel Owner Supremo (Control Total)</h2>
+        <h2 class="section-title"><i class="fa-solid fa-crown" style="color:#f59e0b;"></i> Panel Owner Supremo</h2>
         
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 2rem;">
+        <!-- REGISTRO Y CONTROL DE PROFESORES -->
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
+          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-users-gear"></i> Profesores Registrados (Control Total)</h3>
+          <p style="font-size:0.88rem; color:#94a3b8; margin-bottom:12px;">Profesores que han ingresado su nombre y apellido en el sistema:</p>
+          <div id="owner-professors-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+
+        <!-- AUTORIZAR PROFESOR PARA CLASES PERSONALIZADAS -->
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
+          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-user-check"></i> Dar Acceso a Profesor para Clases Personalizadas</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <select id="select-prof-custom-permission" class="input-pass" style="flex:1; margin:0; text-align:left;"></select>
+            <button class="btn" style="width:auto; margin:0; background:#0284c7;" onclick="autorizarProfesorCustom()">Habilitar/Deshabilitar Custom</button>
+          </div>
+        </div>
+
+        <!-- CAMBIAR TODAS LAS CLAVES -->
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
+          <h3 style="color:#f8fafc; margin-bottom:12px;"><i class="fa-solid fa-key"></i> Cambiar Contraseñas del Sistema</h3>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+            <div>
+              <label style="font-size:0.8rem; color:#cbd5e1;">Tu Clave de Owner:</label>
+              <input type="text" id="input-new-owner-pass" class="input-pass" placeholder="Nueva clave Owner">
+              <button class="btn" style="background:#d97706; padding:0.5rem; margin-top:5px;" onclick="cambiarClaveOwner()">Guardar Owner Pass</button>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; color:#cbd5e1;">Clave Profesores Normales:</label>
+              <input type="text" id="input-new-prof-pass" class="input-pass" placeholder="Nueva clave Profesor">
+              <button class="btn" style="background:#2563eb; padding:0.5rem; margin-top:5px;" onclick="cambiarClaveProfesorGlobal()">Guardar Prof Pass</button>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; color:#cbd5e1;">Clave Clases Personalizadas:</label>
+              <input type="text" id="input-new-custom-pass" class="input-pass" placeholder="Nueva clave Custom">
+              <button class="btn" style="background:#0284c7; padding:0.5rem; margin-top:5px;" onclick="cambiarClaveCustomGlobal()">Guardar Custom Pass</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- INHABILITAR MÓDULOS -->
+        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
+          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-folder-minus"></i> Estado de Módulos (Habilitar / Inhabilitar)</h3>
+          <div id="owner-modules-toggle-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px;"></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px;">
           <div style="background:#0f172a; padding:1.2rem; border-radius:12px; border:1px solid #334155;">
-            <h4>Gestión de Quizzes</h4>
-            <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="actualizarQuizzesEstudiantes()">🔄 Habilitar / Actualizar Quizzes</button>
+            <h4>Resetear Quizzes Estudiantes</h4>
+            <button class="btn" style="background: #16a34a; margin-top: 10px;" onclick="actualizarQuizzesEstudiantes()">🔄 Resetear Quizzes</button>
           </div>
           <div style="background:#0f172a; padding:1.2rem; border-radius:12px; border:1px solid #334155;">
             <h4>Contador de Descuento</h4>
@@ -346,70 +413,43 @@
             </div>
           </div>
         </div>
-
-        <!-- LISTA DESPLEGABLE PARA INHABILITAR PROFESORES -->
-        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
-          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-users-slash"></i> Inhabilitar / Bloquear Acceso a Profesores</h3>
-          <p style="font-size:0.88rem; color:#94a3b8; margin-bottom:12px;">Selecciona al profesor de la lista para revocarle todos los permisos y bloquear su acceso:</p>
-          
-          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-            <select id="owner-prof-select-list" class="input-pass" style="flex:1; margin:0; text-align:left;">
-              <option value="Profesor Principal (PROFESOR2026)">Profesor Principal (PROFESOR2026) - ACTIVO</option>
-              <option value="Profesor Auxiliar (Inglés A1-A2)">Profesor Auxiliar (Inglés A1-A2) - ACTIVO</option>
-              <option value="Profesor Suplente">Profesor Suplente - ACTIVO</option>
-            </select>
-
-            <button class="btn" style="width:auto; margin:0; background:#dc2626;" onclick="inhabilitarProfesorSeleccionado()"><i class="fa-solid fa-user-xmark"></i> Inhabilitar / Bloquear Acceso</button>
-          </div>
-        </div>
-
-        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
-          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-key"></i> Clave Activa de Certificados</h3>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <input type="text" id="owner-cert-key-input" class="input-pass" placeholder="Nueva Clave Certificados" style="flex:1; margin:0;">
-            <button class="btn" style="width:auto; margin:0; background:#d97706;" onclick="actualizarClaveCertificado()">Cambiar Clave</button>
-          </div>
-        </div>
-
-        <!-- ACTUALIZAR LEADERBOARDS POR MÓDULO -->
-        <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155;">
-          <h3 style="color:#f8fafc; margin-bottom:1rem;"><i class="fa-solid fa-folder-open"></i> Actualizar Leaderboards por Módulo (1 al 9)</h3>
-          
-          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
-            <button class="tab-btn active" onclick="seleccionarModuloOwner(1, this)">Módulo 1</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(2, this)">Módulo 2</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(3, this)">Módulo 3</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(4, this)">Módulo 4</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(5, this)">Módulo 5</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(6, this)">Módulo 6</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(7, this)">Módulo 7</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(8, this)">Módulo 8</button>
-            <button class="tab-btn" onclick="seleccionarModuloOwner(9, this)">Módulo 9</button>
-          </div>
-
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:10px;">
-            <select id="lb-owner-lvl" class="input-pass" style="margin:0;">
-              <option value="A1">Nivel A1</option><option value="A2">Nivel A2</option><option value="B1">Nivel B1</option>
-              <option value="B2">Nivel B2</option><option value="C1">Nivel C1</option><option value="C2">Nivel C2</option>
-            </select>
-            <select id="lb-owner-pos" class="input-pass" style="margin:0;">
-              <option value="1">Top 1 (🥇)</option><option value="2">Top 2 (🥈)</option><option value="3">Top 3 (🥉)</option>
-            </select>
-          </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <input type="text" id="lb-student-name" placeholder="Nombre Estudiante" class="input-pass" style="flex:1; margin:0;">
-            <input type="number" id="lb-student-score" placeholder="Puntos" class="input-pass" style="width:120px; margin:0;">
-            <button class="btn" style="width:auto; margin:0;" onclick="actualizarLeaderboardOwner()">Guardar en Leaderboard</button>
-          </div>
-        </div>
       </div>
     </div>
 
   </div>
 
-  <!-- MODALS LOGINS Y PERFIL -->
-  <div class="modal-overlay" id="loginProfesorModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Profesor</h3><input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Profesor"><button class="btn" onclick="loginProfesor()">Entrar</button><button class="btn" style="background:#334155; margin-top:8px;" onclick="document.getElementById('loginProfesorModal').style.display='none'">Cancelar</button></div></div>
-  <div class="modal-overlay" id="loginOwnerModal"><div class="modal-card" style="max-width:380px; text-align:center;"><h3>Login Owner</h3><input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner"><button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button><button class="btn" style="background:#334155; margin-top:8px;" onclick="document.getElementById('loginOwnerModal').style.display='none'">Cancelar</button></div></div>
+  <!-- MODALS -->
+  <div class="modal-overlay" id="loginProfesorModal">
+    <div class="modal-card" style="max-width:400px; text-align:center;">
+      <h3>Acceso Profesores</h3>
+      <div style="margin-top:10px; text-align:left;">
+        <label style="font-size:0.85rem;">Nombre y Apellido (Primera vez):</label>
+        <input type="text" id="prof-fullname-input" class="input-pass" placeholder="Ej: Carlos Mendoza" style="margin-bottom:10px;">
+      </div>
+      <input type="password" id="prof-pass-input" class="input-pass" placeholder="Clave Docente">
+      <button class="btn" onclick="loginProfesor()">Entrar al Panel</button>
+      <button class="btn" style="background:#334155; margin-top:8px;" onclick="cerrarModales()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="loginCustomModal">
+    <div class="modal-card" style="max-width:380px; text-align:center;">
+      <h3>Clases Personalizadas VIP</h3>
+      <p style="font-size:0.85rem; color:#94a3b8; margin-top:5px;">Ingresa la clave de acceso para Clases Personalizadas:</p>
+      <input type="password" id="custom-pass-input" class="input-pass" placeholder="Clave Clases Personalizadas">
+      <button class="btn" style="background:#0284c7;" onclick="verificarLoginCustom()">Ingresar</button>
+      <button class="btn" style="background:#334155; margin-top:8px;" onclick="cerrarModales()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="loginOwnerModal">
+    <div class="modal-card" style="max-width:380px; text-align:center;">
+      <h3>Login Owner Supremo</h3>
+      <input type="password" id="owner-pass-input" class="input-pass" placeholder="Clave Owner">
+      <button class="btn" style="background:#d97706;" onclick="loginOwner()">Entrar</button>
+      <button class="btn" style="background:#334155; margin-top:8px;" onclick="cerrarModales()">Cancelar</button>
+    </div>
+  </div>
 
   <!-- MODAL CONFIGURAR PERFIL -->
   <div class="modal-overlay" id="configPerfilModal">
@@ -419,10 +459,10 @@
       <input type="text" id="input-edit-name" class="input-pass" placeholder="Tu nombre" style="margin-top:4px; margin-bottom:12px;">
       <label style="font-weight:600; font-size:0.9rem;">Descripción Personal / Nivel:</label>
       <input type="text" id="input-edit-desc" class="input-pass" placeholder="Ej: Estudiante avanzado" style="margin-top:4px; margin-bottom:12px;">
-      <label style="font-weight:600; font-size:0.9rem;">Subir Foto de Perfil:</label>
+      <label style="font-weight:600; font-size:0.9rem;">Foto de Perfil:</label>
       <input type="file" id="input-edit-photo" accept="image/*" class="input-pass" style="margin-top:4px; margin-bottom:20px; background:#0f172a; padding:0.5rem;">
       <button class="btn" onclick="guardarPerfilEstudiante()">Guardar Cambios</button>
-      <button class="btn" style="background:#334155; margin-top:8px;" onclick="document.getElementById('configPerfilModal').style.display='none'">Cancelar</button>
+      <button class="btn" style="background:#334155; margin-top:8px;" onclick="cerrarModales()">Cancelar</button>
     </div>
   </div>
 
@@ -438,7 +478,21 @@
   </div>
 
   <script>
-    // FUNCIÓN PARA QUITAR EL SPLASH DE FORMA SEGURA (CON BOTÓN O AUTOMÁTICO A LOS 5 SEGUNDOS)
+    // CONTROL Y CONFIGURACIÓN DE CLAVES E HISTORIAL
+    let claveOwnerGlobal = localStorage.getItem('claveOwnerGlobal') || "OWNER2026";
+    let claveProfesorGlobal = localStorage.getItem('claveProfesorGlobal') || "PROFESOR2026";
+    let claveCustomGlobal = localStorage.getItem('claveCustomGlobal') || "CUSTOM2026";
+    
+    let listaProfesores = JSON.parse(localStorage.getItem('listaProfesores') || '[]');
+    let modulosInhabilitados = JSON.parse(localStorage.getItem('modulosInhabilitados') || '{}');
+    let datosClasesNormales = JSON.parse(localStorage.getItem('datosClasesNormales') || '{}');
+    let datosClasesCustom = JSON.parse(localStorage.getItem('datosClasesCustom') || '{}');
+    let profesorActualLogueado = null;
+
+    const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
+    let leaderboardDatos = {};
+    let timerInterval = null;
+
     function quitarSplash() {
       const splash = document.getElementById('welcome-splash');
       if(splash && splash.style.display !== 'none') {
@@ -447,42 +501,46 @@
       }
     }
 
-    window.addEventListener('load', () => {
-      setTimeout(quitarSplash, 5000);
-    });
-
-    const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
-    let datosClases = {}; 
-    let leaderboardDatos = {};
-    let moduloOwnerSeleccionado = 1;
-    let claveCertificadoOwner = "CERT-OWNER-2026";
-    let profesorBloqueado = false;
-    let timerInterval = null;
-    let perfilUsuario = { nombre: "Estudiante Liroy", desc: "Nivel A1 (Básico Initial)" };
+    window.addEventListener('load', () => { setTimeout(quitarSplash, 5000); });
 
     window.addEventListener('DOMContentLoaded', () => {
-      renderizarModulos();
+      renderizarModulosNormales();
+      renderizarModulosCustom();
       renderizarLeaderboards();
       cargarPerfil();
     });
 
-    function renderizarModulos() {
+    function cerrarModales() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+    }
+
+    function cambiarPortal(p) {
+      document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(`portal-${p}`).classList.add('active');
+    }
+
+    // RENDER DE MÓDULOS NORMALES
+    function renderizarModulosNormales() {
       const container = document.getElementById('modulesContainer');
       if(!container) return;
       container.innerHTML = '';
       for (let m = 1; m <= 9; m++) {
+        if(modulosInhabilitados[m]) {
+          container.innerHTML += `<div class="folder-card" style="opacity:0.5; padding:1rem; text-align:center;"><i class="fa-solid fa-lock"></i> Módulo ${m} - Inhabilitado por el Owner</div>`;
+          continue;
+        }
         let html = `<div class="folder-card"><div class="folder-header" onclick="toggleFolder('mod${m}')"><span><i class="fa-solid fa-folder"></i> Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="folder-content" id="mod${m}">`;
         niveles.forEach(lvl => {
           const key = `${m}-${lvl}`;
-          const conf = datosClases[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', videoName: '' };
+          const conf = datosClasesNormales[key] || { pass: `MOD${m}-${lvl}`, meet: 'https://meet.google.com/', videoName: '' };
           html += `
             <div class="classroom-box">
               <h4>Nivel ${lvl}</h4>
-              <input type="password" id="pass-${key}" class="input-pass" placeholder="Clave de Clase">
-              <button class="btn" onclick="verificarClase(${m}, '${lvl}')">Ingresar a Clase</button>
-              <div id="content-${key}" style="display:none; margin-top:10px;">
+              <input type="password" id="pass-normal-${key}" class="input-pass" placeholder="Clave de Clase">
+              <button class="btn" onclick="verificarClase('normal', ${m}, '${lvl}')">Ingresar a Clase</button>
+              <div id="content-normal-${key}" style="display:none; margin-top:10px;">
                 <a href="${conf.meet}" target="_blank" class="btn">Entrar a Meet</a>
-                <button class="btn btn-history" onclick="verHistorial('${key}')">📺 Historial de Clases</button>
+                <button class="btn btn-history" onclick="verHistorial('normal', '${key}')">📺 Historial de Clases</button>
               </div>
             </div>`;
         });
@@ -490,6 +548,390 @@
         container.innerHTML += html;
       }
     }
+
+    // RENDER DE MÓDULOS DE CLASES PERSONALIZADAS (SIN LEADERBOARD)
+    function renderizarModulosCustom() {
+      const container = document.getElementById('customModulesContainer');
+      if(!container) return;
+      container.innerHTML = '';
+      for (let m = 1; m <= 9; m++) {
+        let html = `<div class="folder-card"><div class="folder-header" onclick="toggleFolder('custom-mod${m}')"><span><i class="fa-solid fa-star"></i> Módulo Personalizado ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="folder-content" id="custom-mod${m}">`;
+        niveles.forEach(lvl => {
+          const key = `${m}-${lvl}`;
+          const conf = datosClasesCustom[key] || { pass: `CUSTOM-${m}-${lvl}`, meet: 'https://meet.google.com/', videoName: '' };
+          html += `
+            <div class="classroom-box">
+              <h4>Nivel VIP ${lvl}</h4>
+              <input type="password" id="pass-custom-${key}" class="input-pass" placeholder="Clave VIP">
+              <button class="btn" style="background:#0284c7;" onclick="verificarClase('custom', ${m}, '${lvl}')">Ingresar a Clase VIP</button>
+              <div id="content-custom-${key}" style="display:none; margin-top:10px;">
+                <a href="${conf.meet}" target="_blank" class="btn">Entrar a Meet VIP</a>
+                <button class="btn btn-history" onclick="verHistorial('custom', '${key}')">📺 Historial Clase VIP</button>
+              </div>
+            </div>`;
+        });
+        html += `</div></div>`;
+        container.innerHTML += html;
+      }
+    }
+
+    function toggleFolder(id) { document.getElementById(id).classList.toggle('open'); }
+
+    function abrirAccesoClasesPersonalizadas() {
+      document.getElementById('loginCustomModal').style.display = 'flex';
+    }
+
+    function verificarLoginCustom() {
+      if(document.getElementById('custom-pass-input').value === claveCustomGlobal) {
+        cerrarModales();
+        cambiarPortal('personalizadas');
+      } else alert('Clave de Clases Personalizadas incorrecta.');
+    }
+
+    function verificarClase(tipo, m, lvl) {
+      const key = `${m}-${lvl}`;
+      const pool = tipo === 'normal' ? datosClasesNormales : datosClasesCustom;
+      const conf = pool[key] || { pass: tipo === 'normal' ? `MOD${m}-${lvl}` : `CUSTOM-${m}-${lvl}` };
+      const inputVal = document.getElementById(`pass-${tipo}-${key}`).value;
+      if(inputVal === conf.pass) {
+        document.getElementById(`content-${tipo}-${key}`).style.display = 'block';
+        alert('¡Acceso concedido!');
+      } else alert('Contraseña de clase incorrecta.');
+    }
+
+    function verHistorial(tipo, key) {
+      const pool = tipo === 'normal' ? datosClasesNormales : datosClasesCustom;
+      const conf = pool[key];
+      if(conf && conf.videoName) alert(`📺 Historial de Clase Grabada (${key}):\nArchivo: ${conf.videoName}`);
+      else alert('Aún no hay clases grabadas publicadas en este nivel.');
+    }
+
+    // LOGIN PROFESORES Y REGISTRO DE NOMBRE Y APELLIDO
+    function abrirLoginProfesor() {
+      document.getElementById('loginProfesorModal').style.display = 'flex';
+    }
+
+    function loginProfesor() {
+      const pass = document.getElementById('prof-pass-input').value;
+      const nombreInput = document.getElementById('prof-fullname-input').value.trim();
+
+      if(pass !== claveProfesorGlobal) {
+        alert('Clave de Profesor incorrecta.');
+        return;
+      }
+
+      let profObj = listaProfesores.find(p => p.nombre.toLowerCase() === nombreInput.toLowerCase());
+      if(!profObj) {
+        if(!nombreInput) {
+          alert('Debes escribir tu Nombre y Apellido para registrarte como Profesor.');
+          return;
+        }
+        profObj = { id: Date.now(), nombre: nombreInput, activo: true, permisoCustom: false };
+        listaProfesores.push(profObj);
+        localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores));
+      }
+
+      if(!profObj.activo) {
+        alert('⛔ Tu acceso como profesor ha sido INHABILITADO por el Owner.');
+        return;
+      }
+
+      profesorActualLogueado = profObj;
+      cerrarModales();
+      cambiarPortal('profesores');
+    }
+
+    function guardarClaveClase() {
+      const target = document.getElementById('teacher-target-type').value;
+      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) {
+        alert('⛔ No tienes permiso del Owner para editar Clases Personalizadas.');
+        return;
+      }
+      const m = document.getElementById('teacher-mod-select').value;
+      const lvl = document.getElementById('teacher-lvl-select').value;
+      const key = `${m}-${lvl}`;
+      const newPass = document.getElementById('teacher-mod-pass').value;
+
+      if(target === 'normal') {
+        if(!datosClasesNormales[key]) datosClasesNormales[key] = {};
+        datosClasesNormales[key].pass = newPass;
+        localStorage.setItem('datosClasesNormales', JSON.stringify(datosClasesNormales));
+        renderizarModulosNormales();
+      } else {
+        if(!datosClasesCustom[key]) datosClasesCustom[key] = {};
+        datosClasesCustom[key].pass = newPass;
+        localStorage.setItem('datosClasesCustom', JSON.stringify(datosClasesCustom));
+        renderizarModulosCustom();
+      }
+      alert(`¡Contraseña guardada para Módulo ${m} - Nivel ${lvl}!`);
+    }
+
+    function guardarMeetClase() {
+      const target = document.getElementById('teacher-target-type').value;
+      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) {
+        alert('⛔ No tienes permiso del Owner para editar Clases Personalizadas.');
+        return;
+      }
+      const m = document.getElementById('teacher-mod-select').value;
+      const lvl = document.getElementById('teacher-lvl-select').value;
+      const key = `${m}-${lvl}`;
+      const meetUrl = document.getElementById('teacher-meet-url').value;
+
+      if(target === 'normal') {
+        if(!datosClasesNormales[key]) datosClasesNormales[key] = {};
+        datosClasesNormales[key].meet = meetUrl;
+        localStorage.setItem('datosClasesNormales', JSON.stringify(datosClasesNormales));
+        renderizarModulosNormales();
+      } else {
+        if(!datosClasesCustom[key]) datosClasesCustom[key] = {};
+        datosClasesCustom[key].meet = meetUrl;
+        localStorage.setItem('datosClasesCustom', JSON.stringify(datosClasesCustom));
+        renderizarModulosCustom();
+      }
+      alert(`¡Link de Meet guardado!`);
+    }
+
+    function subirVideoHistorialArchivo() {
+      const target = document.getElementById('teacher-target-type').value;
+      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) {
+        alert('⛔ No tienes permiso del Owner para editar Clases Personalizadas.');
+        return;
+      }
+      const m = document.getElementById('teacher-mod-select').value;
+      const lvl = document.getElementById('teacher-lvl-select').value;
+      const key = `${m}-${lvl}`;
+      const fileInput = document.getElementById('teacher-class-file');
+
+      if(fileInput.files && fileInput.files[0]) {
+        const vName = fileInput.files[0].name;
+        if(target === 'normal') {
+          if(!datosClasesNormales[key]) datosClasesNormales[key] = {};
+          datosClasesNormales[key].videoName = vName;
+          localStorage.setItem('datosClasesNormales', JSON.stringify(datosClasesNormales));
+        } else {
+          if(!datosClasesCustom[key]) datosClasesCustom[key] = {};
+          datosClasesCustom[key].videoName = vName;
+          localStorage.setItem('datosClasesCustom', JSON.stringify(datosClasesCustom));
+        }
+        alert(`¡Video "${vName}" publicado en el Historial!`);
+      } else alert('Selecciona un archivo de video.');
+    }
+
+    // PANEL OWNER ACCIONES
+    function abrirLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'flex'; }
+    function loginOwner() {
+      if(document.getElementById('owner-pass-input').value === claveOwnerGlobal) {
+        cerrarModales();
+        actualizarVistaOwner();
+        cambiarPortal('owner');
+      } else alert('Clave de Owner incorrecta.');
+    }
+
+    function actualizarVistaOwner() {
+      const pList = document.getElementById('owner-professors-list');
+      const pSelect = document.getElementById('select-prof-custom-permission');
+      pList.innerHTML = ''; pSelect.innerHTML = '';
+
+      if(listaProfesores.length === 0) {
+        pList.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No hay profesores registrados en el sistema.</p>';
+      } else {
+        listaProfesores.forEach(p => {
+          pList.innerHTML += `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:8px 12px; border-radius:8px;">
+              <span><strong>${p.nombre}</strong> (${p.activo ? '✅ Activo' : '❌ Inhabilitado'}) ${p.permisoCustom ? '⭐ Permiso Custom' : ''}</span>
+              <button class="btn" style="width:auto; margin:0; padding:4px 10px; background:${p.activo ? '#dc2626' : '#16a34a'};" onclick="toggleEstadoProfesor(${p.id})">
+                ${p.activo ? 'Inhabilitar' : 'Habilitar'}
+              </button>
+            </div>`;
+          pSelect.innerHTML += `<option value="${p.id}">${p.nombre}</option>`;
+        });
+      }
+
+      const gridMod = document.getElementById('owner-modules-toggle-grid');
+      gridMod.innerHTML = '';
+      for(let m=1; m<=9; m++) {
+        const isOff = modulosInhabilitados[m];
+        gridMod.innerHTML += `
+          <button class="btn" style="margin:0; background:${isOff ? '#dc2626' : '#16a34a'};" onclick="toggleModuloOwner(${m})">
+            Módulo ${m}: ${isOff ? 'OFF' : 'ON'}
+          </button>`;
+      }
+    }
+
+    function toggleEstadoProfesor(id) {
+      let p = listaProfesores.find(x => x.id === id);
+      if(p) {
+        p.activo = !p.activo;
+        localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores));
+        actualizarVistaOwner();
+      }
+    }
+
+    function autorizarProfesorCustom() {
+      const id = parseInt(document.getElementById('select-prof-custom-permission').value);
+      let p = listaProfesores.find(x => x.id === id);
+      if(p) {
+        p.permisoCustom = !p.permisoCustom;
+        localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores));
+        actualizarVistaOwner();
+        alert(`Permiso de Clases Personalizadas actualizado para ${p.nombre}.`);
+      }
+    }
+
+    function cambiarClaveOwner() {
+      const v = document.getElementById('input-new-owner-pass').value;
+      if(v) { claveOwnerGlobal = v; localStorage.setItem('claveOwnerGlobal', v); alert('¡Clave Owner actualizada!'); }
+    }
+    function cambiarClaveProfesorGlobal() {
+      const v = document.getElementById('input-new-prof-pass').value;
+      if(v) { claveProfesorGlobal = v; localStorage.setItem('claveProfesorGlobal', v); alert('¡Clave General de Profesores actualizada!'); }
+    }
+    function cambiarClaveCustomGlobal() {
+      const v = document.getElementById('input-new-custom-pass').value;
+      if(v) { claveCustomGlobal = v; localStorage.setItem('claveCustomGlobal', v); alert('¡Clave de Clases Personalizadas actualizada!'); }
+    }
+
+    function toggleModuloOwner(m) {
+      modulosInhabilitados[m] = !modulosInhabilitados[m];
+      localStorage.setItem('modulosInhabilitados', JSON.stringify(modulosInhabilitados));
+      actualizarVistaOwner();
+      renderizarModulosNormales();
+    }
+
+    // SPEAKING ZONE: ENVÍO DIRECTO A TU WHATSAPP PRIVADO (+584125952360)
+    function enviarMensajeWhatsAppDirecto() {
+      const text = document.getElementById('speaking-text-msg').value;
+      if(!text) { alert('Por favor escribe tu mensaje o tarea primero.'); return; }
+      const miNumeroWhatsApp = "584125952360";
+      const url = `https://api.whatsapp.com/send?phone=${miNumeroWhatsApp}&text=${encodeURIComponent('Hola Owner, te envío mi mensaje desde el Speaking Zone:\n\n' + text)}`;
+      window.open(url, '_blank');
+    }
+
+    // PERFIL DE USUARIO PERMANENTE
+    function cargarPerfil() {
+      const savedPerfil = JSON.parse(localStorage.getItem('perfilUsuarioLocal') || 'null');
+      if(savedPerfil) {
+        document.getElementById('profile-name-display').innerText = savedPerfil.nombre;
+        document.getElementById('profile-desc-display').innerText = savedPerfil.desc;
+        document.getElementById('profile-initial').innerText = savedPerfil.nombre.charAt(0).toUpperCase();
+        if(savedPerfil.photo) {
+          document.getElementById('profile-photo-container').innerHTML = `<img src="${savedPerfil.photo}" style="width:100%; height:100%; object-fit:cover;">`;
+        }
+      }
+      let score = parseInt(localStorage.getItem('user_quiz_score') || '0');
+      document.getElementById('profile-score-quiz').innerText = `${score} / 24 Puntos`;
+      let lvl = "Nivel A1 (Básico Initial)";
+      if(score >= 18) lvl = "Nivel C1 - C2 (Avanzado)";
+      else if(score >= 10) lvl = "Nivel B1 - B2 (Intermedio)";
+      document.getElementById('profile-level-tag').innerText = lvl;
+    }
+
+    function abrirConfigPerfil() {
+      document.getElementById('configPerfilModal').style.display = 'flex';
+    }
+
+    function guardarPerfilEstudiante() {
+      const name = document.getElementById('input-edit-name').value;
+      const desc = document.getElementById('input-edit-desc').value;
+      const photoInput = document.getElementById('input-edit-photo');
+
+      let currentPerfil = JSON.parse(localStorage.getItem('perfilUsuarioLocal') || '{"nombre":"Estudiante Liroy","desc":"Nivel A1"}');
+      if(name) currentPerfil.nombre = name;
+      if(desc) currentPerfil.desc = desc;
+
+      if(photoInput.files && photoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          currentPerfil.photo = e.target.result;
+          localStorage.setItem('perfilUsuarioLocal', JSON.stringify(currentPerfil));
+          cargarPerfil();
+        };
+        reader.readAsDataURL(photoInput.files[0]);
+      } else {
+        localStorage.setItem('perfilUsuarioLocal', JSON.stringify(currentPerfil));
+        cargarPerfil();
+      }
+      cerrarModales();
+      alert('¡Perfil guardado con éxito!');
+    }
+
+    // SISTEMA DE QUIZZES CON ALEATORIEDAD COMPLETA (PREGUNTAS Y OPCIONES MEZCLADAS)
+    const bancoPreguntasBase = [
+      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
+      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
+      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "An antes de vocal." },
+      { q: "4. Opuesto de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "Small es pequeño." },
+      { q: "5. 'If I ___ time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Pasado simple en condicional II." },
+      { q: "6. 'She has been working here ___ 2020.'", options: ["since", "for", "during"], correct: "since", reason: "Since para punto de inicio." },
+      { q: "7. 'The report ___ by the manager.'", options: ["was written", "wrote", "is written"], correct: "was written", reason: "Voz pasiva en pasado." },
+      { q: "8. 'He studied, ___ he passed.'", options: ["therefore", "because", "although"], correct: "therefore", reason: "Conector de consecuencia." },
+      { q: "9. 'Hardly ___ entered when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión por adverbio negativo." },
+      { q: "10. 'Seldom ___ such a show.'", options: ["have I seen", "I saw", "saw I"], correct: "have I seen", reason: "Inversión formal." },
+      { q: "11. 'Were it not for you, I ___ in time.'", options: ["wouldn't have finished", "finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional invertido." },
+      { q: "12. 'To bite the bullet':", options: ["Face a tough situation", "Delay", "Get angry"], correct: "Face a tough situation", reason: "Afrontar algo difícil." }
+    ];
+
+    let preguntasPartida = [];
+    let indice = 0, scoreActual = 0;
+
+    function mezclarArray(array) {
+      let arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function iniciarQuiz() {
+      // Mezcla las preguntas y mezcla las opciones de cada pregunta al azar
+      preguntasPartida = mezclarArray(bancoPreguntasBase).map(p => {
+        return {
+          ...p,
+          optionsShuffled: mezclarArray(p.options)
+        };
+      });
+      indice = 0; scoreActual = 0;
+      document.getElementById('quizModal').style.display = 'flex';
+      mostrarQ();
+    }
+
+    function mostrarQ() {
+      document.getElementById('feedbackBox').style.display = 'none';
+      document.getElementById('btnNextQuestion').style.display = 'none';
+
+      if(indice >= preguntasPartida.length) {
+        let prev = parseInt(localStorage.getItem('user_quiz_score') || '0');
+        let totalAcumulado = Math.min(24, prev + scoreActual);
+        localStorage.setItem('user_quiz_score', totalAcumulado);
+        cargarPerfil();
+        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:#f8fafc;">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
+        return;
+      }
+
+      const q = preguntasPartida[indice];
+      document.getElementById('quizProgress').innerText = `Pregunta ${indice + 1} de ${preguntasPartida.length}`;
+      document.getElementById('questionText').innerText = q.q;
+      const c = document.getElementById('optionsContainer'); c.innerHTML = '';
+
+      q.optionsShuffled.forEach(opt => {
+        const b = document.createElement('button'); b.className = 'option-btn'; b.innerText = opt;
+        b.onclick = () => {
+          document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+          const fb = document.getElementById('feedbackBox');
+          if(opt === q.correct) {
+            scoreActual++;
+            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Felicidades, Respuesta Correcta! 🎉</strong><br>${q.reason}`;
+          } else {
+            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>Correcta: ${q.correct}. ${q.reason}`;
+          }
+          fb.style.display = 'block'; document.getElementById('btnNextQuestion').style.display = 'block';
+        };
+        c.appendChild(b);
+      });
+    }
+
+    function siguientePregunta() { indice++; mostrarQ(); }
 
     function renderizarLeaderboards() {
       const container = document.getElementById('leaderboardsFoldersContainer');
@@ -516,135 +958,6 @@
       }
     }
 
-    function toggleFolder(id) { document.getElementById(id).classList.toggle('open'); }
-    function cambiarPortal(p) {
-      document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
-      document.getElementById(`portal-${p}`).classList.add('active');
-    }
-
-    function abrirLoginProfesor() { 
-      if(profesorBloqueado) {
-        alert('❌ Este acceso de profesor ha sido INHABILITADO por el Owner.');
-        return;
-      }
-      document.getElementById('loginProfesorModal').style.display = 'flex'; 
-    }
-    function abrirLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'flex'; }
-    function loginProfesor() { 
-      if(profesorBloqueado) {
-        alert('❌ Tu usuario ha sido inhabilitado por el Owner.');
-        return;
-      }
-      if(document.getElementById('prof-pass-input').value === "PROFESOR2026") { 
-        document.getElementById('loginProfesorModal').style.display = 'none'; 
-        cambiarPortal('profesores'); 
-      } else alert('Clave incorrecta'); 
-    }
-    function loginOwner() { if(document.getElementById('owner-pass-input').value === "OWNER2026") { document.getElementById('loginOwnerModal').style.display = 'none'; cambiarPortal('owner'); } else alert('Clave incorrecta'); }
-
-    function inhabilitarProfesorSeleccionado() {
-      const select = document.getElementById('owner-prof-select-list');
-      const profNombre = select.value;
-      profesorBloqueado = true;
-      alert(`⛔ ¡${profNombre} ha sido INHABILITADO! Se le han revocado todos los permisos y no podrá ingresar a la plataforma.`);
-    }
-
-    function guardarClaveClase() {
-      const m = document.getElementById('teacher-mod-select').value;
-      const lvl = document.getElementById('teacher-lvl-select').value;
-      const key = `${m}-${lvl}`;
-      if(!datosClases[key]) datosClases[key] = {};
-      datosClases[key].pass = document.getElementById('teacher-mod-pass').value;
-      alert(`¡Contraseña guardada para Módulo ${m} - Nivel ${lvl}!`);
-    }
-
-    function guardarMeetClase() {
-      const m = document.getElementById('teacher-mod-select').value;
-      const lvl = document.getElementById('teacher-lvl-select').value;
-      const key = `${m}-${lvl}`;
-      if(!datosClases[key]) datosClases[key] = {};
-      datosClases[key].meet = document.getElementById('teacher-meet-url').value;
-      renderizarModulos();
-      alert(`¡Link de Meet guardado para Módulo ${m} - Nivel ${lvl}!`);
-    }
-
-    function subirVideoHistorialArchivo() {
-      const m = document.getElementById('teacher-mod-select').value;
-      const lvl = document.getElementById('teacher-lvl-select').value;
-      const key = `${m}-${lvl}`;
-      const fileInput = document.getElementById('teacher-class-file');
-      if(fileInput.files && fileInput.files[0]) {
-        if(!datosClases[key]) datosClases[key] = {};
-        datosClases[key].videoName = fileInput.files[0].name;
-        alert(`¡Video "${fileInput.files[0].name}" publicado correctamente en el Historial del Módulo ${m} - Nivel ${lvl}!`);
-      } else {
-        alert('Por favor selecciona un archivo de video de tu galería.');
-      }
-    }
-
-    function verificarClase(m, lvl) {
-      const key = `${m}-${lvl}`;
-      const conf = datosClases[key] || { pass: `MOD${m}-${lvl}` };
-      if(document.getElementById(`pass-${key}`).value === conf.pass) {
-        document.getElementById(`content-${key}`).style.display = 'block';
-        alert('¡Acceso concedido a la clase!');
-      } else alert('Contraseña de clase incorrecta.');
-    }
-
-    function verHistorial(key) {
-      const conf = datosClases[key];
-      if(conf && conf.videoName) alert(`📺 Historial de Clase Grabada (${key}):\nArchivo: ${conf.videoName}`);
-      else alert('Aún no hay clases grabadas publicadas en este nivel.');
-    }
-
-    function seleccionarModuloOwner(modNum, btnEl) {
-      moduloOwnerSeleccionado = modNum;
-      document.querySelectorAll('#portal-owner .tab-btn').forEach(b => b.classList.remove('active'));
-      if(btnEl) btnEl.classList.add('active');
-    }
-
-    function actualizarLeaderboardOwner() {
-      const lvl = document.getElementById('lb-owner-lvl').value;
-      const pos = document.getElementById('lb-owner-pos').value;
-      const name = document.getElementById('lb-student-name').value;
-      const score = document.getElementById('lb-student-score').value;
-      if(name && score) {
-        leaderboardDatos[`${moduloOwnerSeleccionado}-${lvl}-${pos}`] = { name, score };
-        renderizarLeaderboards();
-        alert(`¡Leaderboard del Módulo ${moduloOwnerSeleccionado} (${lvl}) actualizada con éxito!`);
-      } else {
-        alert('Ingresa el nombre y los puntos.');
-      }
-    }
-
-    function abrirConfigPerfil() {
-      document.getElementById('input-edit-name').value = perfilUsuario.nombre;
-      document.getElementById('input-edit-desc').value = perfilUsuario.desc;
-      document.getElementById('configPerfilModal').style.display = 'flex';
-    }
-
-    function guardarPerfilEstudiante() {
-      const name = document.getElementById('input-edit-name').value;
-      const desc = document.getElementById('input-edit-desc').value;
-      const photoInput = document.getElementById('input-edit-photo');
-      if(name) perfilUsuario.nombre = name;
-      if(desc) perfilUsuario.desc = desc;
-
-      document.getElementById('profile-name-display').innerText = perfilUsuario.nombre;
-      document.getElementById('profile-desc-display').innerText = perfilUsuario.desc;
-      document.getElementById('profile-initial').innerText = perfilUsuario.nombre.charAt(0).toUpperCase();
-
-      if(photoInput.files && photoInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          document.getElementById('profile-photo-container').innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
-        };
-        reader.readAsDataURL(photoInput.files[0]);
-      }
-      document.getElementById('configPerfilModal').style.display = 'none';
-      alert('¡Perfil actualizado con éxito!');
-    }
-
     function iniciarContador() {
       if(timerInterval) clearInterval(timerInterval);
       const d = parseInt(document.getElementById('owner-timer-days-input').value) || 7;
@@ -664,92 +977,17 @@
       alert('Contador detenido.');
     }
 
-    function actualizarClaveCertificado() { 
-      claveCertificadoOwner = document.getElementById('owner-cert-key-input').value; 
-      alert('¡Clave de certificados actualizada!'); 
-    }
-
-    function procesarCertificado() {
-      if(document.getElementById('cert-code-input').value === claveCertificadoOwner) {
-        document.getElementById('cert-announcement-box').style.display = 'block';
-      } else alert('Clave de certificado inválida.');
-    }
-
-    // BANCO PREGUNTAS Y SISTEMA ACUMULATIVO 24 PTS
-    const bancoPreguntas = [
-      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
-      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
-      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "An antes de vocal." },
-      { q: "4. Opuesto de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "Small es pequeño." },
-      { q: "5. 'If I ___ time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Pasado simple en condicional II." },
-      { q: "6. 'She has been working here ___ 2020.'", options: ["since", "for", "during"], correct: "since", reason: "Since para punto de inicio." },
-      { q: "7. 'The report ___ by the manager.'", options: ["was written", "wrote", "is written"], correct: "was written", reason: "Voz pasiva en pasado." },
-      { q: "8. 'He studied, ___ he passed.'", options: ["therefore", "because", "although"], correct: "therefore", reason: "Conector de consecuencia." },
-      { q: "9. 'Hardly ___ entered when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión por adverbio negativo." },
-      { q: "10. 'Seldom ___ such a show.'", options: ["have I seen", "I saw", "saw I"], correct: "have I seen", reason: "Inversión formal." },
-      { q: "11. 'Were it not for you, I ___ in time.'", options: ["wouldn't have finished", "finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional invertido." },
-      { q: "12. 'To bite the bullet':", options: ["Face a tough situation", "Delay", "Get angry"], correct: "Face a tough situation", reason: "Afrontar algo difícil." }
-    ];
-
-    let indice = 0, scoreActual = 0;
-    function iniciarQuiz() {
-      indice = 0; scoreActual = 0;
-      document.getElementById('quizModal').style.display = 'flex';
-      mostrarQ();
-    }
-
-    function mostrarQ() {
-      document.getElementById('feedbackBox').style.display = 'none';
-      document.getElementById('btnNextQuestion').style.display = 'none';
-      if(indice >= bancoPreguntas.length) {
-        let prev = parseInt(localStorage.getItem('user_quiz_score') || '0');
-        let totalAcumulado = Math.min(24, prev + scoreActual);
-        localStorage.setItem('user_quiz_score', totalAcumulado);
-        cargarPerfil();
-        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:#f8fafc;">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
-        return;
-      }
-      const q = bancoPreguntas[indice];
-      document.getElementById('quizProgress').innerText = `Pregunta ${indice + 1} de 12`;
-      document.getElementById('questionText').innerText = q.q;
-      const c = document.getElementById('optionsContainer'); c.innerHTML = '';
-      q.options.forEach(opt => {
-        const b = document.createElement('button'); b.className = 'option-btn'; b.innerText = opt;
-        b.onclick = () => {
-          document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
-          const fb = document.getElementById('feedbackBox');
-          if(opt === q.correct) {
-            scoreActual++;
-            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Felicidades, Respuesta Correcta! 🎉</strong><br>${q.reason}`;
-          } else {
-            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>Correcta: ${q.correct}. ${q.reason}`;
-          }
-          fb.style.display = 'block'; document.getElementById('btnNextQuestion').style.display = 'block';
-        };
-        c.appendChild(b);
-      });
-    }
-
-    function siguientePregunta() { indice++; mostrarQ(); }
-    
-    function cargarPerfil() {
-      let score = parseInt(localStorage.getItem('user_quiz_score') || '0');
-      document.getElementById('profile-score-quiz').innerText = `${score} / 24 Puntos`;
-      let lvl = "Nivel A1 (Básico Initial)";
-      if(score >= 18) lvl = "Nivel C1 - C2 (Avanzado)";
-      else if(score >= 10) lvl = "Nivel B1 - B2 (Intermedio)";
-      document.getElementById('profile-level-tag').innerText = lvl;
-      document.getElementById('profile-desc-display').innerText = lvl;
-    }
-
     function actualizarQuizzesEstudiantes() {
       localStorage.setItem('user_quiz_score', '0');
       cargarPerfil();
-      alert('¡Quizzes reseteados/actualizados para remediación por el Owner!');
+      alert('¡Quizzes reseteados con éxito!');
     }
 
-    function enviarTarea(tipo) {
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent('Opinión enviada desde Speaking Zone ('+tipo+'): ' + document.getElementById('speaking-text-msg').value)}`, '_blank');
+    function procesarCertificado() {
+      const code = document.getElementById('cert-code-input').value;
+      if(code === "CERT-OWNER-2026") {
+        document.getElementById('cert-announcement-box').style.display = 'block';
+      } else alert('Clave de certificado inválida.');
     }
   </script>
 </body>
