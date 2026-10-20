@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
 
-    /* ANIMACIÓN DE ENTRADA (SPLASH SCREEN DE 5 SEGUNDOS) */
+    /* ANIMACIÓN DE ENTRADA (SPLASH SCREEN) */
     #welcome-splash {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
@@ -54,7 +54,7 @@
     .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
     .timer-badge { background: rgba(15, 23, 42, 0.85); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
 
-    /* HEADER CON NUEVA PESTAÑA CLASES PERSONALIZADAS AL LADO DE ESTUDIANTES */
+    /* HEADER */
     header {
       background: #090d16; color: white; padding: 1.1rem 2.5rem;
       display: flex; justify-content: space-between; align-items: center;
@@ -158,7 +158,6 @@
     <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Liroy Estudio de Idiomas</div>
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="cambiarPortal('estudiantes')"><i class="fa-solid fa-user-graduate"></i> Estudiantes</button>
-      <!-- BOTÓN CLASES PERSONALIZADAS AL LADO DE ESTUDIANTES -->
       <button class="tab-btn custom-btn" onclick="abrirAccesoClasesPersonalizadas()"><i class="fa-solid fa-user-lock"></i> Clases Personalizadas</button>
       <button class="tab-btn" onclick="cambiarPortal('perfil')"><i class="fa-solid fa-id-card"></i> Mi Perfil</button>
       <button class="tab-btn" onclick="cambiarPortal('speaking')"><i class="fa-solid fa-comments"></i> Speaking Zone</button>
@@ -174,10 +173,10 @@
     <div id="portal-estudiantes" class="portal-section active">
       <section style="margin-bottom: 2.5rem; background: linear-gradient(135deg, #1e293b, #1e3a8a); color: white; padding: 2.2rem; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border: 1px solid #334155;">
         <div>
-          <h3 style="font-size: 1.4rem; margin-bottom: 6px;"><i class="fa-solid fa-clipboard-question"></i> Quiz Evaluativo de Nivel (24 Puntos Totales)</h3>
-          <p style="color: #cbd5e1; font-size: 0.95rem;">Evaluaciones continuas con explicaciones inmediatas y sincronización en vivo a tu perfil.</p>
+          <h3 style="font-size: 1.4rem; margin-bottom: 6px;"><i class="fa-solid fa-clipboard-question"></i> Quiz Evaluativo Dinámico (24 Puntos Totales)</h3>
+          <p style="color: #cbd5e1; font-size: 0.95rem;">Las preguntas y el orden de respuestas cambian aleatoriamente en cada intento.</p>
         </div>
-        <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.8rem 1.8rem;" onclick="iniciarQuiz()"><i class="fa-solid fa-play"></i> Iniciar Quiz</button>
+        <button class="btn" style="background: #f59e0b; color: #0f172a; width: auto; padding: 0.8rem 1.8rem;" onclick="iniciarQuiz()"><i class="fa-solid fa-play"></i> Iniciar Quiz Aleatorio</button>
       </section>
 
       <section>
@@ -209,7 +208,7 @@
       </section>
     </div>
 
-    <!-- NUEVA SECCIÓN: CLASES PERSONALIZADAS (SIN LEADERBOARD) -->
+    <!-- CLASES PERSONALIZADAS -->
     <div id="portal-personalizadas" class="portal-section">
       <div style="background: linear-gradient(135deg, #1e293b, #0369a1); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; border: 1px solid #334155; text-align: center;">
         <h2 style="color: #f8fafc; font-size: 1.8rem;"><i class="fa-solid fa-user-lock"></i> Clases Personalizadas VIP</h2>
@@ -244,13 +243,13 @@
       </div>
     </div>
 
-    <!-- SPEAKING ZONE DIRECTO A TU CHAT DE WHATSAPP -->
+    <!-- SPEAKING ZONE DIRECTO A WHATSAPP PRIVADO -->
     <div id="portal-speaking" class="portal-section">
       <div style="background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; max-width: 750px; margin: auto;">
         <h2 class="section-title"><i class="fa-solid fa-comments"></i> Speaking Zone - Foro de Opinión</h2>
         <div style="background: #0f172a; padding: 1.2rem; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 1.5rem; border: 1px solid #334155;">
           <p style="color: #e2e8f0; font-size: 0.95rem;">
-            <strong>¿Qué se hace aquí?</strong> Escribe tu tarea, duda o práctica hablada aquí. Al tocar el botón, serás redirigido directamente al chat privado de WhatsApp del Owner.
+            <strong>¿Qué se hace aquí?</strong> Escribe tu tarea, duda o mensaje. Al tocar el botón, irás directo al chat de WhatsApp del Owner.
           </p>
         </div>
 
@@ -293,7 +292,7 @@
             Por favor espera <strong>24 horas</strong>. Tu certificado oficial te será emitido.
           </p>
           <div style="background: #0f172a; padding: 1.1rem; border-radius: 10px; border: 2px dashed #d97706; font-size: 0.9rem; color: #f8fafc; text-align: left;">
-            📷 <strong>PASO OBLIGATORIO DE COMPROBACIÓN:</strong> Toma captura de pantalla y envíasela al Owner por WhatsApp.
+            📷 <strong>PASO OBLIGATORIO:</strong> Toma captura de pantalla y envíasela al Owner por WhatsApp.
           </div>
         </div>
       </div>
@@ -305,7 +304,7 @@
         <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> Panel Docente</h2>
         
         <div style="margin-bottom:15px; background:#0f172a; padding:1rem; border-radius:10px; border:1px solid #334155;">
-          <label style="font-weight:700; font-size:0.9rem; color:#f59e0b;">Selecciona qué tipo de clase vas a gestionar:</label>
+          <label style="font-weight:700; font-size:0.9rem; color:#f59e0b;">Selecciona el tipo de clase a gestionar:</label>
           <select id="teacher-target-type" class="input-pass" style="margin-top:5px;">
             <option value="normal">Clases Normales Estándar</option>
             <option value="custom">Clases Personalizadas VIP</option>
@@ -364,7 +363,7 @@
 
         <!-- AUTORIZAR PROFESOR PARA CLASES PERSONALIZADAS -->
         <div style="background:#0f172a; padding:1.5rem; border-radius:12px; border:1px solid #334155; margin-bottom: 2rem;">
-          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-user-check"></i> Dar Acceso a Profesor para Clases Personalizadas</h3>
+          <h3 style="color:#f8fafc; margin-bottom:10px;"><i class="fa-solid fa-user-check"></i> Autorizar Profesor para Clases Personalizadas</h3>
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <select id="select-prof-custom-permission" class="input-pass" style="flex:1; margin:0; text-align:left;"></select>
             <button class="btn" style="width:auto; margin:0; background:#0284c7;" onclick="autorizarProfesorCustom()">Habilitar/Deshabilitar Custom</button>
@@ -478,7 +477,6 @@
   </div>
 
   <script>
-    // CONTROL Y CONFIGURACIÓN DE CLAVES E HISTORIAL
     let claveOwnerGlobal = localStorage.getItem('claveOwnerGlobal') || "OWNER2026";
     let claveProfesorGlobal = localStorage.getItem('claveProfesorGlobal') || "PROFESOR2026";
     let claveCustomGlobal = localStorage.getItem('claveCustomGlobal') || "CUSTOM2026";
@@ -519,7 +517,7 @@
       document.getElementById(`portal-${p}`).classList.add('active');
     }
 
-    // RENDER DE MÓDULOS NORMALES
+    // RENDER MÓDULOS NORMALES
     function renderizarModulosNormales() {
       const container = document.getElementById('modulesContainer');
       if(!container) return;
@@ -549,7 +547,7 @@
       }
     }
 
-    // RENDER DE MÓDULOS DE CLASES PERSONALIZADAS (SIN LEADERBOARD)
+    // RENDER MÓDULOS CLASES PERSONALIZADAS
     function renderizarModulosCustom() {
       const container = document.getElementById('customModulesContainer');
       if(!container) return;
@@ -606,7 +604,7 @@
       else alert('Aún no hay clases grabadas publicadas en este nivel.');
     }
 
-    // LOGIN PROFESORES Y REGISTRO DE NOMBRE Y APELLIDO
+    // LOGIN PROFESORES
     function abrirLoginProfesor() {
       document.getElementById('loginProfesorModal').style.display = 'flex';
     }
@@ -717,7 +715,7 @@
       } else alert('Selecciona un archivo de video.');
     }
 
-    // PANEL OWNER ACCIONES
+    // PANEL OWNER
     function abrirLoginOwner() { document.getElementById('loginOwnerModal').style.display = 'flex'; }
     function loginOwner() {
       if(document.getElementById('owner-pass-input').value === claveOwnerGlobal) {
@@ -798,7 +796,7 @@
       renderizarModulosNormales();
     }
 
-    // SPEAKING ZONE: ENVÍO DIRECTO A TU WHATSAPP PRIVADO (+584125952360)
+    // SPEAKING ZONE WHATSAPP DIRECTO
     function enviarMensajeWhatsAppDirecto() {
       const text = document.getElementById('speaking-text-msg').value;
       if(!text) { alert('Por favor escribe tu mensaje o tarea primero.'); return; }
@@ -855,8 +853,8 @@
       alert('¡Perfil guardado con éxito!');
     }
 
-    // SISTEMA DE QUIZZES CON ALEATORIEDAD COMPLETA (PREGUNTAS Y OPCIONES MEZCLADAS)
-    const bancoPreguntasBase = [
+    // BANCO MASIVO DE PREGUNTAS (AMPLIADO Y TOTALMENTE DINÁMICO)
+    const bancoPreguntasGrande = [
       { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
       { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
       { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "An antes de vocal." },
@@ -868,29 +866,42 @@
       { q: "9. 'Hardly ___ entered when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión por adverbio negativo." },
       { q: "10. 'Seldom ___ such a show.'", options: ["have I seen", "I saw", "saw I"], correct: "have I seen", reason: "Inversión formal." },
       { q: "11. 'Were it not for you, I ___ in time.'", options: ["wouldn't have finished", "finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional invertido." },
-      { q: "12. 'To bite the bullet':", options: ["Face a tough situation", "Delay", "Get angry"], correct: "Face a tough situation", reason: "Afrontar algo difícil." }
+      { q: "12. 'To bite the bullet':", options: ["Face a tough situation", "Delay", "Get angry"], correct: "Face a tough situation", reason: "Afrontar algo difícil." },
+      { q: "13. 'They ___ playing football now.'", options: ["are", "is", "were"], correct: "are", reason: "Presente continuo para 'They'." },
+      { q: "14. 'He is ___ than his brother.'", options: ["taller", "tall", "tallest"], correct: "taller", reason: "Comparativo de superioridad." },
+      { q: "15. 'We have lived here ___ five years.'", options: ["for", "since", "from"], correct: "for", reason: "For para la duración de tiempo." },
+      { q: "16. 'What ___ you do if you win?'", options: ["will", "did", "have"], correct: "will", reason: "Primer condicional futuro." },
+      { q: "17. 'You ___ stop at the red light.'", options: ["must", "might", "could"], correct: "must", reason: "Obligación / Regla de tránsito." },
+      { q: "18. 'This book is ___ than that one.'", options: ["more interesting", "interesting", "most interesting"], correct: "more interesting", reason: "Comparativo de adjetivo largo." },
+      { q: "19. 'I am looking forward to ___ you.'", options: ["seeing", "see", "saw"], correct: "seeing", reason: "'Look forward to' exige gerundio (-ing)." },
+      { q: "20. 'By next year, I ___ my degree.'", options: ["will have finished", "finish", "finished"], correct: "will have finished", reason: "Futuro perfecto para acción completada." }
     ];
 
     let preguntasPartida = [];
     let indice = 0, scoreActual = 0;
 
-    function mezclarArray(array) {
-      let arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
+    // ALGORITMO MEZCLADOR FISHER-YATES
+    function mezclar(arr) {
+      let array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [array[i], array[j]] = [array[j], array[i]];
       }
-      return arr;
+      return array;
     }
 
     function iniciarQuiz() {
-      // Mezcla las preguntas y mezcla las opciones de cada pregunta al azar
-      preguntasPartida = mezclarArray(bancoPreguntasBase).map(p => {
+      // 1. Mezcla todo el banco masivo de preguntas y selecciona 12 al azar
+      let preguntasSeleccionadas = mezclar(bancoPreguntasGrande).slice(0, 12);
+
+      // 2. Mezcla el orden de las respuestas en CADA PREGUNTA individualmente
+      preguntasPartida = preguntasSeleccionadas.map(p => {
         return {
           ...p,
-          optionsShuffled: mezclarArray(p.options)
+          optionsShuffled: mezclar(p.options)
         };
       });
+
       indice = 0; scoreActual = 0;
       document.getElementById('quizModal').style.display = 'flex';
       mostrarQ();
