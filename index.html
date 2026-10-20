@@ -23,23 +23,26 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
 
-    /* ANIMACIÓN DE ENTRADA PROFESIONAL (5 SEGUNDOS EXACTOS) */
+    /* ANIMACIÓN DE ENTRADA CON BOTÓN DE SALTO DE EMERGENCIA */
     #welcome-splash {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
       z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; color: white; transition: opacity 0.8s ease, visibility 0.8s; padding: 2rem;
+      text-align: center; color: white; transition: opacity 0.6s ease, visibility 0.6s; padding: 2rem;
     }
-    .splash-icon {
-      font-size: 5rem; color: #f59e0b; margin-bottom: 1.5rem;
-      animation: splashBounce 2s infinite alternate ease-in-out;
-    }
+    .splash-icon { font-size: 5rem; color: #f59e0b; margin-bottom: 1.5rem; animation: splashBounce 2s infinite alternate ease-in-out; }
     @keyframes splashBounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-10px) scale(1.05); } }
     .splash-title { font-size: 2.8rem; font-weight: 800; color: #f8fafc; letter-spacing: 1px; margin-bottom: 0.5rem; }
     .splash-subtitle { font-size: 1.25rem; color: #cbd5e1; font-weight: 400; max-width: 600px; }
     .splash-loader { width: 220px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 10px; margin-top: 2.5rem; overflow: hidden; }
     .splash-bar { width: 100%; height: 100%; background: #f59e0b; animation: loadLine 5s linear forwards; }
     @keyframes loadLine { 0% { transform: translateX(-100%); } 100% { transform: translateX(0); } }
+    
+    .skip-splash-btn {
+      margin-top: 2rem; background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.6rem 1.4rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s;
+    }
+    .skip-splash-btn:hover { background: #2563eb; color: white; border-color: #2563eb; }
 
     /* BANNER PROMO */
     #promo-banner {
@@ -132,12 +135,13 @@
 </head>
 <body>
 
-  <!-- ANIMACIÓN DE ENTRADA (SPLASH SCREEN DE 5 SEGUNDOS) -->
+  <!-- ANIMACIÓN DE ENTRADA CON BOTÓN DE SALTO -->
   <div id="welcome-splash">
     <div class="splash-icon"><i class="fa-solid fa-graduation-cap"></i></div>
     <h1 class="splash-title">Liroy Estudio de Idiomas</h1>
     <p class="splash-subtitle">Bienvenido a la Excelencia Académica y Global</p>
     <div class="splash-loader"><div class="splash-bar"></div></div>
+    <button class="skip-splash-btn" onclick="quitarSplash()">Omitir Animación ➔</button>
   </div>
 
   <!-- BANNER PROMO -->
@@ -434,15 +438,17 @@
   </div>
 
   <script>
-    // CONTROL DE LA ANIMACIÓN DE ENTRADA (SPLASH SCREEN: ~5 SEGUNDOS EXACTOS)
+    // FUNCIÓN PARA QUITAR EL SPLASH DE FORMA SEGURA (CON BOTÓN O AUTOMÁTICO A LOS 5 SEGUNDOS)
+    function quitarSplash() {
+      const splash = document.getElementById('welcome-splash');
+      if(splash && splash.style.display !== 'none') {
+        splash.style.opacity = '0';
+        setTimeout(() => { splash.style.display = 'none'; }, 600);
+      }
+    }
+
     window.addEventListener('load', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('welcome-splash');
-        if(splash) {
-          splash.style.opacity = '0';
-          setTimeout(() => { splash.style.display = 'none'; }, 800);
-        }
-      }, 5000);
+      setTimeout(quitarSplash, 5000);
     });
 
     const niveles = ["A1", "A2", "B1", "B2", "C1", "C2"];
