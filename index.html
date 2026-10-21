@@ -131,6 +131,21 @@
       background: linear-gradient(135deg, #1e293b, #0f172a);
       border: 2px dashed #f59e0b; border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem;
     }
+
+    /* ESTILOS DEL REPORT EN PDF (FORMATO HOJA BOLETÍN OFICIAL) */
+    #pdf-printable-area {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      padding: 30px !important;
+      border-radius: 0px !important;
+      border: 2px solid #0f172a !important;
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
+    #pdf-printable-area h2 { color: #0f172a !important; font-size: 1.8rem !important; margin-bottom: 2px !important; }
+    #pdf-printable-area p { color: #334155 !important; }
+    .pdf-table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }
+    .pdf-table th { background: #0f172a; color: #ffffff; padding: 8px 12px; text-align: left; font-size: 0.85rem; border: 1px solid #0f172a; }
+    .pdf-table td { padding: 8px 12px; border: 1px solid #cbd5e1; font-size: 0.85rem; color: #0f172a; }
   </style>
 </head>
 <body>
@@ -349,7 +364,7 @@
         <!-- MÓDULO: CARPETAS Y GESTIÓN DE HASTA 10 ESTUDIANTES -->
         <div id="teacher-folders-section" style="background: #0f172a; padding: 1.8rem; border-radius: 12px; border: 1px solid #334155;">
           <h3 style="color: #f8fafc; margin-bottom: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #f59e0b;"></i> Carpetas de Evaluación (Límite 10 Estudiantes)</h3>
-          <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">Crea tu carpeta con contraseña, gestiona hasta 10 alumnos y exporta el reporte oficial en PDF.</p>
+          <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">Crea tu carpeta con contraseña, gestiona hasta 10 alumnos y exporta el boletín de notas en PDF.</p>
 
           <button class="btn" style="background: #16a34a; width: auto; margin-bottom: 1.2rem;" onclick="abrirModalCrearCarpeta()"><i class="fa-solid fa-folder-plus"></i> Crear Nueva Carpeta de Clases</button>
 
@@ -537,7 +552,7 @@
     </div>
   </div>
 
-  <!-- PANEL DE GESTIÓN DE HASTA 10 ESTUDIANTES Y PDF OFICIAL -->
+  <!-- FORMULARIO INTERNO DE CARPETA (CARGA DE NOTAS DE HASTA 10 ALUMNOS) -->
   <div class="modal-overlay" id="modalFormularioEvaluacion">
     <div class="modal-card" style="max-width: 750px; max-height: 90vh; overflow-y: auto;">
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-bottom: 15px;">
@@ -545,43 +560,60 @@
         <button onclick="abrirModalCambiarPassCarpetaDesdeDentro()" style="background: #d97706; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-key"></i> Cambiar Contraseña</button>
       </div>
 
-      <!-- CONTENEDOR CON INSIGNIA Y NOMBRE DE LA ACADEMIA PARA EL PDF -->
-      <div id="pdf-printable-area" style="background: #0f172a; padding: 25px; border-radius: 12px; border: 1px solid #334155; color: #f8fafc;">
-        
-        <!-- MEMBRETE CON INSIGNIA Y NOMBRE DE LA ACADEMIA -->
-        <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #334155; padding-bottom: 15px;">
-          <div style="font-size: 3rem; color: #f59e0b; margin-bottom: 5px;"><i class="fa-solid fa-graduation-cap"></i></div>
-          <h2 style="color: #f8fafc; font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px;">Liroy Estudio de Idiomas</h2>
-          <p style="font-size: 0.88rem; color: #cbd5e1; font-weight: 600;">Reporte Oficial de Calificaciones y Sesión Docente</p>
-          <p id="pdf-header-teacher-info" style="font-size: 0.82rem; color: #94a3b8; margin-top: 6px;"></p>
-        </div>
+      <div style="margin-bottom: 15px;">
+        <label style="font-size: 0.85rem; font-weight: bold; color: #f59e0b;">Seleccionar Módulo Evaluado para los Alumnos:</label>
+        <select id="eval-module-select" class="input-pass" style="max-width: 250px;">
+          <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
+          <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
+          <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
+        </select>
+      </div>
 
-        <div style="margin-bottom: 15px;">
-          <label style="font-size: 0.85rem; font-weight: bold; color: #f59e0b;">Seleccionar Módulo Evaluado para los Alumnos:</label>
-          <select id="eval-module-select" class="input-pass" style="max-width: 250px;">
-            <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
-            <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
-            <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
-          </select>
-        </div>
+      <h4 style="color: #f8fafc; font-size: 1.05rem; margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> Listado de Estudiantes (Máximo 10)</h4>
+      
+      <!-- CONTENEDOR DE LOS 10 CAMPOS DE ESTUDIANTES EN LA INTERFAZ -->
+      <div id="estudiantes-inputs-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+        <!-- Generado dinámicamente -->
+      </div>
 
-        <h4 style="color: #f8fafc; font-size: 1.05rem; margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> Listado de Estudiantes (Máximo 10)</h4>
-        
-        <!-- CONTENEDOR DE LOS 10 CAMPOS DE ESTUDIANTES -->
-        <div id="estudiantes-inputs-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
-          <!-- Generado dinámicamente -->
-        </div>
-
-        <div style="margin-top: 15px;">
-          <label style="font-size: 0.85rem; font-weight: bold; color: #94a3b8;">Observaciones Generales de la Clase:</label>
-          <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Comentarios generales de la clase y recomendaciones..."></textarea>
-        </div>
+      <div style="margin-top: 15px;">
+        <label style="font-size: 0.85rem; font-weight: bold; color: #94a3b8;">Observaciones Generales de la Clase:</label>
+        <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Comentarios generales de la clase y observaciones..."></textarea>
       </div>
 
       <!-- BOTONES DE ACCIÓN -->
       <div style="margin-top: 1.5rem; display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn" style="background: #16a34a; flex: 1;" onclick="procesarGuardarYGenerarPDF()"><i class="fa-solid fa-file-pdf"></i> Guardar y Convertir a PDF Oficial</button>
+        <button class="btn" style="background: #16a34a; flex: 1;" onclick="procesarGuardarYGenerarPDF()"><i class="fa-solid fa-file-pdf"></i> Guardar y Generar Boletín PDF</button>
         <button class="btn" style="background: #334155; width: auto;" onclick="cerrarModales()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANTILLA OCULTA LIMPIA TIPO BOLETÍN/ACTA DIPLOMÁTICA PARA EL PDF (SIN ELEMENTOS DE PÁGINA NI IA) -->
+  <div style="display: none;">
+    <div id="pdf-printable-area">
+      <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 10px; margin-bottom: 20px;">
+        <h2>LIROY ESTUDIO DE IDIOMAS</h2>
+        <p style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-top: 4px;">Boletín Oficial de Calificaciones Académicas</p>
+        <p id="pdf-header-teacher-info" style="font-size: 0.85rem; color: #475569; margin-top: 6px;"></p>
+      </div>
+
+      <div id="pdf-table-wrapper">
+        <!-- Renderizado dinámico de la tabla limpia de notas -->
+      </div>
+
+      <div style="margin-top: 25px; border-top: 1px solid #cbd5e1; padding-top: 10px;">
+        <p style="font-weight: bold; font-size: 0.9rem;">Observaciones del Docente:</p>
+        <p id="pdf-observations-display" style="font-size: 0.85rem; font-style: italic; margin-top: 4px; color: #334155;"></p>
+      </div>
+
+      <div style="margin-top: 50px; display: flex; justify-content: space-around; text-align: center;">
+        <div style="border-top: 1px solid #0f172a; width: 200px; padding-top: 5px; font-size: 0.8rem; font-weight: bold;">
+          Firma / Sello del Docente
+        </div>
+        <div style="border-top: 1px solid #0f172a; width: 200px; padding-top: 5px; font-size: 0.8rem; font-weight: bold;">
+          Dirección Académica
+        </div>
       </div>
     </div>
   </div>
@@ -788,7 +820,7 @@
       } else alert('Selecciona un video.');
     }
 
-    // CARPETAS Y GESTIÓN DE HASTA 10 ESTUDIANTES
+    // CARPETAS Y GESTIÓN DE NOTAS DE HASTA 10 ESTUDIANTES
     function abrirModalCrearCarpeta() {
       document.getElementById('new-folder-teacher-name').value = '';
       document.getElementById('new-folder-pass').value = '';
@@ -801,7 +833,6 @@
       const pass = document.getElementById('new-folder-pass').value;
       if(!name || !pass) { alert('Completa los campos.'); return; }
 
-      // Inicializa un array vacío de hasta 10 estudiantes
       let initialStudents = [];
       for(let i=0; i<10; i++) {
         initialStudents.push({ name: '', score: '' });
@@ -854,10 +885,8 @@
 
     function abrirFormularioEvaluacion(folder) {
       document.getElementById('active-folder-heading').innerHTML = `<i class="fa-solid fa-users"></i> Carpeta de: ${folder.name}`;
-      document.getElementById('pdf-header-teacher-info').innerText = `Docente a cargo: ${folder.name} | Estatus: [${folder.status.toUpperCase()}]`;
       document.getElementById('eval-observations').value = folder.observations || '';
 
-      // Renderizar los 10 inputs de estudiantes
       const container = document.getElementById('estudiantes-inputs-container');
       container.innerHTML = '';
       
@@ -905,14 +934,18 @@
       let folder = teacherFolders.find(f => f.id === currentActiveFolderId);
 
       let updatedStudents = [];
+      let validStudentsForPDF = [];
+
       for(let i=0; i<10; i++) {
         let nameVal = document.getElementById(`est-name-${i}`).value.trim();
         let scoreVal = document.getElementById(`est-score-${i}`).value.trim();
         updatedStudents.push({ name: nameVal, score: scoreVal });
 
-        // Sincronizar automáticamente al Leaderboard si tiene nota numérica
-        if(nameVal && scoreVal !== '') {
-          actualizarLeaderboardAutomatico(moduleNum, nameVal, parseInt(scoreVal) || 0);
+        if(nameVal) {
+          validStudentsForPDF.push({ name: nameVal, score: scoreVal || 'N/A' });
+          if(scoreVal !== '') {
+            actualizarLeaderboardAutomatico(moduleNum, nameVal, parseInt(scoreVal) || 0);
+          }
         }
       }
 
@@ -920,22 +953,39 @@
       folder.observations = observations;
       localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
 
-      // Generar PDF con la insignia y marca de la academia
+      // Preparar el encabezado e información oficial del boletín
+      document.getElementById('pdf-header-teacher-info').innerText = `Docente a cargo: ${folder.name} | Módulo Evaluado: Módulo ${moduleNum}`;
+      document.getElementById('pdf-observations-display').innerText = observations || 'Sin observaciones registradas.';
+
+      // Armar la tabla limpia de notas
+      let tableHTML = `<table class="pdf-table"><thead><tr><th style="width: 15%;">#</th><th>Nombre del Estudiante</th><th style="width: 30%; text-align: center;">Calificación / Puntos</th></tr></thead><tbody>`;
+      
+      if(validStudentsForPDF.length === 0) {
+        tableHTML += `<tr><td colspan="3" style="text-align: center;">No hay estudiantes registrados en esta sesión.</td></tr>`;
+      } else {
+        validStudentsForPDF.forEach((st, idx) => {
+          tableHTML += `<tr><td style="font-weight: bold;">${idx+1}</td><td>${st.name}</td><td style="text-align: center; font-weight: bold;">${st.score} Pts</td></tr>`;
+        });
+      }
+      tableHTML += `</tbody></table>`;
+      document.getElementById('pdf-table-wrapper').innerHTML = tableHTML;
+
+      // Renderizar y descargar el PDF formal
       const elementToPDF = document.getElementById('pdf-printable-area');
       const opt = {
         margin:       0.5,
-        filename:     `Reporte_Liroy_Mod${moduleNum}_${folder.name.replace(/\s+/g, '_')}.pdf`,
+        filename:     `Boletin_Liroy_Mod${moduleNum}_${folder.name.replace(/\s+/g, '_')}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true },
+        html2canvas:  { scale: 2 },
         jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
       };
 
       html2pdf().from(elementToPDF).set(opt).save().then(() => {
-        const enviarWhatsApp = confirm("🎉 ¡Notas guardadas y Leaderboard actualizado!\n\nPDF oficial generado con la insignia de Liroy Estudio de Idiomas.\n¿Deseas enviar este reporte directamente al Owner por WhatsApp?");
+        const enviarWhatsApp = confirm("🎉 ¡Notas guardadas y boletín de notas generado!\n\n¿Deseas enviar el resumen directamente al Owner por WhatsApp?");
         if(enviarWhatsApp) {
           const numeroOwner = "584125952360";
-          let listaMsg = updatedStudents.filter(s => s.name).map(s => `- ${s.name}: ${s.score} Pts`).join('\n');
-          const mensaje = `Hola Owner Liroy, reporte de la carpeta de ${folder.name} (Módulo ${moduleNum}):\n\n*ALUMNOS REGISTRADOS:*\n${listaMsg}\n\n*Observaciones:* ${observations}\n\n📎 *(PDF adjunto generado con insignia oficial)*`;
+          let listaMsg = validStudentsForPDF.map(s => `- ${s.name}: ${s.score} Pts`).join('\n');
+          const mensaje = `Hola Owner Liroy, envío el acta de notas de la clase de ${folder.name} (Módulo ${moduleNum}):\n\n*ALUMNOS Y CALIFICACIONES:*\n${listaMsg}\n\n*Observaciones:* ${observations}\n\n📎 *(Adjunto el boletín PDF oficial)*`;
           window.open(`https://api.whatsapp.com/send?phone=${numeroOwner}&text=${encodeURIComponent(mensaje)}`, '_blank');
         }
         cerrarModales();
