@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Liroy Estudio de Idiomas</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <!-- Librería html2pdf.js vía CDN para conversión automática a PDF -->
+  <!-- Librería html2pdf.js vía CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
@@ -25,7 +25,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0f172a; color: #f8fafc; line-height: 1.6; overflow-x: hidden; }
 
-    /* ANIMACIÓN DE ENTRADA (SPLASH SCREEN) */
     #welcome-splash {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e3a8a 100%);
@@ -46,7 +45,6 @@
     }
     .skip-splash-btn:hover { background: #2563eb; color: white; border-color: #2563eb; }
 
-    /* BANNER PROMO */
     #promo-banner {
       background: linear-gradient(135deg, #090d16, #1e3a8a, #d97706);
       color: white; padding: 0.75rem 1.5rem; font-weight: 600; font-size: 0.92rem;
@@ -56,7 +54,6 @@
     .promo-tag { background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
     .timer-badge { background: rgba(15, 23, 42, 0.85); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 1.05rem; color: #fef08a; border: 1px solid rgba(255,255,255,0.2); }
 
-    /* HEADER */
     header {
       background: #090d16; color: white; padding: 1.1rem 2.5rem;
       display: flex; justify-content: space-between; align-items: center;
@@ -349,10 +346,10 @@
           <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Archivo en Historial</button>
         </div>
 
-        <!-- NUEVO MÓDULO: CARPETAS DE EVALUACIÓN DE PROFESORES -->
+        <!-- MÓDULO: CARPETAS Y GESTIÓN DE HASTA 10 ESTUDIANTES -->
         <div id="teacher-folders-section" style="background: #0f172a; padding: 1.8rem; border-radius: 12px; border: 1px solid #334155;">
-          <h3 style="color: #f8fafc; margin-bottom: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #f59e0b;"></i> Carpetas de Evaluación de Clases</h3>
-          <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">Crea tu propia carpeta con contraseña o desbloquea una existente para evaluar alumnos y generar reportes PDF.</p>
+          <h3 style="color: #f8fafc; margin-bottom: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #f59e0b;"></i> Carpetas de Evaluación (Límite 10 Estudiantes)</h3>
+          <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">Crea tu carpeta con contraseña, gestiona hasta 10 alumnos y exporta el reporte oficial en PDF.</p>
 
           <button class="btn" style="background: #16a34a; width: auto; margin-bottom: 1.2rem;" onclick="abrirModalCrearCarpeta()"><i class="fa-solid fa-folder-plus"></i> Crear Nueva Carpeta de Clases</button>
 
@@ -471,7 +468,6 @@
     </div>
   </div>
 
-  <!-- MODAL CONFIGURAR PERFIL -->
   <div class="modal-overlay" id="configPerfilModal">
     <div class="modal-card" style="max-width:450px;">
       <h3 style="margin-bottom:15px; color:#f8fafc;"><i class="fa-solid fa-id-card"></i> Configurar mi Perfil</h3>
@@ -486,7 +482,6 @@
     </div>
   </div>
 
-  <!-- MODAL QUIZ -->
   <div class="modal-overlay" id="quizModal">
     <div class="modal-card" id="quizCard">
       <h3 id="quizProgress" style="color:#f8fafc;">Pregunta 1</h3>
@@ -497,13 +492,12 @@
     </div>
   </div>
 
-  <!-- MODALES DEL SISTEMA DE CARPETAS DE PROFESORES Y EVALUACIÓN PDF -->
-  <!-- 1. Modal Crear Carpeta Docente -->
+  <!-- MODALES DE CARPETAS Y GESTIÓN DE HASTA 10 ESTUDIANTES -->
   <div class="modal-overlay" id="modalCrearCarpeta">
     <div class="modal-card" style="max-width: 420px;">
       <h3 style="color: #f8fafc; margin-bottom: 1rem;"><i class="fa-solid fa-folder-plus"></i> Registrar Carpeta Docente</h3>
       <label style="font-size:0.85rem; font-weight:bold;">Nombre Completo del Profesor:</label>
-      <input type="text" id="new-folder-teacher-name" class="input-pass" placeholder="Ej. Prof. Carlos Mendoza" style="margin-bottom: 10px;">
+      <input type="text" id="new-folder-teacher-name" class="input-pass" placeholder="Ej. Carlos Mendoza" style="margin-bottom: 10px;">
 
       <label style="font-size:0.85rem; font-weight:bold;">Estatus Inicial:</label>
       <select id="new-folder-status" class="input-pass" style="margin-bottom: 10px;">
@@ -519,7 +513,6 @@
     </div>
   </div>
 
-  <!-- 2. Modal Autenticación para Abrir Carpeta -->
   <div class="modal-overlay" id="modalAuthCarpeta">
     <div class="modal-card" style="max-width: 380px; text-align: center;">
       <h3>Acceso a Carpeta Docente</h3>
@@ -530,7 +523,6 @@
     </div>
   </div>
 
-  <!-- 3. Modal Cambiar Contraseña de Carpeta Validando la Anterior -->
   <div class="modal-overlay" id="modalChangePassCarpeta">
     <div class="modal-card" style="max-width: 380px;">
       <h3>Cambiar Contraseña de Carpeta</h3>
@@ -545,70 +537,50 @@
     </div>
   </div>
 
-  <!-- 4. Formulario de Evaluación y Generación de PDF -->
+  <!-- PANEL DE GESTIÓN DE HASTA 10 ESTUDIANTES Y PDF OFICIAL -->
   <div class="modal-overlay" id="modalFormularioEvaluacion">
-    <div class="modal-card" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
+    <div class="modal-card" style="max-width: 750px; max-height: 90vh; overflow-y: auto;">
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-bottom: 15px;">
-        <h3 id="active-folder-heading" style="color: #f8fafc;"><i class="fa-solid fa-file-pen"></i> Evaluación de Sesión</h3>
+        <h3 id="active-folder-heading" style="color: #f8fafc;"><i class="fa-solid fa-users"></i> Gestión de Alumnos (Hasta 10)</h3>
         <button onclick="abrirModalCambiarPassCarpetaDesdeDentro()" style="background: #d97706; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-key"></i> Cambiar Contraseña</button>
       </div>
 
-      <!-- Contenedor Estético Convertible a PDF -->
-      <div id="pdf-printable-area" style="background: #0f172a; padding: 20px; border-radius: 10px; border: 1px solid #334155; color: #f8fafc;">
-        <div style="text-align: center; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
-          <h2 style="color: #f59e0b; font-size: 1.3rem;">Liroy Estudio de Idiomas</h2>
-          <p style="font-size: 0.85rem; color: #94a3b8;">Reporte Oficial de Evaluación de Clase</p>
-          <p id="pdf-header-teacher-info" style="font-size: 0.85rem; color: #cbd5e1; margin-top: 4px;"></p>
+      <!-- CONTENEDOR CON INSIGNIA Y NOMBRE DE LA ACADEMIA PARA EL PDF -->
+      <div id="pdf-printable-area" style="background: #0f172a; padding: 25px; border-radius: 12px; border: 1px solid #334155; color: #f8fafc;">
+        
+        <!-- MEMBRETE CON INSIGNIA Y NOMBRE DE LA ACADEMIA -->
+        <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #334155; padding-bottom: 15px;">
+          <div style="font-size: 3rem; color: #f59e0b; margin-bottom: 5px;"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h2 style="color: #f8fafc; font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px;">Liroy Estudio de Idiomas</h2>
+          <p style="font-size: 0.88rem; color: #cbd5e1; font-weight: 600;">Reporte Oficial de Calificaciones y Sesión Docente</p>
+          <p id="pdf-header-teacher-info" style="font-size: 0.82rem; color: #94a3b8; margin-top: 6px;"></p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-          <div>
-            <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Nombre del Alumno:</label>
-            <input type="text" id="eval-student-name" class="input-pass" placeholder="Nombre completo">
-          </div>
-          <div>
-            <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Módulo Evaluado:</label>
-            <select id="eval-module-select" class="input-pass">
-              <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
-              <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
-              <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
-            </select>
-          </div>
+        <div style="margin-bottom: 15px;">
+          <label style="font-size: 0.85rem; font-weight: bold; color: #f59e0b;">Seleccionar Módulo Evaluado para los Alumnos:</label>
+          <select id="eval-module-select" class="input-pass" style="max-width: 250px;">
+            <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
+            <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
+            <option value="7">Módulo 7</option><option value="8">Módulo 8</option><option value="9">Módulo 9</option>
+          </select>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-          <div>
-            <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Preguntas Correctas:</label>
-            <input type="text" id="eval-correct-answers" class="input-pass" placeholder="Ej. 8/10">
-          </div>
-          <div>
-            <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Pronunciación (1-10):</label>
-            <select id="eval-pronunciation" class="input-pass">
-              <option value="Excelente (10/10)">Excelente (10/10)</option>
-              <option value="Muy Bueno (8-9/10)">Muy Bueno (8-9/10)</option>
-              <option value="Bueno (6-7/10)">Bueno (6-7/10)</option>
-              <option value="Regular (1-5/10)">Regular (1-5/10)</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Puntos Leaderboard:</label>
-            <input type="number" id="eval-leaderboard-points" class="input-pass" value="150" placeholder="Puntos">
-          </div>
+        <h4 style="color: #f8fafc; font-size: 1.05rem; margin-bottom: 10px;"><i class="fa-solid fa-list-check"></i> Listado de Estudiantes (Máximo 10)</h4>
+        
+        <!-- CONTENEDOR DE LOS 10 CAMPOS DE ESTUDIANTES -->
+        <div id="estudiantes-inputs-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+          <!-- Generado dinámicamente -->
         </div>
 
-        <div style="margin-bottom: 12px;">
-          <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Fluidez y Gramática:</label>
-          <input type="text" id="eval-fluency-grammar" class="input-pass" placeholder="Ej. Estructuras sólidas, requiere práctica en pasado.">
-        </div>
-
-        <div style="margin-bottom: 10px;">
-          <label style="font-size: 0.82rem; font-weight: bold; color: #94a3b8;">Observaciones Generales y Tareas:</label>
-          <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Comentarios y tareas recomendadas..."></textarea>
+        <div style="margin-top: 15px;">
+          <label style="font-size: 0.85rem; font-weight: bold; color: #94a3b8;">Observaciones Generales de la Clase:</label>
+          <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Comentarios generales de la clase y recomendaciones..."></textarea>
         </div>
       </div>
 
-      <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
-        <button class="btn" style="background: #16a34a; flex: 1;" onclick="procesarGuardarYGenerarPDF()"><i class="fa-solid fa-file-pdf"></i> Generar y Convertir a PDF</button>
+      <!-- BOTONES DE ACCIÓN -->
+      <div style="margin-top: 1.5rem; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn" style="background: #16a34a; flex: 1;" onclick="procesarGuardarYGenerarPDF()"><i class="fa-solid fa-file-pdf"></i> Guardar y Convertir a PDF Oficial</button>
         <button class="btn" style="background: #334155; width: auto;" onclick="cerrarModales()">Cerrar</button>
       </div>
     </div>
@@ -625,7 +597,6 @@
     let datosClasesCustom = JSON.parse(localStorage.getItem('datosClasesCustom') || '{}');
     let profesorActualLogueado = null;
 
-    // Carpetas de Evaluación Docente
     let teacherFolders = JSON.parse(localStorage.getItem('liroy_teacher_folders') || '[]');
     let currentActiveFolderId = null;
 
@@ -661,7 +632,6 @@
       document.getElementById(`portal-${p}`).classList.add('active');
     }
 
-    // RENDER MÓDULOS NORMALES
     function renderizarModulosNormales() {
       const container = document.getElementById('modulesContainer');
       if(!container) return;
@@ -691,7 +661,6 @@
       }
     }
 
-    // RENDER MÓDULOS CLASES PERSONALIZADAS
     function renderizarModulosCustom() {
       const container = document.getElementById('customModulesContainer');
       if(!container) return;
@@ -718,66 +687,40 @@
     }
 
     function toggleFolder(id) { document.getElementById(id).classList.toggle('open'); }
-
-    function abrirAccesoClasesPersonalizadas() {
-      document.getElementById('loginCustomModal').style.display = 'flex';
-    }
-
+    function abrirAccesoClasesPersonalizadas() { document.getElementById('loginCustomModal').style.display = 'flex'; }
     function verificarLoginCustom() {
-      if(document.getElementById('custom-pass-input').value === claveCustomGlobal) {
-        cerrarModales();
-        cambiarPortal('personalizadas');
-      } else alert('Clave de Clases Personalizadas incorrecta.');
+      if(document.getElementById('custom-pass-input').value === claveCustomGlobal) { cerrarModales(); cambiarPortal('personalizadas'); }
+      else alert('Clave incorrecta.');
     }
-
     function verificarClase(tipo, m, lvl) {
       const key = `${m}-${lvl}`;
       const pool = tipo === 'normal' ? datosClasesNormales : datosClasesCustom;
       const conf = pool[key] || { pass: tipo === 'normal' ? `MOD${m}-${lvl}` : `CUSTOM-${m}-${lvl}` };
-      const inputVal = document.getElementById(`pass-${tipo}-${key}`).value;
-      if(inputVal === conf.pass) {
+      if(document.getElementById(`pass-${tipo}-${key}`).value === conf.pass) {
         document.getElementById(`content-${tipo}-${key}`).style.display = 'block';
         alert('¡Acceso concedido!');
-      } else alert('Contraseña de clase incorrecta.');
+      } else alert('Contraseña incorrecta.');
     }
-
     function verHistorial(tipo, key) {
       const pool = tipo === 'normal' ? datosClasesNormales : datosClasesCustom;
       const conf = pool[key];
-      if(conf && conf.videoName) alert(`📺 Historial de Clase Grabada (${key}):\nArchivo: ${conf.videoName}`);
-      else alert('Aún no hay clases grabadas publicadas en este nivel.');
+      if(conf && conf.videoName) alert(`📺 Historial (${key}): ${conf.videoName}`);
+      else alert('No hay clases grabadas publicadas.');
     }
 
-    // LOGIN PROFESORES
-    function abrirLoginProfesor() {
-      document.getElementById('loginProfesorModal').style.display = 'flex';
-    }
-
+    function abrirLoginProfesor() { document.getElementById('loginProfesorModal').style.display = 'flex'; }
     function loginProfesor() {
       const pass = document.getElementById('prof-pass-input').value;
       const nombreInput = document.getElementById('prof-fullname-input').value.trim();
-
-      if(pass !== claveProfesorGlobal) {
-        alert('Clave de Profesor incorrecta.');
-        return;
-      }
-
+      if(pass !== claveProfesorGlobal) { alert('Clave incorrecta.'); return; }
       let profObj = listaProfesores.find(p => p.nombre.toLowerCase() === nombreInput.toLowerCase());
       if(!profObj) {
-        if(!nombreInput) {
-          alert('Debes escribir tu Nombre y Apellido para registrarte como Profesor.');
-          return;
-        }
+        if(!nombreInput) { alert('Escribe tu Nombre y Apellido.'); return; }
         profObj = { id: Date.now(), nombre: nombreInput, activo: true, permisoCustom: false };
         listaProfesores.push(profObj);
         localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores));
       }
-
-      if(!profObj.activo) {
-        alert('⛔ Tu acceso como profesor ha sido INHABILITADO por el Owner.');
-        return;
-      }
-
+      if(!profObj.activo) { alert('⛔ Tu acceso está inhabilitado.'); return; }
       profesorActualLogueado = profObj;
       cerrarModales();
       cambiarPortal('profesores');
@@ -785,15 +728,11 @@
 
     function guardarClaveClase() {
       const target = document.getElementById('teacher-target-type').value;
-      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) {
-        alert('⛔ No tienes permiso del Owner para editar Clases Personalizadas.');
-        return;
-      }
+      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) { alert('No autorizado.'); return; }
       const m = document.getElementById('teacher-mod-select').value;
       const lvl = document.getElementById('teacher-lvl-select').value;
       const key = `${m}-${lvl}`;
       const newPass = document.getElementById('teacher-mod-pass').value;
-
       if(target === 'normal') {
         if(!datosClasesNormales[key]) datosClasesNormales[key] = {};
         datosClasesNormales[key].pass = newPass;
@@ -805,20 +744,15 @@
         localStorage.setItem('datosClasesCustom', JSON.stringify(datosClasesCustom));
         renderizarModulosCustom();
       }
-      alert(`¡Contraseña guardada para Módulo ${m} - Nivel ${lvl}!`);
+      alert('Contraseña guardada.');
     }
 
     function guardarMeetClase() {
       const target = document.getElementById('teacher-target-type').value;
-      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) {
-        alert('⛔ No tienes permiso del Owner para editar Clases Personalizadas.');
-        return;
-      }
       const m = document.getElementById('teacher-mod-select').value;
       const lvl = document.getElementById('teacher-lvl-select').value;
       const key = `${m}-${lvl}`;
       const meetUrl = document.getElementById('teacher-meet-url').value;
-
       if(target === 'normal') {
         if(!datosClasesNormales[key]) datosClasesNormales[key] = {};
         datosClasesNormales[key].meet = meetUrl;
@@ -830,20 +764,15 @@
         localStorage.setItem('datosClasesCustom', JSON.stringify(datosClasesCustom));
         renderizarModulosCustom();
       }
-      alert(`¡Link de Meet guardado!`);
+      alert('Meet guardado.');
     }
 
     function subirVideoHistorialArchivo() {
       const target = document.getElementById('teacher-target-type').value;
-      if(target === 'custom' && (!profesorActualLogueado || !profesorActualLogueado.permisoCustom)) {
-        alert('⛔ No tienes permiso del Owner para editar Clases Personalizadas.');
-        return;
-      }
       const m = document.getElementById('teacher-mod-select').value;
       const lvl = document.getElementById('teacher-lvl-select').value;
       const key = `${m}-${lvl}`;
       const fileInput = document.getElementById('teacher-class-file');
-
       if(fileInput.files && fileInput.files[0]) {
         const vName = fileInput.files[0].name;
         if(target === 'normal') {
@@ -855,13 +784,11 @@
           datosClasesCustom[key].videoName = vName;
           localStorage.setItem('datosClasesCustom', JSON.stringify(datosClasesCustom));
         }
-        alert(`¡Video "${vName}" publicado en el Historial!`);
-      } else alert('Selecciona un archivo de video.');
+        alert('Video publicado.');
+      } else alert('Selecciona un video.');
     }
 
-    // ---------------------------------------------------------
-    // SISTEMA DE CARPETAS DE EVALUACIÓN DE PROFESORES
-    // ---------------------------------------------------------
+    // CARPETAS Y GESTIÓN DE HASTA 10 ESTUDIANTES
     function abrirModalCrearCarpeta() {
       document.getElementById('new-folder-teacher-name').value = '';
       document.getElementById('new-folder-pass').value = '';
@@ -872,39 +799,38 @@
       const name = document.getElementById('new-folder-teacher-name').value.trim();
       const status = document.getElementById('new-folder-status').value;
       const pass = document.getElementById('new-folder-pass').value;
+      if(!name || !pass) { alert('Completa los campos.'); return; }
 
-      if(!name || !pass) {
-        alert('Por favor completa el nombre del profesor y asigna una contraseña.');
-        return;
+      // Inicializa un array vacío de hasta 10 estudiantes
+      let initialStudents = [];
+      for(let i=0; i<10; i++) {
+        initialStudents.push({ name: '', score: '' });
       }
 
-      const newFolder = { id: Date.now(), name: name, status: status, pass: pass };
+      const newFolder = { id: Date.now(), name: name, status: status, pass: pass, students: initialStudents };
       teacherFolders.push(newFolder);
       localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
-
       cerrarModales();
       renderTeacherFolders();
       renderOwnerFoldersManagement();
-      alert('¡Carpeta de clases creada y guardada con éxito!');
+      alert('¡Carpeta creada con éxito!');
     }
 
     function renderTeacherFolders() {
       const container = document.getElementById('teacher-folders-grid');
       if(!container) return;
       container.innerHTML = '';
-
       if(teacherFolders.length === 0) {
-        container.innerHTML = '<p style="color: #94a3b8; font-size: 0.85rem;">No hay carpetas docentes creadas todavía.</p>';
+        container.innerHTML = '<p style="color: #94a3b8; font-size: 0.85rem;">No hay carpetas creadas.</p>';
         return;
       }
-
       teacherFolders.forEach(folder => {
         const badgeColor = folder.status === 'Profesor Principal' ? '#16a34a' : '#d97706';
         container.innerHTML += `
           <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 1.1rem; position: relative;">
             <span style="position: absolute; top: 10px; right: 10px; background: ${badgeColor}; color: white; padding: 2px 7px; border-radius: 4px; font-size: 0.65rem; font-weight: bold;">[${folder.status.toUpperCase()}]</span>
             <h4 style="color: #f8fafc; font-size: 1rem; margin-bottom: 5px;"><i class="fa-solid fa-folder"></i> ${folder.name}</h4>
-            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 10px;">Carpeta Segura</p>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-bottom: 10px;">Hasta 10 Alumnos</p>
             <button class="btn" style="padding: 0.4rem; font-size: 0.8rem;" onclick="promptAuthCarpeta(${folder.id}, '${folder.name}')"><i class="fa-solid fa-lock-open"></i> Abrir Carpeta</button>
           </div>`;
       });
@@ -920,24 +846,35 @@
     function verificarPasswordCarpeta() {
       const inputPass = document.getElementById('auth-folder-pass-input').value;
       const folder = teacherFolders.find(f => f.id === currentActiveFolderId);
-
       if(folder && folder.pass === inputPass) {
         cerrarModales();
         abrirFormularioEvaluacion(folder);
-      } else {
-        alert('Contraseña incorrecta. Inténtalo de nuevo.');
-      }
+      } else alert('Contraseña incorrecta.');
     }
 
     function abrirFormularioEvaluacion(folder) {
-      document.getElementById('active-folder-heading').innerHTML = `<i class="fa-solid fa-file-pen"></i> Carpeta de: ${folder.name}`;
-      document.getElementById('pdf-header-teacher-info').innerText = `Evaluado por: ${folder.name} | Estatus: [${folder.status.toUpperCase()}]`;
+      document.getElementById('active-folder-heading').innerHTML = `<i class="fa-solid fa-users"></i> Carpeta de: ${folder.name}`;
+      document.getElementById('pdf-header-teacher-info').innerText = `Docente a cargo: ${folder.name} | Estatus: [${folder.status.toUpperCase()}]`;
+      document.getElementById('eval-observations').value = folder.observations || '';
+
+      // Renderizar los 10 inputs de estudiantes
+      const container = document.getElementById('estudiantes-inputs-container');
+      container.innerHTML = '';
       
-      document.getElementById('eval-student-name').value = '';
-      document.getElementById('eval-correct-answers').value = '';
-      document.getElementById('eval-fluency-grammar').value = '';
-      document.getElementById('eval-observations').value = '';
-      document.getElementById('eval-leaderboard-points').value = '150';
+      if(!folder.students || folder.students.length === 0) {
+        folder.students = [];
+        for(let i=0; i<10; i++) folder.students.push({ name: '', score: '' });
+      }
+
+      for(let i=0; i<10; i++) {
+        let st = folder.students[i] || { name: '', score: '' };
+        container.innerHTML += `
+          <div style="display: flex; gap: 10px; align-items: center; background: #1e293b; padding: 8px 12px; border-radius: 8px; border: 1px solid #334155;">
+            <span style="font-weight: bold; color: #f59e0b; width: 25px;">#${i+1}</span>
+            <input type="text" id="est-name-${i}" class="input-pass" placeholder="Nombre del Alumno" value="${st.name}" style="margin:0; flex:2;">
+            <input type="number" id="est-score-${i}" class="input-pass" placeholder="Nota / Puntos" value="${st.score}" style="margin:0; flex:1;">
+          </div>`;
+      }
 
       document.getElementById('modalFormularioEvaluacion').style.display = 'flex';
     }
@@ -951,76 +888,56 @@
     function ejecutarCambioPasswordCarpeta() {
       const oldPass = document.getElementById('old-pass-input').value;
       const newPass = document.getElementById('new-pass-input').value;
-
       let folder = teacherFolders.find(f => f.id === currentActiveFolderId);
       if(folder) {
-        if(folder.pass !== oldPass) {
-          alert('La contraseña anterior ingresada no es correcta.');
-          return;
-        }
-        if(!newPass) {
-          alert('Ingresa una nueva contraseña válida.');
-          return;
-        }
+        if(folder.pass !== oldPass) { alert('Contraseña anterior incorrecta.'); return; }
+        if(!newPass) { alert('Ingresa nueva contraseña.'); return; }
         folder.pass = newPass;
         localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
         cerrarModales();
-        alert('¡Contraseña de la carpeta actualizada con éxito!');
+        alert('¡Contraseña actualizada!');
       }
     }
 
     function procesarGuardarYGenerarPDF() {
-      const studentName = document.getElementById('eval-student-name').value.trim();
       const moduleNum = document.getElementById('eval-module-select').value;
-      const correctAnswers = document.getElementById('eval-correct-answers').value;
-      const pronunciation = document.getElementById('eval-pronunciation').value;
-      const fluencyGrammar = document.getElementById('eval-fluency-grammar').value;
-      const leaderboardPts = parseInt(document.getElementById('eval-leaderboard-points').value) || 0;
       const observations = document.getElementById('eval-observations').value;
+      let folder = teacherFolders.find(f => f.id === currentActiveFolderId);
 
-      if(!studentName) {
-        alert('Por favor ingresa el nombre del alumno.');
-        return;
+      let updatedStudents = [];
+      for(let i=0; i<10; i++) {
+        let nameVal = document.getElementById(`est-name-${i}`).value.trim();
+        let scoreVal = document.getElementById(`est-score-${i}`).value.trim();
+        updatedStudents.push({ name: nameVal, score: scoreVal });
+
+        // Sincronizar automáticamente al Leaderboard si tiene nota numérica
+        if(nameVal && scoreVal !== '') {
+          actualizarLeaderboardAutomatico(moduleNum, nameVal, parseInt(scoreVal) || 0);
+        }
       }
 
-      // Sincronizar Leaderboard automáticamente
-      actualizarLeaderboardAutomatico(moduleNum, studentName, leaderboardPts);
+      folder.students = updatedStudents;
+      folder.observations = observations;
+      localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
 
-      // Generar PDF con html2pdf
+      // Generar PDF con la insignia y marca de la academia
       const elementToPDF = document.getElementById('pdf-printable-area');
       const opt = {
         margin:       0.5,
-        filename:     `Evaluacion_${studentName.replace(/\s+/g, '_')}_Mod${moduleNum}.pdf`,
+        filename:     `Reporte_Liroy_Mod${moduleNum}_${folder.name.replace(/\s+/g, '_')}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true },
         jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
       };
 
       html2pdf().from(elementToPDF).set(opt).save().then(() => {
-        const folder = teacherFolders.find(f => f.id === currentActiveFolderId);
-        const enviarWhatsApp = confirm(
-          "🎉 ¡Evaluación guardada y Leaderboard actualizado!\n\n" +
-          "Se ha descargado el archivo PDF en tu dispositivo.\n" +
-          "¿Deseas enviar este resumen de evaluación directamente al Owner Liroy por WhatsApp?"
-        );
-
+        const enviarWhatsApp = confirm("🎉 ¡Notas guardadas y Leaderboard actualizado!\n\nPDF oficial generado con la insignia de Liroy Estudio de Idiomas.\n¿Deseas enviar este reporte directamente al Owner por WhatsApp?");
         if(enviarWhatsApp) {
           const numeroOwner = "584125952360";
-          const mensaje = `Hola Owner Liroy, le saluda el docente ${folder ? folder.name : 'Docente'}.\n\n` +
-                          `📋 *REPORTE DE EVALUACIÓN DE CLASE*\n` +
-                          `- Alumno: ${studentName}\n` +
-                          `- Módulo Evaluado: Módulo ${moduleNum}\n` +
-                          `- Preguntas Correctas: ${correctAnswers}\n` +
-                          `- Pronunciación: ${pronunciation}\n` +
-                          `- Fluidez/Gramática: ${fluencyGrammar}\n` +
-                          `- Puntos Leaderboard: ${leaderboardPts} Pts\n` +
-                          `- Observaciones: ${observations}\n\n` +
-                          `📎 *(Nota: Adjunto el archivo PDF generado en este chat).*`;
-
-          const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroOwner}&text=${encodeURIComponent(mensaje)}`;
-          window.open(urlWhatsApp, '_blank');
+          let listaMsg = updatedStudents.filter(s => s.name).map(s => `- ${s.name}: ${s.score} Pts`).join('\n');
+          const mensaje = `Hola Owner Liroy, reporte de la carpeta de ${folder.name} (Módulo ${moduleNum}):\n\n*ALUMNOS REGISTRADOS:*\n${listaMsg}\n\n*Observaciones:* ${observations}\n\n📎 *(PDF adjunto generado con insignia oficial)*`;
+          window.open(`https://api.whatsapp.com/send?phone=${numeroOwner}&text=${encodeURIComponent(mensaje)}`, '_blank');
         }
-
         cerrarModales();
       });
     }
@@ -1029,13 +946,9 @@
       let lbData = JSON.parse(localStorage.getItem('liroy_leaderboard_data') || '{}');
       const keyMod = `mod_${moduleNum}`;
       if(!lbData[keyMod]) lbData[keyMod] = [];
-      
       let studentRecord = lbData[keyMod].find(item => item.name.toLowerCase() === studentName.toLowerCase());
-      if(studentRecord) {
-        studentRecord.score += points;
-      } else {
-        lbData[keyMod].push({ name: studentName, score: points });
-      }
+      if(studentRecord) { studentRecord.score += points; }
+      else { lbData[keyMod].push({ name: studentName, score: points }); }
       lbData[keyMod].sort((a, b) => b.score - a.score);
       localStorage.setItem('liroy_leaderboard_data', JSON.stringify(lbData));
     }
@@ -1047,39 +960,30 @@
         cerrarModales();
         actualizarVistaOwner();
         cambiarPortal('owner');
-      } else alert('Clave de Owner incorrecta.');
+      } else alert('Clave incorrecta.');
     }
 
     function actualizarVistaOwner() {
       const pList = document.getElementById('owner-professors-list');
       const pSelect = document.getElementById('select-prof-custom-permission');
       pList.innerHTML = ''; pSelect.innerHTML = '';
-
-      if(listaProfesores.length === 0) {
-        pList.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No hay profesores registrados en el sistema.</p>';
-      } else {
+      if(listaProfesores.length === 0) pList.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No hay profesores.</p>';
+      else {
         listaProfesores.forEach(p => {
           pList.innerHTML += `
             <div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:8px 12px; border-radius:8px;">
-              <span><strong>${p.nombre}</strong> (${p.activo ? '✅ Activo' : '❌ Inhabilitado'}) ${p.permisoCustom ? '⭐ Permiso Custom' : ''}</span>
-              <button class="btn" style="width:auto; margin:0; padding:4px 10px; background:${p.activo ? '#dc2626' : '#16a34a'};" onclick="toggleEstadoProfesor(${p.id})">
-                ${p.activo ? 'Inhabilitar' : 'Habilitar'}
-              </button>
+              <span><strong>${p.nombre}</strong> (${p.activo ? '✅ Activo' : '❌ Inhabilitado'})</span>
+              <button class="btn" style="width:auto; margin:0; padding:4px 10px; background:${p.activo ? '#dc2626' : '#16a34a'};" onclick="toggleEstadoProfesor(${p.id})">${p.activo ? 'Inhabilitar' : 'Habilitar'}</button>
             </div>`;
           pSelect.innerHTML += `<option value="${p.id}">${p.nombre}</option>`;
         });
       }
-
       renderOwnerFoldersManagement();
-
       const gridMod = document.getElementById('owner-modules-toggle-grid');
       gridMod.innerHTML = '';
       for(let m=1; m<=9; m++) {
         const isOff = modulosInhabilitados[m];
-        gridMod.innerHTML += `
-          <button class="btn" style="margin:0; background:${isOff ? '#dc2626' : '#16a34a'};" onclick="toggleModuloOwner(${m})">
-            Módulo ${m}: ${isOff ? 'OFF' : 'ON'}
-          </button>`;
+        gridMod.innerHTML += `<button class="btn" style="margin:0; background:${isOff ? '#dc2626' : '#16a34a'};" onclick="toggleModuloOwner(${m})">Módulo ${m}: ${isOff ? 'OFF' : 'ON'}</button>`;
       }
     }
 
@@ -1087,12 +991,7 @@
       const container = document.getElementById('owner-all-folders-list');
       if(!container) return;
       container.innerHTML = '';
-
-      if(teacherFolders.length === 0) {
-        container.innerHTML = '<p style="color: #94a3b8; font-size: 0.85rem;">No hay carpetas docentes registradas.</p>';
-        return;
-      }
-
+      if(teacherFolders.length === 0) { container.innerHTML = '<p style="color: #94a3b8; font-size: 0.85rem;">No hay carpetas docentes.</p>'; return; }
       teacherFolders.forEach(folder => {
         const badgeColor = folder.status === 'Profesor Principal' ? '#16a34a' : '#d97706';
         container.innerHTML += `
@@ -1103,8 +1002,8 @@
               <span style="color: #94a3b8; font-size: 0.78rem; margin-left: 6px;">Pass: <code>${folder.pass}</code></span>
             </div>
             <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <button class="btn" style="width: auto; padding: 4px 8px; font-size: 0.75rem; background: #2563eb;" onclick="ownerCambiarEstatus(${folder.id})">Cambiar Estatus</button>
-              <button class="btn" style="width: auto; padding: 4px 8px; font-size: 0.75rem; background: #d97706;" onclick="ownerResetPassword(${folder.id})">Reset Pass</button>
+              <button class="btn" style="width: auto; padding: 4px 8px; font-size: 0.75rem; background: #2563eb;" onclick="ownerCambiarEstatus(${folder.id})">Estatus</button>
+              <button class="btn" style="width: auto; padding: 4px 8px; font-size: 0.75rem; background: #d97706;" onclick="ownerResetPassword(${folder.id})">Pass</button>
               <button class="btn" style="width: auto; padding: 4px 8px; font-size: 0.75rem; background: #dc2626;" onclick="ownerEliminarCarpeta(${folder.id})">Eliminar</button>
             </div>
           </div>`;
@@ -1118,66 +1017,56 @@
         localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
         renderTeacherFolders();
         renderOwnerFoldersManagement();
-        alert(`Estatus actualizado a: [${folder.status.toUpperCase()}]`);
+        alert('Estatus actualizado.');
       }
     }
 
     function ownerResetPassword(folderId) {
       let folder = teacherFolders.find(f => f.id === folderId);
       if(folder) {
-        const nuevaPass = prompt(`Nueva contraseña temporal para la carpeta de ${folder.name}:`, "liroy2026");
+        const nuevaPass = prompt(`Nueva contraseña para ${folder.name}:`, "liroy2026");
         if(nuevaPass) {
           folder.pass = nuevaPass;
           localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
           renderOwnerFoldersManagement();
-          alert('¡Contraseña reseteada por el Owner!');
+          alert('Contraseña reseteada.');
         }
       }
     }
 
     function ownerEliminarCarpeta(folderId) {
-      if(confirm("¿Eliminar permanentemente esta carpeta docente?")) {
+      if(confirm("¿Eliminar carpeta?")) {
         teacherFolders = teacherFolders.filter(f => f.id !== folderId);
         localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
         renderTeacherFolders();
         renderOwnerFoldersManagement();
-        alert('Carpeta eliminada.');
+        alert('Eliminado.');
       }
     }
 
     function toggleEstadoProfesor(id) {
       let p = listaProfesores.find(x => x.id === id);
-      if(p) {
-        p.activo = !p.activo;
-        localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores));
-        actualizarVistaOwner();
-      }
+      if(p) { p.activo = !p.activo; localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores)); actualizarVistaOwner(); }
     }
 
     function autorizarProfesorCustom() {
       const id = parseInt(document.getElementById('select-prof-custom-permission').value);
       let p = listaProfesores.find(x => x.id === id);
-      if(p) {
-        p.permisoCustom = !p.permisoCustom;
-        localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores));
-        actualizarVistaOwner();
-        alert(`Permiso actualizado para ${p.nombre}.`);
-      }
+      if(p) { p.permisoCustom = !p.permisoCustom; localStorage.setItem('listaProfesores', JSON.stringify(listaProfesores)); actualizarVistaOwner(); alert('Permiso actualizado.'); }
     }
 
     function cambiarClaveOwner() {
       const v = document.getElementById('input-new-owner-pass').value;
-      if(v) { claveOwnerGlobal = v; localStorage.setItem('claveOwnerGlobal', v); alert('¡Clave Owner actualizada!'); }
+      if(v) { claveOwnerGlobal = v; localStorage.setItem('claveOwnerGlobal', v); alert('Clave Owner actualizada.'); }
     }
     function cambiarClaveProfesorGlobal() {
       const v = document.getElementById('input-new-prof-pass').value;
-      if(v) { claveProfesorGlobal = v; localStorage.setItem('claveProfesorGlobal', v); alert('¡Clave General de Profesores actualizada!'); }
+      if(v) { claveProfesorGlobal = v; localStorage.setItem('claveProfesorGlobal', v); alert('Clave Profesores actualizada.'); }
     }
     function cambiarClaveCustomGlobal() {
       const v = document.getElementById('input-new-custom-pass').value;
-      if(v) { claveCustomGlobal = v; localStorage.setItem('claveCustomGlobal', v); alert('¡Clave de Clases Personalizadas actualizada!'); }
+      if(v) { claveCustomGlobal = v; localStorage.setItem('claveCustomGlobal', v); alert('Clave Custom actualizada.'); }
     }
-
     function toggleModuloOwner(m) {
       modulosInhabilitados[m] = !modulosInhabilitados[m];
       localStorage.setItem('modulosInhabilitados', JSON.stringify(modulosInhabilitados));
@@ -1185,90 +1074,45 @@
       renderizarModulosNormales();
     }
 
-    // SPEAKING ZONE WHATSAPP DIRECTO
     function enviarMensajeWhatsAppDirecto() {
       const text = document.getElementById('speaking-text-msg').value;
-      if(!text) { alert('Por favor escribe tu mensaje o tarea primero.'); return; }
-      const miNumeroWhatsApp = "584125952360";
-      const url = `https://api.whatsapp.com/send?phone=${miNumeroWhatsApp}&text=${encodeURIComponent('Hola Owner, te envío mi mensaje desde el Speaking Zone:\n\n' + text)}`;
-      window.open(url, '_blank');
+      if(!text) { alert('Escribe tu mensaje.'); return; }
+      window.open(`https://api.whatsapp.com/send?phone=584125952360&text=${encodeURIComponent('Hola Owner, envío mi mensaje:\n\n' + text)}`, '_blank');
     }
 
-    // PERFIL DE USUARIO PERMANENTE
     function cargarPerfil() {
       const savedPerfil = JSON.parse(localStorage.getItem('perfilUsuarioLocal') || 'null');
       if(savedPerfil) {
         document.getElementById('profile-name-display').innerText = savedPerfil.nombre;
         document.getElementById('profile-desc-display').innerText = savedPerfil.desc;
         document.getElementById('profile-initial').innerText = savedPerfil.nombre.charAt(0).toUpperCase();
-        if(savedPerfil.photo) {
-          document.getElementById('profile-photo-container').innerHTML = `<img src="${savedPerfil.photo}" style="width:100%; height:100%; object-fit:cover;">`;
-        }
+        if(savedPerfil.photo) document.getElementById('profile-photo-container').innerHTML = `<img src="${savedPerfil.photo}" style="width:100%; height:100%; object-fit:cover;">`;
       }
       let score = parseInt(localStorage.getItem('user_quiz_score') || '0');
       document.getElementById('profile-score-quiz').innerText = `${score} / 24 Puntos`;
-      let lvl = "Nivel A1 (Básico Initial)";
-      if(score >= 18) lvl = "Nivel C1 - C2 (Avanzado)";
-      else if(score >= 10) lvl = "Nivel B1 - B2 (Intermedio)";
-      document.getElementById('profile-level-tag').innerText = lvl;
     }
 
-    function abrirConfigPerfil() {
-      document.getElementById('configPerfilModal').style.display = 'flex';
-    }
-
+    function abrirConfigPerfil() { document.getElementById('configPerfilModal').style.display = 'flex'; }
     function guardarPerfilEstudiante() {
       const name = document.getElementById('input-edit-name').value;
       const desc = document.getElementById('input-edit-desc').value;
-      const photoInput = document.getElementById('input-edit-photo');
-
       let currentPerfil = JSON.parse(localStorage.getItem('perfilUsuarioLocal') || '{"nombre":"Estudiante Liroy","desc":"Nivel A1"}');
       if(name) currentPerfil.nombre = name;
       if(desc) currentPerfil.desc = desc;
-
-      if(photoInput.files && photoInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          currentPerfil.photo = e.target.result;
-          localStorage.setItem('perfilUsuarioLocal', JSON.stringify(currentPerfil));
-          cargarPerfil();
-        };
-        reader.readAsDataURL(photoInput.files[0]);
-      } else {
-        localStorage.setItem('perfilUsuarioLocal', JSON.stringify(currentPerfil));
-        cargarPerfil();
-      }
+      localStorage.setItem('perfilUsuarioLocal', JSON.stringify(currentPerfil));
+      cargarPerfil();
       cerrarModales();
-      alert('¡Perfil guardado con éxito!');
+      alert('Perfil guardado.');
     }
 
-    // BANCO MASIVO DE PREGUNTAS (ALEATORIEDAD COMPLETA)
     const bancoPreguntasGrande = [
-      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular lleva -es." },
-      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "You lleva 'were' en pasado." },
-      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "An antes de vocal." },
-      { q: "4. Opuesto de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "Small es pequeño." },
-      { q: "5. 'If I ___ time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Pasado simple en condicional II." },
-      { q: "6. 'She has been working here ___ 2020.'", options: ["since", "for", "during"], correct: "since", reason: "Since para punto de inicio." },
-      { q: "7. 'The report ___ by the manager.'", options: ["was written", "wrote", "is written"], correct: "was written", reason: "Voz pasiva en pasado." },
-      { q: "8. 'He studied, ___ he passed.'", options: ["therefore", "because", "although"], correct: "therefore", reason: "Conector de consecuencia." },
-      { q: "9. 'Hardly ___ entered when the phone rang.'", options: ["had I", "I had", "did I"], correct: "had I", reason: "Inversión por adverbio negativo." },
-      { q: "10. 'Seldom ___ such a show.'", options: ["have I seen", "I saw", "saw I"], correct: "have I seen", reason: "Inversión formal." },
-      { q: "11. 'Were it not for you, I ___ in time.'", options: ["wouldn't have finished", "finish", "hadn't finished"], correct: "wouldn't have finished", reason: "Tercer condicional invertido." },
-      { q: "12. 'To bite the bullet':", options: ["Face a tough situation", "Delay", "Get angry"], correct: "Face a tough situation", reason: "Afrontar algo difícil." },
-      { q: "13. 'They ___ playing football now.'", options: ["are", "is", "were"], correct: "are", reason: "Presente continuo para 'They'." },
-      { q: "14. 'He is ___ than his brother.'", options: ["taller", "tall", "tallest"], correct: "taller", reason: "Comparativo de superioridad." },
-      { q: "15. 'We have lived here ___ five years.'", options: ["for", "since", "from"], correct: "for", reason: "For para la duración de tiempo." },
-      { q: "16. 'What ___ you do if you win?'", options: ["will", "did", "have"], correct: "will", reason: "Primer condicional futuro." },
-      { q: "17. 'You ___ stop at the red light.'", options: ["must", "might", "could"], correct: "must", reason: "Obligación / Regla de tránsito." },
-      { q: "18. 'This book is ___ than that one.'", options: ["more interesting", "interesting", "most interesting"], correct: "more interesting", reason: "Comparativo de adjetivo largo." },
-      { q: "19. 'I am looking forward to ___ you.'", options: ["seeing", "see", "saw"], correct: "seeing", reason: "'Look forward to' exige gerundio (-ing)." },
-      { q: "20. 'By next year, I ___ my degree.'", options: ["will have finished", "finish", "finished"], correct: "will have finished", reason: "Futuro perfecto para acción completada." }
+      { q: "1. 'She ___ to school every day.'", options: ["goes", "go", "going"], correct: "goes", reason: "3ª persona singular." },
+      { q: "2. 'Where ___ you yesterday?'", options: ["were", "was", "are"], correct: "were", reason: "Pasado con 'You'." },
+      { q: "3. 'I have ___ apple.'", options: ["an", "a", "the"], correct: "an", reason: "Antes de vocal." },
+      { q: "4. Opuesto de 'Big':", options: ["Small", "Fast", "Tall"], correct: "Small", reason: "Pequeño." },
+      { q: "5. 'If I ___ time, I would learn German.'", options: ["had", "have", "would have"], correct: "had", reason: "Condicional II." }
     ];
-
-    let preguntasPartida = [];
-    let indice = 0, scoreActual = 0;
-
+    let preguntasPartida = [], indice = 0, scoreActual = 0;
     function mezclar(arr) {
       let array = [...arr];
       for (let i = array.length - 1; i > 0; i--) {
@@ -1277,52 +1121,39 @@
       }
       return array;
     }
-
     function iniciarQuiz() {
-      let preguntasSeleccionadas = mezclar(bancoPreguntasGrande).slice(0, 12);
-      preguntasPartida = preguntasSeleccionadas.map(p => {
-        return { ...p, optionsShuffled: mezclar(p.options) };
-      });
+      preguntasPartida = mezclar(bancoPreguntasGrande).slice(0, 5).map(p => ({ ...p, optionsShuffled: mezclar(p.options) }));
       indice = 0; scoreActual = 0;
       document.getElementById('quizModal').style.display = 'flex';
       mostrarQ();
     }
-
     function mostrarQ() {
       document.getElementById('feedbackBox').style.display = 'none';
       document.getElementById('btnNextQuestion').style.display = 'none';
-
       if(indice >= preguntasPartida.length) {
         let prev = parseInt(localStorage.getItem('user_quiz_score') || '0');
-        let totalAcumulado = Math.min(24, prev + scoreActual);
-        localStorage.setItem('user_quiz_score', totalAcumulado);
+        let total = Math.min(24, prev + scoreActual);
+        localStorage.setItem('user_quiz_score', total);
         cargarPerfil();
-        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3 style="color:#f8fafc;">Quiz Finalizado</h3><p style="margin:10px 0;">Obtuviste ${scoreActual} puntos en esta sesión.</p><p style="margin:10px 0;">Score Acumulado Total en Perfil: <strong>${totalAcumulado} / 24 Puntos</strong></p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
+        document.getElementById('quizCard').innerHTML = `<div style="text-align:center;"><h3>Quiz Finalizado</h3><p>Puntos obtenidos: ${scoreActual}</p><button class="btn" onclick="location.reload()">Regresar</button></div>`;
         return;
       }
-
       const q = preguntasPartida[indice];
       document.getElementById('quizProgress').innerText = `Pregunta ${indice + 1} de ${preguntasPartida.length}`;
       document.getElementById('questionText').innerText = q.q;
       const c = document.getElementById('optionsContainer'); c.innerHTML = '';
-
       q.optionsShuffled.forEach(opt => {
         const b = document.createElement('button'); b.className = 'option-btn'; b.innerText = opt;
         b.onclick = () => {
           document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
           const fb = document.getElementById('feedbackBox');
-          if(opt === q.correct) {
-            scoreActual++;
-            fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Felicidades, Respuesta Correcta! 🎉</strong><br>${q.reason}`;
-          } else {
-            fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Respuesta Incorrecta ❌</strong><br>Correcta: ${q.correct}. ${q.reason}`;
-          }
+          if(opt === q.correct) { scoreActual++; fb.className = 'feedback-box correct'; fb.innerHTML = `<strong>¡Correcto! 🎉</strong>`; }
+          else { fb.className = 'feedback-box incorrect'; fb.innerHTML = `<strong>Incorrecto ❌ (Correcta: ${q.correct})</strong>`; }
           fb.style.display = 'block'; document.getElementById('btnNextQuestion').style.display = 'block';
         };
         c.appendChild(b);
       });
     }
-
     function siguientePregunta() { indice++; mostrarQ(); }
 
     function renderizarLeaderboards() {
@@ -1330,26 +1161,13 @@
       if(!container) return;
       container.innerHTML = '';
       let lbData = JSON.parse(localStorage.getItem('liroy_leaderboard_data') || '{}');
-
       for (let m = 1; m <= 9; m++) {
         let html = `<div class="lb-folder-card"><div class="lb-folder-header" onclick="toggleFolder('lb-mod${m}')"><span><i class="fa-solid fa-trophy"></i> Leaderboard - Módulo ${m}</span><i class="fa-solid fa-chevron-down"></i></div><div class="lb-folder-content" id="lb-mod${m}"><div class="levels-lb-grid">`;
         niveles.forEach(lvl => {
-          const modKey = `mod_${m}`;
-          const topList = (lbData[modKey] || []).slice(0, 3);
-          
-          html += `
-            <div class="level-lb-card">
-              <h4>Nivel ${lvl}</h4>
-              <ul class="lb-top-list">`;
-          
-          if(topList.length === 0) {
-            html += `<li class="lb-top-item"><span>Sin registros aún</span><strong>0 Pts</strong></li>`;
-          } else {
-            topList.forEach((item, idx) => {
-              const medals = ['🥇', '🥈', '🥉'];
-              html += `<li class="lb-top-item"><span>${medals[idx] || '•'} ${item.name}</span><strong>${item.score} Pts</strong></li>`;
-            });
-          }
+          const topList = (lbData[`mod_${m}`] || []).slice(0, 3);
+          html += `<div class="level-lb-card"><h4>Nivel ${lvl}</h4><ul class="lb-top-list">`;
+          if(topList.length === 0) html += `<li class="lb-top-item"><span>Sin registros</span><strong>0 Pts</strong></li>`;
+          else topList.forEach((item, idx) => { html += `<li class="lb-top-item"><span>${['🥇','🥈','🥉'][idx]} ${item.name}</span><strong>${item.score} Pts</strong></li>`; });
           html += `</ul></div>`;
         });
         html += `</div></div></div>`;
@@ -1367,26 +1185,13 @@
         document.getElementById('week-timer-display').innerText = `${days}d : ${h}h : ${m}m : ${s}s`;
         seg--;
       }, 1000);
-      alert(`¡Contador iniciado por ${d} días!`);
+      alert('Contador iniciado.');
     }
-
-    function detenerContador() { 
-      if(timerInterval) clearInterval(timerInterval); 
-      document.getElementById('week-timer-display').innerText = "OFFLINE (00d : 00h : 00m : 00s)"; 
-      alert('Contador detenido.');
-    }
-
-    function actualizarQuizzesEstudiantes() {
-      localStorage.setItem('user_quiz_score', '0');
-      cargarPerfil();
-      alert('¡Quizzes reseteados con éxito!');
-    }
-
+    function detenerContador() { if(timerInterval) clearInterval(timerInterval); document.getElementById('week-timer-display').innerText = "OFFLINE"; }
+    function actualizarQuizzesEstudiantes() { localStorage.setItem('user_quiz_score', '0'); cargarPerfil(); alert('Reseteado.'); }
     function procesarCertificado() {
-      const code = document.getElementById('cert-code-input').value;
-      if(code === "CERT-OWNER-2026") {
-        document.getElementById('cert-announcement-box').style.display = 'block';
-      } else alert('Clave de certificado inválida.');
+      if(document.getElementById('cert-code-input').value === "CERT-OWNER-2026") document.getElementById('cert-announcement-box').style.display = 'block';
+      else alert('Clave inválida.');
     }
   </script>
 </body>
