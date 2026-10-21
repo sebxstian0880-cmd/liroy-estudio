@@ -132,20 +132,24 @@
       border: 2px dashed #f59e0b; border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem;
     }
 
-    /* ESTILOS DEL REPORT EN PDF (FORMATO HOJA BOLETÍN OFICIAL) */
+    /* ESTILOS DEL REPORT EN PDF (FORMATO HOJA COMPLETA PROFESIONAL Y ELEGANTE) */
     #pdf-printable-area {
       background: #ffffff !important;
       color: #0f172a !important;
-      padding: 30px !important;
-      border-radius: 0px !important;
-      border: 2px solid #0f172a !important;
+      padding: 40px !important;
       font-family: Arial, Helvetica, sans-serif !important;
+      width: 794px !important;
+      min-height: 1050px !important;
+      box-sizing: border-box !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    #pdf-printable-area h2 { color: #0f172a !important; font-size: 1.8rem !important; margin-bottom: 2px !important; }
+    #pdf-printable-area h2 { color: #0f172a !important; font-size: 2rem !important; margin-bottom: 4px !important; letter-spacing: 1px; }
     #pdf-printable-area p { color: #334155 !important; }
-    .pdf-table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }
-    .pdf-table th { background: #0f172a; color: #ffffff; padding: 8px 12px; text-align: left; font-size: 0.85rem; border: 1px solid #0f172a; }
-    .pdf-table td { padding: 8px 12px; border: 1px solid #cbd5e1; font-size: 0.85rem; color: #0f172a; }
+    .pdf-table { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 25px; }
+    .pdf-table th { background: #0f172a; color: #ffffff; padding: 12px 16px; text-align: left; font-size: 0.95rem; border: 1px solid #0f172a; }
+    .pdf-table td { padding: 11px 16px; border: 1px solid #cbd5e1; font-size: 0.95rem; color: #0f172a; }
   </style>
 </head>
 <body>
@@ -581,6 +585,19 @@
         <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Comentarios generales de la clase y observaciones..."></textarea>
       </div>
 
+      <!-- TARJETA CON GUÍA VISUAL / DIBUJO DE INSTRUCCIONES PARA ADJUNTAR EL PDF EN WHATSAPP -->
+      <div style="background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-top: 20px; display: flex; align-items: center; gap: 15px;">
+        <div style="font-size: 2.8rem; color: #25d366; text-align: center; min-width: 50px;">
+          <i class="fa-solid fa-paperclip"></i>
+        </div>
+        <div>
+          <h5 style="color: #f59e0b; font-size: 0.95rem; margin-bottom: 3px;"><i class="fa-solid fa-circle-info"></i> ¿Cómo enviar el reporte al Owner?</h5>
+          <p style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.4;">
+            Al presionar el botón abajo, se <strong>descargará el PDF de hoja completa</strong> y se abrirá WhatsApp con el mensaje de notas redactado. Toca el icono de <strong>Clip (📎 Archivo)</strong> en WhatsApp para adjuntar el PDF descargado si deseas.
+          </p>
+        </div>
+      </div>
+
       <!-- BOTONES DE ACCIÓN -->
       <div style="margin-top: 1.5rem; display: flex; gap: 10px; flex-wrap: wrap;">
         <button class="btn" style="background: #16a34a; flex: 1;" onclick="procesarGuardarYGenerarPDF()"><i class="fa-solid fa-file-pdf"></i> Guardar y Generar Boletín PDF</button>
@@ -589,30 +606,37 @@
     </div>
   </div>
 
-  <!-- PLANTILLA OCULTA LIMPIA TIPO BOLETÍN/ACTA DIPLOMÁTICA PARA EL PDF (SIN ELEMENTOS DE PÁGINA NI IA) -->
+  <!-- PLANTILLA OCULTA LIMPIA DE HOJA COMPLETA A4 PARA EL PDF -->
   <div style="display: none;">
     <div id="pdf-printable-area">
-      <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 10px; margin-bottom: 20px;">
-        <h2>LIROY ESTUDIO DE IDIOMAS</h2>
-        <p style="font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-top: 4px;">Boletín Oficial de Calificaciones Académicas</p>
-        <p id="pdf-header-teacher-info" style="font-size: 0.85rem; color: #475569; margin-top: 6px;"></p>
-      </div>
-
-      <div id="pdf-table-wrapper">
-        <!-- Renderizado dinámico de la tabla limpia de notas -->
-      </div>
-
-      <div style="margin-top: 25px; border-top: 1px solid #cbd5e1; padding-top: 10px;">
-        <p style="font-weight: bold; font-size: 0.9rem;">Observaciones del Docente:</p>
-        <p id="pdf-observations-display" style="font-size: 0.85rem; font-style: italic; margin-top: 4px; color: #334155;"></p>
-      </div>
-
-      <div style="margin-top: 50px; display: flex; justify-content: space-around; text-align: center;">
-        <div style="border-top: 1px solid #0f172a; width: 200px; padding-top: 5px; font-size: 0.8rem; font-weight: bold;">
-          Firma / Sello del Docente
+      <div>
+        <!-- ENCABEZADO CON INSIGNIA / LOGOTIPO DE ACADEMIA -->
+        <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 15px; margin-bottom: 25px;">
+          <div style="font-size: 3rem; color: #d97706; margin-bottom: 5px;"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h2>LIROY ESTUDIO DE IDIOMAS</h2>
+          <p style="font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.95rem; margin-top: 5px; color: #0f172a !important;">Boletín Oficial de Calificaciones Académicas</p>
+          <p id="pdf-header-teacher-info" style="font-size: 0.9rem; color: #475569 !important; margin-top: 8px; font-weight: 600;"></p>
         </div>
-        <div style="border-top: 1px solid #0f172a; width: 200px; padding-top: 5px; font-size: 0.8rem; font-weight: bold;">
-          Dirección Académica
+
+        <!-- TABLA COMPLETA DE ALUMNOS -->
+        <div id="pdf-table-wrapper">
+          <!-- Renderizado dinámico de la tabla de notas -->
+        </div>
+
+        <!-- SECCIÓN DE OBSERVACIONES -->
+        <div style="margin-top: 30px; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px; background: #f8fafc;">
+          <p style="font-weight: bold; font-size: 0.95rem; color: #0f172a !important; margin-bottom: 5px;"><i class="fa-solid fa-comment-dots"></i> Observaciones del Docente:</p>
+          <p id="pdf-observations-display" style="font-size: 0.9rem; font-style: italic; color: #334155 !important; line-height: 1.5;"></p>
+        </div>
+      </div>
+
+      <!-- PIE DE PÁGINA Y FIRMAS PARA COMPLETAR LA HOJA A4 -->
+      <div style="margin-top: 60px; border-top: 2px solid #e2e8f0; padding-top: 40px; display: flex; justify-content: space-around; text-align: center;">
+        <div style="border-top: 1px solid #0f172a; width: 220px; padding-top: 8px; font-size: 0.85rem; font-weight: bold; color: #0f172a !important;">
+          Firma del Docente
+        </div>
+        <div style="border-top: 1px solid #0f172a; width: 220px; padding-top: 8px; font-size: 0.85rem; font-weight: bold; color: #0f172a !important;">
+          Dirección Académica Liroy
         </div>
       </div>
     </div>
@@ -954,11 +978,11 @@
       localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
 
       // Preparar el encabezado e información oficial del boletín
-      document.getElementById('pdf-header-teacher-info').innerText = `Docente a cargo: ${folder.name} | Módulo Evaluado: Módulo ${moduleNum}`;
-      document.getElementById('pdf-observations-display').innerText = observations || 'Sin observaciones registradas.';
+      document.getElementById('pdf-header-teacher-info').innerText = `Docente: ${folder.name} | Módulo Evaluado: Módulo ${moduleNum}`;
+      document.getElementById('pdf-observations-display').innerText = observations || 'Sin observaciones adicionales registradas para esta clase.';
 
       // Armar la tabla limpia de notas
-      let tableHTML = `<table class="pdf-table"><thead><tr><th style="width: 15%;">#</th><th>Nombre del Estudiante</th><th style="width: 30%; text-align: center;">Calificación / Puntos</th></tr></thead><tbody>`;
+      let tableHTML = `<table class="pdf-table"><thead><tr><th style="width: 12%;">#</th><th>Nombre del Estudiante</th><th style="width: 30%; text-align: center;">Calificación / Puntos</th></tr></thead><tbody>`;
       
       if(validStudentsForPDF.length === 0) {
         tableHTML += `<tr><td colspan="3" style="text-align: center;">No hay estudiantes registrados en esta sesión.</td></tr>`;
@@ -970,22 +994,25 @@
       tableHTML += `</tbody></table>`;
       document.getElementById('pdf-table-wrapper').innerHTML = tableHTML;
 
-      // Renderizar y descargar el PDF formal
+      // Renderizar y descargar el PDF formal en 1 HOJA COMPLETA A4
       const elementToPDF = document.getElementById('pdf-printable-area');
       const opt = {
-        margin:       0.5,
+        margin:       0,
         filename:     `Boletin_Liroy_Mod${moduleNum}_${folder.name.replace(/\s+/g, '_')}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
       };
 
       html2pdf().from(elementToPDF).set(opt).save().then(() => {
-        const enviarWhatsApp = confirm("🎉 ¡Notas guardadas y boletín de notas generado!\n\n¿Deseas enviar el resumen directamente al Owner por WhatsApp?");
+        const enviarWhatsApp = confirm("🎉 ¡Notas guardadas y boletín PDF generado!\n\n¿Deseas enviar el resumen al Owner por WhatsApp?");
         if(enviarWhatsApp) {
           const numeroOwner = "584125952360";
           let listaMsg = validStudentsForPDF.map(s => `- ${s.name}: ${s.score} Pts`).join('\n');
-          const mensaje = `Hola Owner Liroy, envío el acta de notas de la clase de ${folder.name} (Módulo ${moduleNum}):\n\n*ALUMNOS Y CALIFICACIONES:*\n${listaMsg}\n\n*Observaciones:* ${observations}\n\n📎 *(Adjunto el boletín PDF oficial)*`;
+          
+          // Mensaje de WhatsApp totalmente limpio
+          const mensaje = `Hola Owner Liroy, envío la lista de notas de la clase de ${folder.name} (Módulo ${moduleNum}):\n\n*CALIFICACIONES:*\n${listaMsg}\n\n*Observaciones:* ${observations}`;
+          
           window.open(`https://api.whatsapp.com/send?phone=${numeroOwner}&text=${encodeURIComponent(mensaje)}`, '_blank');
         }
         cerrarModales();
