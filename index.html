@@ -344,10 +344,10 @@
           <button class="btn" style="background:#2563eb; margin-top:8px;" onclick="subirVideoHistorialArchivo()">Publicar Archivo en Historial</button>
         </div>
 
-        <!-- MÓDULO: CARPETAS Y GESTIÓN DE NOTAS DIRECTA -->
+        <!-- MÓDULO: CARPETAS DOCENTES Y ENVÍO DIRECTO AL OWNER POR WHATSAPP -->
         <div id="teacher-folders-section" style="background: #0f172a; padding: 1.8rem; border-radius: 12px; border: 1px solid #334155;">
-          <h3 style="color: #f8fafc; margin-bottom: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #f59e0b;"></i> Carpetas de Evaluación (Límite 10 Estudiantes)</h3>
-          <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">Crea tu carpeta con contraseña y registra las puntuaciones de tus alumnos directamente en la página.</p>
+          <h3 style="color: #f8fafc; margin-bottom: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #f59e0b;"></i> Carpetas de Evaluación Docente</h3>
+          <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.2rem;">Ingresa el nombre del alumno, su puntuación y tu opinión. Al presionar el botón, el reporte completo se enviará directamente al WhatsApp del Owner para su revisión.</p>
 
           <button class="btn" style="background: #16a34a; width: auto; margin-bottom: 1.2rem;" onclick="abrirModalCrearCarpeta()"><i class="fa-solid fa-folder-plus"></i> Crear Nueva Carpeta de Clases</button>
 
@@ -490,7 +490,7 @@
     </div>
   </div>
 
-  <!-- MODALES DE CARPETAS Y GESTIÓN DE NOTAS DIRECTAS -->
+  <!-- MODALES DE CARPETAS Y REGISTRO DE NOTAS -->
   <div class="modal-overlay" id="modalCrearCarpeta">
     <div class="modal-card" style="max-width: 420px;">
       <h3 style="color: #f8fafc; margin-bottom: 1rem;"><i class="fa-solid fa-folder-plus"></i> Registrar Carpeta Docente</h3>
@@ -535,16 +535,16 @@
     </div>
   </div>
 
-  <!-- FORMULARIO DIRECTO PARA INGRESAR NOTAS (SIN PDF) -->
+  <!-- FORMULARIO DIRECTO PARA INGRESAR NOTAS Y ENVIAR AL OWNER VÍA WHATSAPP -->
   <div class="modal-overlay" id="modalFormularioEvaluacion">
     <div class="modal-card" style="max-width: 750px; max-height: 90vh; overflow-y: auto;">
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-bottom: 15px;">
-        <h3 id="active-folder-heading" style="color: #f8fafc;"><i class="fa-solid fa-users"></i> Registro de Notas de Alumnos</h3>
+        <h3 id="active-folder-heading" style="color: #f8fafc;"><i class="fa-solid fa-users"></i> Registro de Notas para el Owner</h3>
         <button onclick="abrirModalCambiarPassCarpetaDesdeDentro()" style="background: #d97706; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-key"></i> Cambiar Contraseña</button>
       </div>
 
       <div style="margin-bottom: 15px;">
-        <label style="font-size: 0.85rem; font-weight: bold; color: #f59e0b;">Seleccionar Módulo a Evaluar:</label>
+        <label style="font-size: 0.85rem; font-weight: bold; color: #f59e0b;">Seleccionar Módulo Evaluado:</label>
         <select id="eval-module-select" class="input-pass" style="max-width: 250px;">
           <option value="1">Módulo 1</option><option value="2">Módulo 2</option><option value="3">Módulo 3</option>
           <option value="4">Módulo 4</option><option value="5">Módulo 5</option><option value="6">Módulo 6</option>
@@ -560,13 +560,13 @@
       </div>
 
       <div style="margin-top: 15px;">
-        <label style="font-size: 0.85rem; font-weight: bold; color: #94a3b8;">Observaciones Generales de la Clase:</label>
-        <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Escribe aquí los comentarios u observaciones del profesor..."></textarea>
+        <label style="font-size: 0.85rem; font-weight: bold; color: #94a3b8;">Opinión del Profesor / Observaciones Generales:</label>
+        <textarea id="eval-observations" class="input-text-pro" rows="3" placeholder="Escribe tu opinión personal o comentarios del desempeño de tus alumnos aquí..."></textarea>
       </div>
 
       <!-- BOTONES DE ACCIÓN -->
       <div style="margin-top: 1.5rem; display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn" style="background: #16a34a; flex: 1;" onclick="procesarGuardarDirectoEnPagina()"><i class="fa-solid fa-floppy-disk"></i> Guardar Notas en la Página</button>
+        <button class="btn" style="background: #25d366; flex: 1; font-size: 1rem;" onclick="enviarNotasDirectasAlOwnerWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Enviar Calificaciones y Opinión al Owner (WhatsApp)</button>
         <button class="btn" style="background: #334155; width: auto;" onclick="cerrarModales()">Cerrar</button>
       </div>
     </div>
@@ -774,7 +774,7 @@
       } else alert('Selecciona un video.');
     }
 
-    // GESTIÓN DE CARPETAS Y REGISTRO DIRECTO DE NOTAS DE HASTA 10 ESTUDIANTES
+    // GESTIÓN DE CARPETAS Y ENVÍO EXCLUSIVO AL OWNER VÍA WHATSAPP
     function abrirModalCrearCarpeta() {
       document.getElementById('new-folder-teacher-name').value = '';
       document.getElementById('new-folder-pass').value = '';
@@ -882,41 +882,44 @@
       }
     }
 
-    function procesarGuardarDirectoEnPagina() {
+    // ENVÍO EXCLUSIVO DE CALIFICACIONES Y OPINIÓN DEL PROFESOR AL OWNER POR WHATSAPP
+    function enviarNotasDirectasAlOwnerWhatsApp() {
       const moduleNum = document.getElementById('eval-module-select').value;
-      const observations = document.getElementById('eval-observations').value;
+      const observations = document.getElementById('eval-observations').value.trim();
       let folder = teacherFolders.find(f => f.id === currentActiveFolderId);
 
       let updatedStudents = [];
+      let validList = [];
+
       for(let i=0; i<10; i++) {
         let nameVal = document.getElementById(`est-name-${i}`).value.trim();
         let scoreVal = document.getElementById(`est-score-${i}`).value.trim();
         updatedStudents.push({ name: nameVal, score: scoreVal });
 
-        // Guardado directo en el Leaderboard de la página
-        if(nameVal && scoreVal !== '') {
-          actualizarLeaderboardAutomatico(moduleNum, nameVal, parseInt(scoreVal) || 0);
+        if(nameVal) {
+          validList.push(`- ${nameVal}: ${scoreVal !== '' ? scoreVal + ' Pts' : 'Sin Nota'}`);
         }
       }
 
+      // Guardar el estado local de la carpeta del profesor (sin tocar la web/leaderboard pública)
       folder.students = updatedStudents;
       folder.observations = observations;
       localStorage.setItem('liroy_teacher_folders', JSON.stringify(teacherFolders));
 
-      renderizerLeaderboards();
-      alert(`✅ ¡Notas guardadas exitosamente en la página para el Módulo ${moduleNum}!`);
-      cerrarModales();
-    }
+      if(validList.length === 0 && !observations) {
+        alert('Por favor ingresa la nota de al menos un estudiante o tu opinión antes de enviar.');
+        return;
+      }
 
-    function actualizarLeaderboardAutomatico(moduleNum, studentName, points) {
-      let lbData = JSON.parse(localStorage.getItem('liroy_leaderboard_data') || '{}');
-      const keyMod = `mod_${moduleNum}`;
-      if(!lbData[keyMod]) lbData[keyMod] = [];
-      let studentRecord = lbData[keyMod].find(item => item.name.toLowerCase() === studentName.toLowerCase());
-      if(studentRecord) { studentRecord.score += points; }
-      else { lbData[keyMod].push({ name: studentName, score: points }); }
-      lbData[keyMod].sort((a, b) => b.score - a.score);
-      localStorage.setItem('liroy_leaderboard_data', JSON.stringify(lbData));
+      const numeroOwner = "584125952360";
+      let mensaje = `📌 *REPORTE DOCENTE DE EVALUACIÓN*\n`;
+      mensaje += `👨‍🏫 *Profesor:* ${folder.name}\n`;
+      mensaje += `📚 *Módulo Evaluado:* Módulo ${moduleNum}\n\n`;
+      mensaje += `📝 *CALIFICACIONES DE ALUMNOS:*\n${validList.length > 0 ? validList.join('\n') : 'Sin alumnos registrados'}\n\n`;
+      mensaje += `🗣️ *OPINIÓN / OBSERVACIONES DEL PROFESOR:*\n${observations || 'Sin observaciones registradas.'}`;
+
+      window.open(`https://api.whatsapp.com/send?phone=${numeroOwner}&text=${encodeURIComponent(mensaje)}`, '_blank');
+      cerrarModales();
     }
 
     // PANEL OWNER
