@@ -344,12 +344,13 @@
       const nivel = document.getElementById('nivel').value;
       const experiencia = document.getElementById('experiencia').value;
 
-      const mensaje = `Hola, me dirijo a ustedes desde el portal oficial de Liroy Estudio de Idiomas. Deseo agendar mi sesión de nivelación y clase de prueba gratuita. Mis datos son los siguientes:
+      const mensaje = `*Solicitud de Clase de Prueba — Liroy Estudio*%0A%0A` +
+                      `Estimado equipo, me pongo en contacto para formalizar mi solicitud de clase de cortesía. Mis datos de registro son los siguientes:%0A%0A` +
                       `👤 *Nombre:* ${nombre}%0A` +
                       `🎂 *Edad:* ${edad} años%0A` +
-                      `🌍 *Idioma:* ${idioma}%0A` +
-                      `📊 *Nivel:* ${nivel}%0A` +
-                      `⏳ *Experiencia:* ${experiencia}`;
+                      `🌍 *Idioma de interés:* ${idioma}%0A` +
+                      `📊 *Nivel seleccionado:* ${nivel}%0A` +
+                      `⏳ *Experiencia previa:* ${experiencia}`;
 
       const url = `https://wa.me/${telefonoAcademia}?text=${mensaje}`;
       window.open(url, '_blank');
