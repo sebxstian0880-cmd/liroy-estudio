@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liroy Estudio de Idiomas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #071936;
+      --bg-gradient: radial-gradient(circle at top right, #0e2d5c, #040d1c);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --primary: #d91e36;
+      --glow: rgba(217, 30, 54, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: var(--bg-gradient);
+      color: #f8fafc;
+      min-height: 100vh;
+      transition: background-color 1.5s ease, color 1s ease;
+      overflow-x: hidden;
+    }
+
+    /* =========================================
+       1. PANTALLA DE ENTRADA (SÍ / NO)
+       ========================================= */
+    #entry-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #0f2347 0%, #030712 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      overflow-y: auto;
+      transition: opacity 0.8s ease, background 1.5s ease;
+    }
+
+    #entry-screen.sad-theme {
+      background: radial-gradient(circle at center, #0c1424 0%, #02040a 100%);
+    }
+
+    #entry-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .entry-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      padding: 38px 30px;
+      border-radius: 24px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      margin: auto;
+    }
+
+    .tag-academy {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+    }
+
+    .entry-card h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 28px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .btn-choice {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-si {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: white;
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+    }
+    .btn-si:hover { transform: translateY(-2px); }
+
+    .btn-no {
+      background: rgba(255, 255, 255, 0.06);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-no:hover { background: rgba(255, 255, 255, 0.12); color: white; }
+
+    /* =========================================
+       2. OJITOS + CUESTIONARIO ANÓNIMO (SI DICE NO)
+       ========================================= */
+    #sad-box {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cute-eyes {
+      width: 150px;
+      height: 75px;
+      margin-bottom: 14px;
+    }
+
+    .eyelid-blink {
+      transform-origin: center 42px;
+      animation: slowBlink 5.2s infinite ease-in-out;
+    }
+
+    @keyframes slowBlink {
+      0%, 42%, 58%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.05); }
+    }
+
+    .sad-box-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .sad-box-text {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    /* Estrellas interactivas */
+    .star-rating {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .star-rating span {
+      color: #334155;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .star-rating span.selected,
+    .star-rating span:hover {
+      color: #facc15;
+      transform: scale(1.15);
+    }
+
+    .feedback-form {
+      width: 100%;
+      text-align: left;
+    }
+
+    .feedback-form select,
+    .feedback-form textarea {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: white;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+
+    .privacy-badge {
+      font-size: 0.75rem;
+      color: #38bdf8;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .sad-actions {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    /* =========================================
+       3. CARGADOR DE PORTALES Y CÁLCULO
+       ========================================= */
+    #portal-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 8888;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, background-color 1.2s ease;
+    }
+
+    #portal-loader.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .loader-circle {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--primary);
+      animation: spin 0.9s linear infinite;
+      box-shadow: 0 0 25px var(--glow);
+      margin-bottom: 18px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    /* =========================================
+       4. INTERFAZ PRINCIPAL Y STORE DE OPINIONES
+       ========================================= */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 6%;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo { font-size: 1.35rem; font-weight: 800; cursor: pointer; }
+    .logo span { color: var(--primary); transition: color 1.2s ease; }
+
+    .portals-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .portal-tab {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .portal-tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px var(--glow);
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .banner-portal {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 5px solid var(--primary);
+      padding: 32px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      transition: border-color 1.2s ease;
+    }
+
+    .banner-portal h2 { font-size: 1.9rem; margin-bottom: 8px; }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 20px;
+    }
+
+    .card-level {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card-level:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+    .price-tag {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 12px 0;
+      transition: color 1.2s ease;
+    }
+
+    .btn-enroll {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      transition: background-color 1.2s ease, opacity 0.2s;
+    }
+    .btn-enroll:hover { opacity: 0.9; }
+
+    /* Estilos de la Store de Opiniones (Tipo Google Play) */
+    .store-header {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      background: rgba(255,255,255,0.04);
+      padding: 24px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .big-score {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .review-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .anon-avatar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .anon-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .helpful-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s;
+    }
+
+    .helpful-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    /* =========================================
+       5. MODALES Y PANEL PRIVADO OWNER
+       ========================================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9500;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 28px;
+      border-radius: 20px;
+      max-width: 450px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-content input, .modal-content select, .modal-content textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0 14px 0;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: white;
+    }
+
+    .modal-content label {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    #owner-secret-panel {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 9000;
+    }
+
+    .btn-owner-access {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. PANTALLA DE DECISIÓN INICIAL -->
+  <div id="entry-screen">
+    <div class="entry-card">
+      <!-- Pregunta inicial -->
+      <div id="ask-box">
+        <span class="tag-academy">Liroy Estudio de Idiomas</span>
+        <h1>¿Estás seguro de que quieres iniciar en Liroy Estudio de Idiomas?</h1>
+        <div class="btn-group">
+          <button class="btn-choice btn-si" onclick="enterAcademy()">Sí, ¡empecemos! 🚀</button>
+          <button class="btn-choice btn-no" onclick="showSadSurvey()">No por ahora</button>
+        </div>
+      </div>
+
+      <!-- Pantalla si dice NO: Ojitos + Cuestionario Anónimo estilo Store -->
+      <div id="sad-box">
+        <svg class="cute-eyes" viewBox="0 0 200 100" id="mouse-eyes">
+          <g class="eyelid-blink">
+            <ellipse cx="60" cy="52" rx="26" ry="32" fill="#38bdf8" />
+            <circle id="pupil-left" cx="55" cy="55" r="11" fill="#041024" />
+            <circle cx="51" cy="49" r="4" fill="#ffffff" opacity="0.85"/>
+          </g>
+          <g class="eyelid-blink">
+            <ellipse cx="140" cy="52" rx="26" ry="32" fill="#38bdf8" />
+            <circle id="pupil-right" cx="135" cy="55" r="11" fill="#041024" />
+            <circle cx="131" cy="49" r="4" fill="#ffffff" opacity="0.85"/>
+          </g>
+        </svg>
+
+        <h2 class="sad-box-title">Antes de irte, tu opinión nos ayuda 🥺</h2>
+        <p class="sad-box-text">
+          Igualmente siempre serás bienvenido. Cuéntanos por qué decidiste no iniciar hoy (se publicará de forma <strong>100% anónima</strong> en nuestro muro de reseñas):
+        </p>
+
+        <div class="star-rating" id="star-selector">
+          <span data-val="1" onclick="setRating(1)">★</span>
+          <span data-val="2" onclick="setRating(2)">★</span>
+          <span data-val="3" onclick="setRating(3)">★</span>
+          <span data-val="4" onclick="setRating(4)">★</span>
+          <span data-val="5" onclick="setRating(5)">★</span>
+        </div>
+
+        <div class="feedback-form">
+          <select id="no-reason">
+            <option value="Solo estaba explorando">Solo estaba explorando la página</option>
+            <option value="Falta de tiempo ahora mismo">No tengo tiempo disponible ahora mismo</option>
+            <option value="Presupuesto / Precios">Estoy ajustando mi presupuesto</option>
+            <option value="Busco otro idioma">Busco otro idioma que aún no está</option>
+          </select>
+          <textarea id="no-comment" rows="2" placeholder="Escribe un comentario o sugerencia opcional..."></textarea>
+        </div>
+
+        <div class="privacy-badge">🔒 Cero datos personales filtrados · Publicación Anónima</div>
+
+        <div class="sad-actions">
+          <button class="btn-choice btn-si" style="padding:12px;" onclick="submitAnonymousReview()">Enviar Opinión ⭐</button>
+          <button class="btn-choice btn-no" style="padding:12px;" onclick="enterAcademy()">Mejor sí entro</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ANIMACIÓN DE CARGA / CÁLCULO -->
+  <div id="portal-loader">
+    <div class="loader-circle"></div>
+    <div class="loader-label" id="loader-text">Preparando tu espacio...</div>
+  </div>
+
+  <!-- 3. INTERFAZ PRINCIPAL -->
+  <header>
+    <div class="logo" onclick="location.reload()">LIROY <span>ESTUDIO</span></div>
+    <div class="portals-nav" id="portals-nav"></div>
+  </header>
+
+  <div class="container">
+    <div class="banner-portal">
+      <h2 id="portal-heading">Portal Idiomas</h2>
+      <p id="portal-sub">Selecciona tu nivel ideal.</p>
+    </div>
+
+    <div id="main-content-area"></div>
+  </div>
+
+  <!-- BOTÓN PRIVADO DEL OWNER -->
+  <div id="owner-secret-panel">
+    <button class="btn-owner-access" onclick="openOwnerLogin()">🔑 Owner</button>
+  </div>
+
+  <!-- MODAL INSCRIPCIÓN ESTÁNDAR -->
+  <div id="enroll-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 id="modal-title" style="margin-bottom:10px;">Inscripción</h3>
+      <label>Nombre completo:</label>
+      <input type="text" id="stu-name" placeholder="Tu nombre completo">
+      <label>Edad:</label>
+      <input type="number" id="stu-age" placeholder="Tu edad">
+      <button class="btn-enroll" onclick="confirmEnroll()">Inscribirme ahora ✅</button>
+      <button class="btn-choice btn-no" style="width:100%; margin-top:10px; padding:10px;" onclick="closeModals()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- MODAL CLASES PERSONALIZADAS -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 style="color:#38bdf8; margin-bottom:6px;">⚙️ Clases Personalizadas</h3>
+      <p style="font-size:0.82rem; color:#94a3b8; margin-bottom:12px;">Configura tu plan y calcularemos tu precio estimado automáticamente.</p>
+      
+      <label>Idioma:</label>
+      <select id="custom-lang">
+        <option value="Inglés">Inglés</option>
+        <option value="Portugués">Portugués</option>
+        <option value="Francés">Francés</option>
+      </select>
+
+      <label>País:</label>
+      <input type="text" id="custom-country" placeholder="Ej: Venezuela, Colombia, México...">
+
+      <label>Edad:</label>
+      <input type="number" id="custom-age" placeholder="Ej: 15">
+
+      <label>Días de estudio a la semana:</label>
+      <select id="custom-days">
+        <option value="2">2 días por semana</option>
+        <option value="3">3 días por semana</option>
+        <option value="5">5 días por semana (Intensivo)</option>
+      </select>
+
+      <label>Horas por sesión:</label>
+      <select id="custom-hours">
+        <option value="1">1 hora</option>
+        <option value="1.5">1.5 horas</option>
+        <option value="2">2 horas</option>
+      </select>
+
+      <label>Personalización deseada:</label>
+      <textarea id="custom-focus" rows="2" placeholder="Ej: Conversación rápida, vocabulario técnico, viajes..."></textarea>
+
+      <button class="btn-enroll" onclick="calculateCustomPlan()">Calcular precio estimado 💡</button>
+      <button class="btn-choice btn-no" style="width:100%; margin-top:10px; padding:10px;" onclick="closeModals()">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- MODAL LOGIN OWNER -->
+  <div id="owner-login-modal" class="modal-overlay">
+    <div class="modal-content" style="text-align: center;">
+      <h3 style="color:#38bdf8; margin-bottom:12px;">🔐 Acceso Privado Owner</h3>
+      <input type="password" id="owner-pass" placeholder="Contraseña Maestra" style="text-align:center;">
+      <button class="btn-enroll" onclick="verifyOwner()">Entrar</button>
+      <button class="btn-choice btn-no" style="width:100%; margin-top:10px; padding:10px;" onclick="closeModals()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- PANEL PRIVADO OWNER -->
+  <div id="owner-panel-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 style="color:#38bdf8; margin-bottom:10px;">👑 Panel Privado del Owner</h3>
+      <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:12px;">Activa o desactiva portales:</p>
+      <div id="owner-toggles" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;"></div>
+      <button class="btn-choice btn-no" style="width:100%; padding:10px;" onclick="closeModals()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    const standardLevels = [
+      { title: 'Kids (Menores de 8 años)', price: '$18 / mes', desc: 'Aprendizaje visual, dinámico y juegos interactivos.' },
+      { title: 'Básico (A1 - A2)', price: '$25 / mes', desc: 'Bases gramaticales sólidas y conversación guiada.' },
+      { title: 'Intermedio (B1 - B2)', price: '$35 / mes', desc: 'Fluidez intermedia, modismos y comprensión real.' },
+      { title: 'Avanzado (C1 - C2)', price: '$45 / mes', desc: 'Dominio total, fonética avanzada y certificación.' }
+    ];
+
+    let portals = JSON.parse(localStorage.getItem('liroy_portals_v4')) || [
+      { id: 'en', name: 'Inglés', country: 'Estados Unidos', flag: '🇺🇸', active: true, bgDark: '#071936', gradient: 'radial-gradient(circle at top right, #0e2d5c, #040d1c)', primary: '#d91e36', glow: 'rgba(217, 30, 54, 0.45)', levels: standardLevels },
+      { id: 'pt', name: 'Portugués', country: 'Brasil', flag: '🇧🇷', active: true, bgDark: '#032b16', gradient: 'radial-gradient(circle at top right, #064e28, #02170c)', primary: '#eab308', glow: 'rgba(234, 179, 8, 0.45)', levels: standardLevels },
+      { id: 'fr', name: 'Francés', country: 'Francia', flag: '🇫🇷', active: true, bgDark: '#081436', gradient: 'radial-gradient(circle at top right, #112663, #04091a)', primary: '#ef4444', glow: 'rgba(239, 68, 68, 0.45)', levels: standardLevels },
+      { id: 'custom', name: 'Clases Personalizadas', country: 'A Medida', flag: '⭐', active: true, bgDark: '#22103b', gradient: 'radial-gradient(circle at top right, #4c1d95, #0f071f)', primary: '#a855f7', glow: 'rgba(168, 85, 247, 0.45)', type: 'custom' },
+      { id: 'reviews', name: 'Opiniones (Store)', country: 'Comunidad', flag: '💬', active: true, bgDark: '#0f172a', gradient: 'radial-gradient(circle at top right, #1e293b, #020617)', primary: '#38bdf8', glow: 'rgba(56, 189, 248, 0.4)', type: 'reviews' }
+    ];
+
+    // Base de reseñas anónimas estilo Google Play Store
+    let reviews = JSON.parse(localStorage.getItem('liroy_reviews_v1')) || [
+      { id: 1, stars: 5, reason: 'Solo estaba explorando', comment: 'Me encantó el diseño de los portales y los precios están súper claros. ¡Vuelvo pronto a inscribirme!', likes: 14, date: 'Hace 2 días' },
+      { id: 2, stars: 4, reason: 'Falta de tiempo ahora mismo', comment: 'Muy buena idea la de las clases personalizadas, apenas libere mis tardes entro al módulo de Inglés.', likes: 8, date: 'Ayer' }
+    ];
+
+    let currentId = 'en';
+    let selectedPlan = '';
+    let selectedStars = 5;
+
+    // Seguimiento de ojos con el cursor
+    window.addEventListener('mousemove', (e) => {
+      const box = document.getElementById('mouse-eyes');
+      if (!box) return;
+      const rect = box.getBoundingClientRect();
+      const x = e.clientX - (rect.left + rect.width / 2);
+      const y = e.clientY - (rect.top + rect.height / 2);
+      const moveX = Math.max(-6, Math.min(6, x / 15));
+      const moveY = Math.max(-6, Math.min(6, y / 15));
+
+      document.getElementById('pupil-left').setAttribute('cx', 55 + moveX);
+      document.getElementById('pupil-left').setAttribute('cy', 55 + moveY);
+      document.getElementById('pupil-right').setAttribute('cx', 135 + moveX);
+      document.getElementById('pupil-right').setAttribute('cy', 55 + moveY);
+    });
+
+    function showSadSurvey() {
+      document.getElementById('entry-screen').classList.add('sad-theme');
+      document.getElementById('ask-box').style.display = 'none';
+      document.getElementById('sad-box').style.display = 'flex';
+      setRating(5);
+    }
+
+    function setRating(val) {
+      selectedStars = val;
+      document.querySelectorAll('#star-selector span').forEach(s => {
+        s.classList.toggle('selected', parseInt(s.dataset.val) <= val);
+      });
+    }
+
+    function submitAnonymousReview() {
+      const reason = document.getElementById('no-reason').value;
+      const comment = document.getElementById('no-comment').value.trim() || 'Sin comentario adicional.';
+
+      reviews.unshift({
+        id: Date.now(),
+        stars: selectedStars,
+        reason: reason,
+        comment: comment,
+        likes: 0,
+        date: 'Justo ahora'
+      });
+
+      localStorage.setItem('liroy_reviews_v1', JSON.stringify(reviews));
+      alert('✅ ¡Gracias por tu opinión anónima! Se ha publicado en nuestro apartado de reseñas sin ningún dato personal.');
+      
+      // Entrar directamente al apartado de Opiniones (Store) para que vea su reseña publicada o pueda salir
+      enterAcademy('reviews');
+    }
+
+    function enterAcademy(targetPortal = 'en') {
+      const entry = document.getElementById('entry-screen');
+      const loader = document.getElementById('portal-loader');
+      document.getElementById('loader-text').textContent = 'Cargando plataforma...';
+      
+      loader.classList.add('show');
+      entry.classList.add('fade-out');
+
+      setTimeout(() => {
+        selectPortal(targetPortal, true);
+        loader.classList.remove('show');
+      }, 900);
+    }
+
+    function selectPortal(id, skipLoader = false) {
+      const p = portals.find(x => x.id === id);
+      if (!p || !p.active) return;
+
+      const applyChanges = () => {
+        document.documentElement.style.setProperty('--bg-dark', p.bgDark);
+        document.documentElement.style.setProperty('--bg-gradient', p.gradient);
+        document.documentElement.style.setProperty('--primary', p.primary);
+        document.documentElement.style.setProperty('--glow', p.glow);
+        currentId = id;
+        renderPortal(p);
+        renderNav();
+      };
+
+      if (skipLoader) {
+        applyChanges();
+        return;
+      }
+
+      const loader = document.getElementById('portal-loader');
+      document.getElementById('loader-text').textContent = `Cambiando a ${p.name}...`;
+      applyChanges();
+      loader.classList.add('show');
+
+      setTimeout(() => {
+        loader.classList.remove('show');
+      }, 850);
+    }
+
+    function renderPortal(p) {
+      document.getElementById('portal-heading').textContent = `${p.flag} ${p.name}`;
+      const area = document.getElementById('main-content-area');
+      area.innerHTML = '';
+
+      if (p.type === 'custom') {
+        document.getElementById('portal-sub').textContent = 'Diseña tu horario y calcula tu tarifa al instante.';
+        area.innerHTML = `
+          <div class="card-level" style="text-align:center; padding: 40px;">
+            <h3 style="font-size:1.6rem; margin-bottom:10px;">Clases 100% Personalizadas</h3>
+            <p style="color:#cbd5e1; max-width:600px; margin: 0 auto 20px auto;">
+              Elige cuántas horas, qué días y qué enfoque quieres estudiar. Nuestro sistema calculará tu precio estimado automáticamente.
+            </p>
+            <button class="btn-enroll" style="max-width:280px; margin: 0 auto;" onclick="openCustomModal()">
+              Configurar mi Plan ⚙️
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      if (p.type === 'reviews') {
+        document.getElementById('portal-sub').textContent = 'Reseñas y calificaciones 100% anónimas de nuestros visitantes y estudiantes.';
+        
+        const avg = (reviews.reduce((acc, r) => acc + r.stars, 0) / reviews.length).toFixed(1);
+        
+        let html = `
+          <div class="store-header">
+            <div class="big-score">${avg}</div>
+            <div>
+              <div style="color:#facc15; font-size:1.4rem;">★★★★★</div>
+              <div style="font-size:0.85rem; color:#94a3b8; margin-top:4px;">Basado en ${reviews.length} opiniones verificadas (Privacidad protegida)</div>
+            </div>
+          </div>
+        `;
+
+        reviews.forEach(r => {
+          const starsStr = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+          html += `
+            <div class="review-card">
+              <div class="review-top">
+                <div class="anon-avatar">
+                  <div class="anon-circle">👤</div>
+                  <div>
+                    <div>Usuario Anónimo</div>
+                    <div style="font-size:0.75rem; color:#38bdf8;">Motivo: ${r.reason}</div>
+                  </div>
+                </div>
+                <span style="font-size:0.78rem; color:#64748b;">${r.date}</span>
+              </div>
+              <div style="color:#facc15; margin: 6px 0;">${starsStr}</div>
+              <p style="color:#e2e8f0; font-size:0.95rem; line-height:1.5;">${r.comment}</p>
+              <button class="helpful-btn" onclick="likeReview(${r.id})">👍 Útil (${r.likes})</button>
+            </div>
+          `;
+        });
+
+        area.innerHTML = html;
+        return;
+      }
+
+      document.getElementById('portal-sub').textContent = `Portal oficial de ${p.name} (${p.country}) — Elige tu nivel:`;
+      const grid = document.createElement('div');
+      grid.className = 'grid-cards';
+
+      p.levels.forEach(lvl => {
+        const card = document.createElement('div');
+        card.className = 'card-level';
+        card.innerHTML = `
+          <div>
+            <h3>${lvl.title}</h3>
+            <div class="price-tag">${lvl.price}</div>
+            <p style="font-size:0.9rem; color:#cbd5e1; line-height:1.5;">${lvl.desc}</p>
+          </div>
+          <button class="btn-enroll" onclick="openEnrollModal('${p.name} - ${lvl.title} (${lvl.price})')">
+            Inscribirme
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+
+      area.appendChild(grid);
+    }
+
+    function likeReview(id) {
+      const rev = reviews.find(r => r.id === id);
+      if (rev) {
+        rev.likes += 1;
+        localStorage.setItem('liroy_reviews_v1', JSON.stringify(reviews));
+        renderPortal(portals.find(p => p.id === 'reviews'));
+      }
+    }
+
+    function renderNav() {
+      const nav = document.getElementById('portals-nav');
+      nav.innerHTML = '';
+      portals.forEach(p => {
+        if (!p.active) return;
+        const btn = document.createElement('button');
+        btn.className = `portal-tab ${p.id === currentId ? 'active' : ''}`;
+        btn.innerHTML = `${p.flag} ${p.name}`;
+        btn.onclick = () => selectPortal(p.id);
+        nav.appendChild(btn);
+      });
+    }
+
+    function openEnrollModal(plan) {
+      selectedPlan = plan;
+      document.getElementById('modal-title').textContent = plan;
+      document.getElementById('enroll-modal').style.display = 'flex';
+    }
+
+    function openCustomModal() {
+      document.getElementById('custom-modal').style.display = 'flex';
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+    }
+
+    function confirmEnroll() {
+      const name = document.getElementById('stu-name').value.trim();
+      const age = document.getElementById('stu-age').value.trim();
+      if (!name || !age) return alert('Por favor llena tu nombre y edad.');
+      alert(`¡Excelente ${name}! Tu inscripción para ${selectedPlan} ha sido registrada.`);
+      closeModals();
+    }
+
+    function calculateCustomPlan() {
+      const lang = document.getElementById('custom-lang').value;
+      const days = parseFloat(document.getElementById('custom-days').value);
+      const hours = parseFloat(document.getElementById('custom-hours').value);
+
+      closeModals();
+      const loader = document.getElementById('portal-loader');
+      document.getElementById('loader-text').textContent = 'Espere un momento, estamos calculando su precio estimado...';
+      loader.classList.add('show');
+
+      setTimeout(() => {
+        loader.classList.remove('show');
+        const totalMonthly = Math.round(days * hours * 8 * 4);
+        alert(`📊 ¡Cálculo Completo!\n\nIdioma: ${lang}\nIntensidad: ${days} días/sem, ${hours}h por sesión\n\n💰 Precio Estimado: $${totalMonthly} USD mensuales.`);
+      }, 2000);
+    }
+
+    function openOwnerLogin() {
+      document.getElementById('owner-login-modal').style.display = 'flex';
+    }
+
+    function verifyOwner() {
+      const pass = document.getElementById('owner-pass').value;
+      if (pass === 'liroy2026') {
+        closeModals();
+        renderOwnerToggles();
+        document.getElementById('owner-panel-modal').style.display = 'flex';
+        document.getElementById('owner-pass').value = '';
+      } else {
+        alert('Contraseña incorrecta.');
+      }
+    }
+
+    function renderOwnerToggles() {
+      const container = document.getElementById('owner-toggles');
+      container.innerHTML = '';
+      portals.forEach(p => {
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px 14px; border-radius:8px;';
+        div.innerHTML = `
+          <span>${p.flag} ${p.name}</span>
+          <input type="checkbox" ${p.active ? 'checked' : ''} onchange="togglePortalActive('${p.id}')">
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function togglePortalActive(id) {
+      const p = portals.find(x => x.id === id);
+      if (p) {
+        p.active = !p.active;
+        localStorage.setItem('liroy_portals_v4', JSON.stringify(portals));
+        renderNav();
+        renderOwnerToggles();
+      }
+    }
+
+    // Arrancar
+    selectPortal('en', true);
+  </script>
+</body>
+</html>
