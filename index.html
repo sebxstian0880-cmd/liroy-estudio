@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liroy Estudio de Idiomas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #071936;
+      --bg-gradient: radial-gradient(circle at top right, #0e2d5c, #040d1c);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --primary: #d91e36;
+      --secondary: #ffffff;
+      --glow: rgba(217, 30, 54, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: var(--bg-gradient);
+      color: #f8fafc;
+      min-height: 100vh;
+      transition: background-color 1.5s ease, color 1s ease;
+      overflow-x: hidden;
+    }
+
+    /* =========================================
+       1. PANTALLA DE ENTRADA (SÍ / NO)
+       ========================================= */
+    #entry-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #0f2347 0%, #030712 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      transition: opacity 0.8s ease, background 1.5s ease;
+    }
+
+    #entry-screen.sad-theme {
+      background: radial-gradient(circle at center, #0c1424 0%, #02040a 100%);
+    }
+
+    #entry-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .entry-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      padding: 45px 35px;
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      animation: popIn 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92) translateY(15px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .tag-academy {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    .entry-card h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .btn-choice {
+      flex: 1;
+      padding: 15px 20px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-si {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: white;
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+    }
+
+    .btn-si:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(225, 29, 72, 0.6);
+    }
+
+    .btn-no {
+      background: rgba(255, 255, 255, 0.06);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-no:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+    }
+
+    /* =========================================
+       2. OJITOS TRISTES PARPADEANDO LENTO (SVG)
+       ========================================= */
+    #sad-box {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: popIn 0.9s ease;
+    }
+
+    .cute-eyes {
+      width: 170px;
+      height: 85px;
+      margin-bottom: 24px;
+    }
+
+    .eyelid-anim {
+      transform-origin: center 42px;
+      animation: slowSadBlink 5s infinite ease-in-out;
+    }
+
+    @keyframes slowSadBlink {
+      0%, 40%, 60%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.05); }
+    }
+
+    .sad-box-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+
+    .sad-box-text {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    .btn-back-in {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-back-in:hover {
+      background: #38bdf8;
+      color: #020617;
+    }
+
+    /* =========================================
+       3. TRANSICIÓN ENTRE PORTALES DE IDIOMA
+       ========================================= */
+    #portal-loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 8888;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, background-color 1.2s ease;
+    }
+
+    #portal-loader.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .loader-circle {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--primary);
+      animation: spin 0.9s linear infinite;
+      box-shadow: 0 0 25px var(--glow);
+      margin-bottom: 18px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* =========================================
+       4. INTERFAZ DE INSCRIPCIONES Y PORTALES
+       ========================================= */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 6%;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: var(--primary);
+      transition: color 1.2s ease;
+    }
+
+    .portals-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .portal-tab {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .portal-tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px var(--glow);
+    }
+
+    .portal-tab.locked {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .banner-portal {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 5px solid var(--primary);
+      padding: 32px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      transition: border-color 1.2s ease;
+    }
+
+    .banner-portal h2 {
+      font-size: 1.9rem;
+      margin-bottom: 8px;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card-level {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card-level:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+    }
+
+    .price-tag {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 12px 0;
+      transition: color 1.2s ease;
+    }
+
+    .btn-enroll {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+      transition: background-color 1.2s ease, opacity 0.2s;
+    }
+
+    .btn-enroll:hover { opacity: 0.9; }
+
+    /* =========================================
+       5. MODAL DE INSCRIPCIÓN RÁPIDA
+       ========================================= */
+    #enroll-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9500;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: white;
+    }
+
+    /* =========================================
+       6. PANEL DEL OWNER (ACTIVAR / AGREGAR)
+       ========================================= */
+    .owner-box {
+      margin-top: 60px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+      padding: 24px;
+      border-radius: 18px;
+    }
+
+    .owner-list {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+
+    .owner-chip {
+      background: #1e293b;
+      padding: 10px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .owner-add {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .owner-add input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. PANTALLA DE BIENVENIDA -->
+  <div id="entry-screen">
+    <div class="entry-card">
+      <!-- Pregunta inicial -->
+      <div id="ask-box">
+        <span class="tag-academy">Liroy Estudio de Idiomas</span>
+        <h1>¿Estás seguro de que quieres iniciar en Liroy Estudio de Idiomas?</h1>
+        <div class="btn-group">
+          <button class="btn-choice btn-si" onclick="enterAcademy()">Sí, ¡empecemos! 🚀</button>
+          <button class="btn-choice btn-no" onclick="showSadEyes()">No por ahora</button>
+        </div>
+      </div>
+
+      <!-- Pantalla triste con ojitos SVG expresivos -->
+      <div id="sad-box">
+        <svg class="cute-eyes" viewBox="0 0 200 100">
+          <!-- Ojo Izquierdo -->
+          <g class="eyelid-anim">
+            <ellipse cx="60" cy="52" rx="26" ry="32" fill="#38bdf8" />
+            <circle cx="55" cy="58" r="11" fill="#041024" />
+            <circle cx="51" cy="52" r="4.5" fill="#ffffff" />
+            <!-- Ceja triste -->
+            <path d="M 32 26 Q 58 14 84 28" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.8"/>
+          </g>
+          <!-- Ojo Derecho -->
+          <g class="eyelid-anim">
+            <ellipse cx="140" cy="52" rx="26" ry="32" fill="#38bdf8" />
+            <circle cx="135" cy="58" r="11" fill="#041024" />
+            <circle cx="131" cy="52" r="4.5" fill="#ffffff" />
+            <!-- Ceja triste -->
+            <path d="M 116 28 Q 142 14 168 26" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.8"/>
+          </g>
+        </svg>
+
+        <h2 class="sad-box-title">Oh... qué pena verte dudar 🥺</h2>
+        <p class="sad-box-text">
+          Igualmente siempre serás bienvenido en <strong>Liroy Estudio de Idiomas</strong>. Cuando sientas que es tu momento de aprender un nuevo idioma y competir por grandes premios, aquí tendrás tu lugar guardado.
+        </p>
+        <button class="btn-back-in" onclick="enterAcademy()">Cambiar de opinión y entrar ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ANIMACIÓN DE CAMBIO DE PORTAL -->
+  <div id="portal-loader">
+    <div class="loader-circle"></div>
+    <div class="loader-label" id="loader-text">Entrando a la zona de inscripciones...</div>
+  </div>
+
+  <!-- 3. PLATAFORMA PRINCIPAL -->
+  <header>
+    <div class="logo">LIROY <span>ESTUDIO</span></div>
+    <div class="portals-nav" id="portals-nav"></div>
+  </header>
+
+  <div class="container">
+    <div class="banner-portal">
+      <h2 id="portal-heading">🇺🇸 Portal Inglés — Estados Unidos</h2>
+      <p id="portal-sub">Elige tu módulo según tu edad y nivel para asegurar tu cupo.</p>
+    </div>
+
+    <div class="grid-cards" id="levels-grid"></div>
+
+    <!-- PANEL DEL OWNER -->
+    <div class="owner-box">
+      <h3 style="color:#38bdf8; margin-bottom:6px;">👑 Panel del Owner — Control de Portales</h3>
+      <p style="font-size:0.85rem; color:#94a3b8;">Activa, desactiva o agrega nuevos idiomas al instante.</p>
+      <div class="owner-list" id="owner-toggles"></div>
+
+      <div class="owner-add">
+        <input type="text" id="lang-name" placeholder="Ej: Italiano">
+        <input type="text" id="lang-flag" placeholder="Ej: 🇮🇹">
+        <input type="color" id="lang-bg" value="#082415" title="Fondo">
+        <input type="color" id="lang-color" value="#16a34a" title="Color Principal">
+        <button class="btn-enroll" style="width:auto; margin-top:0; padding:10px 18px;" onclick="createLanguage()">+ Agregar Idioma</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MODAL DE INSCRIPCIÓN -->
+  <div id="enroll-modal">
+    <div class="modal-content">
+      <h3 id="modal-title" style="margin-bottom:10px;">Inscripción</h3>
+      <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:12px;">Completa tus datos para reservar tu cupo:</p>
+      <input type="text" id="stu-name" placeholder="Tu nombre completo">
+      <input type="number" id="stu-age" placeholder="Tu edad">
+      <button class="btn-enroll" onclick="confirmEnroll()">Confirmar Inscripción ✅</button>
+      <button class="btn-choice btn-no" style="width:100%; margin-top:8px; padding:10px;" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    let portals = JSON.parse(localStorage.getItem('liroy_portals_v2')) || [
+      {
+        id: 'en',
+        name: 'Inglés',
+        country: 'Estados Unidos',
+        flag: '🇺🇸',
+        active: true,
+        bgDark: '#071936',
+        gradient: 'radial-gradient(circle at top right, #0e2d5c, #040d1c)',
+        primary: '#d91e36',
+        glow: 'rgba(217, 30, 54, 0.45)',
+        levels: [
+          { title: 'Kids (5 a 8 años)', price: '$15 / mes', desc: 'Clases dinámicas con juegos interactivos y vocabulario visual.' },
+          { title: 'Básico - Intermedio (A1 - B1)', price: '$25 / mes', desc: 'Gramática práctica, conversación y acceso al torneo.' },
+          { title: 'Avanzado Pro (B2 - C2)', price: '$40 / mes', desc: 'Fluidez total, fonética avanzada y certificación interna.' }
+        ]
+      },
+      {
+        id: 'pt',
+        name: 'Portugués',
+        country: 'Brasil',
+        flag: '🇧🇷',
+        active: true,
+        bgDark: '#032b16',
+        gradient: 'radial-gradient(circle at top right, #064e28, #02170c)',
+        primary: '#eab308',
+        glow: 'rgba(234, 179, 8, 0.45)',
+        levels: [
+          { title: 'Kids / Básico (A1 - A2)', price: '$20 / mes', desc: 'Aprende desde cero aprovechando la cercanía con el español.' },
+          { title: 'Avanzado (B1 - C1)', price: '$35 / mes', desc: 'Domina modismos, conversación fluida y acento nativo.' }
+        ]
+      },
+      {
+        id: 'fr',
+        name: 'Francés',
+        country: 'Francia',
+        flag: '🇫🇷',
+        active: true,
+        bgDark: '#081436',
+        gradient: 'radial-gradient(circle at top right, #112663, #04091a)',
+        primary: '#ef4444',
+        glow: 'rgba(239, 68, 68, 0.45)',
+        levels: [
+          { title: 'Básico Inicial (A1 - A2)', price: '$30 / mes', desc: 'Bases sólidas de pronunciación francesa y estructura.' },
+          { title: 'Avanzado (B1 - C2)', price: '$45 / mes', desc: 'Nivel superior conversacional y técnico.' }
+        ]
+      }
+    ];
+
+    let currentId = 'en';
+    let selectedPlan = '';
+
+    function showSadEyes() {
+      document.getElementById('entry-screen').classList.add('sad-theme');
+      document.getElementById('ask-box').style.display = 'none';
+      document.getElementById('sad-box').style.display = 'flex';
+    }
+
+    function enterAcademy() {
+      const entry = document.getElementById('entry-screen');
+      const loader = document.getElementById('portal-loader');
+      document.getElementById('loader-text').textContent = '¡Bienvenido! Abriendo inscripciones...';
+      
+      loader.classList.add('show');
+      entry.classList.add('fade-out');
+
+      setTimeout(() => {
+        loader.classList.remove('show');
+      }, 1200);
+    }
+
+    function selectPortal(id) {
+      const p = portals.find(x => x.id === id);
+      if (!p || !p.active) return;
+
+      const loader = document.getElementById('portal-loader');
+      document.getElementById('loader-text').textContent = `Cambiando al Portal de ${p.name} (${p.country})...`;
+      
+      document.documentElement.style.setProperty('--bg-dark', p.bgDark);
+      document.documentElement.style.setProperty('--bg-gradient', p.gradient);
+      document.documentElement.style.setProperty('--primary', p.primary);
+      document.documentElement.style.setProperty('--glow', p.glow);
+
+      loader.classList.add('show');
+
+      setTimeout(() => {
+        currentId = id;
+        renderPortal(p);
+        renderNav();
+        loader.classList.remove('show');
+      }, 1000);
+    }
+
+    function renderPortal(p) {
+      document.getElementById('portal-heading').textContent = `${p.flag} Portal ${p.name} — ${p.country}`;
+      const grid = document.getElementById('levels-grid');
+      grid.innerHTML = '';
+
+      p.levels.forEach(lvl => {
+        const card = document.createElement('div');
+        card.className = 'card-level';
+        card.innerHTML = `
+          <div>
+            <h3>${lvl.title}</h3>
+            <div class="price-tag">${lvl.price}</div>
+            <p style="font-size:0.9rem; color:#cbd5e1; line-height:1.5;">${lvl.desc}</p>
+          </div>
+          <button class="btn-enroll" onclick="openModal('${p.name} - ${lvl.title} (${lvl.price})')">
+            Inscribirme ahora
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderNav() {
+      const nav = document.getElementById('portals-nav');
+      nav.innerHTML = '';
+      portals.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = `portal-tab ${p.id === currentId ? 'active' : ''} ${!p.active ? 'locked' : ''}`;
+        btn.innerHTML = `${p.flag} ${p.name} ${!p.active ? '<small>(Próximamente)</small>' : ''}`;
+        if (p.active) btn.onclick = () => selectPortal(p.id);
+        nav.appendChild(btn);
+      });
+    }
+
+    function renderOwner() {
+      const list = document.getElementById('owner-toggles');
+      list.innerHTML = '';
+      portals.forEach(p => {
+        const chip = document.createElement('div');
+        chip.className = 'owner-chip';
+        chip.innerHTML = `
+          <span>${p.flag} ${p.name}</span>
+          <input type="checkbox" ${p.active ? 'checked' : ''} onchange="togglePortal('${p.id}')">
+        `;
+        list.appendChild(chip);
+      });
+    }
+
+    function togglePortal(id) {
+      const p = portals.find(x => x.id === id);
+      if (p) {
+        p.active = !p.active;
+        localStorage.setItem('liroy_portals_v2', JSON.stringify(portals));
+        renderNav();
+        renderOwner();
+        if (!p.active && currentId === id) {
+          const next = portals.find(x => x.active);
+          if (next) selectPortal(next.id);
+        }
+      }
+    }
+
+    function createLanguage() {
+      const name = document.getElementById('lang-name').value.trim();
+      const flag = document.getElementById('lang-flag').value.trim() || '🌐';
+      const bg = document.getElementById('lang-bg').value;
+      const color = document.getElementById('lang-color').value;
+
+      if (!name) return alert('Escribe el nombre del idioma');
+
+      portals.push({
+        id: 'lang_' + Date.now(),
+        name,
+        country: 'Internacional',
+        flag,
+        active: true,
+        bgDark: bg,
+        gradient: `radial-gradient(circle at top right, ${bg}, #020617)`,
+        primary: color,
+        glow: 'rgba(255,255,255,0.2)',
+        levels: [
+          { title: 'Básico (A1 - A2)', price: '$25 / mes', desc: 'Aprende las bases desde cero.' },
+          { title: 'Avanzado (B1 - C1)', price: '$35 / mes', desc: 'Perfecciona tu fluidez.' }
+        ]
+      });
+
+      localStorage.setItem('liroy_portals_v2', JSON.stringify(portals));
+      renderNav();
+      renderOwner();
+      document.getElementById('lang-name').value = '';
+    }
+
+    function openModal(plan) {
+      selectedPlan = plan;
+      document.getElementById('modal-title').textContent = plan;
+      document.getElementById('enroll-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('enroll-modal').style.display = 'none';
+    }
+
+    function confirmEnroll() {
+      const name = document.getElementById('stu-name').value.trim();
+      const age = document.getElementById('stu-age').value.trim();
+      if (!name || !age) return alert('Por favor completa tu nombre y edad.');
+      alert(`¡Listo ${name}! Tu solicitud para ${selectedPlan} ha sido registrada.`);
+      closeModal();
+    }
+
+    // Arrancar
+    renderNav();
+    renderOwner();
+    const first = portals.find(x => x.active) || portals[0];
+    if (first) {
+      currentId = first.id;
+      document.documentElement.style.setProperty('--bg-dark', first.bgDark);
+      document.documentElement.style.setProperty('--bg-gradient', first.gradient);
+      document.documentElement.style.setProperty('--primary', first.primary);
+      document.documentElement.style.setProperty('--glow', first.glow);
+      renderPortal(first);
+      renderNav();
+    }
+  </script>
+</body>
+</html>
