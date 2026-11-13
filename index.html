@@ -257,14 +257,18 @@
           <label for="idioma">Idioma de Interés</label>
           <select id="idioma" required>
             <option value="" disabled selected>Selecciona un idioma...</option>
+            
+            <!-- Idiomas Disponibles -->
             <option value="Inglés">Inglés</option>
             <option value="Francés">Francés</option>
             <option value="Portugués">Portugués</option>
-            <option value="Italiano">Italiano</option>
-            <option value="Alemán">Alemán</option>
-            <option value="Chino Mandarín">Chino Mandarín</option>
-            <option value="Japonés">Japonés</option>
-            <option value="Ruso">Ruso</option>
+
+            <!-- Idiomas Bloqueados -->
+            <option value="Italiano" disabled>Italiano 🔒 (No disponible)</option>
+            <option value="Alemán" disabled>Alemán 🔒 (No disponible)</option>
+            <option value="Chino Mandarín" disabled>Chino Mandarín 🔒 (Próximamente)</option>
+            <option value="Japonés" disabled>Japonés 🔒 (Próximamente)</option>
+            <option value="Ruso" disabled>Ruso 🔒 (No disponible)</option>
           </select>
         </div>
 
@@ -274,6 +278,17 @@
             <option value="Principiante (Desde cero)">Principiante (Desde cero - A1)</option>
             <option value="Intermedio (B1)">Intermedio (B1)</option>
             <option value="Avanzado (C1)">Avanzado (C1)</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="experiencia">Tiempo de Experiencia con el Idioma</label>
+          <select id="experiencia" required>
+            <option value="" disabled selected>Selecciona tu experiencia previa...</option>
+            <option value="Cero (Nunca lo he estudiado)">Cero / Nunca lo he estudiado (Desde el inicio)</option>
+            <option value="Menos de 6 meses">Menos de 6 meses</option>
+            <option value="Entre 6 meses y 1 año">Entre 6 meses y 1 año</option>
+            <option value="Más de 1 año (Tengo bases)">Más de 1 año (Tengo bases)</option>
           </select>
         </div>
 
@@ -295,14 +310,13 @@
       setTimeout(() => {
         welcome.style.display = 'none';
         formSection.style.display = 'flex';
-        // Pequeño delay para activar la animación suave de entrada
         setTimeout(() => {
           formSection.classList.add('visible-screen');
         }, 50);
       }, 600);
     }
 
-    // Por si el usuario quiere regresar a ver la bienvenida
+    // Regresar a la pantalla de bienvenida
     function volverBienvenida() {
       const welcome = document.getElementById('welcome-screen');
       const formSection = document.getElementById('form-section');
@@ -317,23 +331,25 @@
       }, 500);
     }
 
-    // Envía los datos directos a tu número de WhatsApp
+    // Envía los datos directos al WhatsApp de la academia
     function enviarWhatsApp(e) {
       e.preventDefault();
 
-      // ⚠️ CAMBIA ESTE NÚMERO POR TU WHATSAPP REAL (con código de país, sin el +)
-      const telefonoAcademia = "584120000000"; 
+      // ⚠️ CAMBIA ESTE NÚMERO POR TU WHATSAPP REAL (código de país + número, sin el +)
+      const telefonoAcademia = "584125952360"; 
 
       const nombre = document.getElementById('nombre').value;
       const edad = document.getElementById('edad').value;
       const idioma = document.getElementById('idioma').value;
       const nivel = document.getElementById('nivel').value;
+      const experiencia = document.getElementById('experiencia').value;
 
       const mensaje = `¡Hola! Vengo de la web de *Liroy Estudio de Idiomas* y quiero reservar mi clase de prueba GRATIS.%0A%0A` +
                       `👤 *Nombre:* ${nombre}%0A` +
                       `🎂 *Edad:* ${edad} años%0A` +
                       `🌍 *Idioma:* ${idioma}%0A` +
-                      `📊 *Nivel:* ${nivel}`;
+                      `📊 *Nivel:* ${nivel}%0A` +
+                      `⏳ *Experiencia:* ${experiencia}`;
 
       const url = `https://wa.me/${telefonoAcademia}?text=${mensaje}`;
       window.open(url, '_blank');
