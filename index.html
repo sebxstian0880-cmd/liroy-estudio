@@ -1,361 +1,495 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liroy Estudio de Idiomas | Inscripciones</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liroy Estudio de Idiomas — Portales Multilingües</title>
   <style>
     :root {
-      --bg-dark: #090d16;
-      --card-bg: #111827;
-      --accent: #facc15;
-      --accent-hover: #eab308;
+      --bg-primary: #0a192f;
+      --bg-card: #112240;
+      --accent-main: #b31942;
+      --accent-secondary: #ffffff;
       --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #1e293b;
+      --glow-color: rgba(179, 25, 66, 0.4);
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
 
+    /* Transición lenta y fluida de toda la página al cambiar de idioma */
     body {
-      background-color: var(--bg-dark);
+      background-color: var(--bg-primary);
       color: var(--text-main);
+      transition: background-color 1.4s cubic-bezier(0.4, 0, 0.2, 1), color 1.2s ease;
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* --- PANTALLA 1: ANIMACIÓN DE BIENVENIDA (100% PANTALLA) --- */
-    #welcome-screen {
-      height: 100vh;
-      width: 100%;
+    /* Pantalla de Animación de Entrada al Portal */
+    #portal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 2rem;
-      background: radial-gradient(circle at center, #1e293b 0%, #090d16 75%);
-      position: relative;
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    #welcome-screen.hidden-screen {
+      justify-content: center;
+      z-index: 9999;
       opacity: 0;
-      transform: translateY(-30px);
       pointer-events: none;
-      position: absolute;
-      top: 0;
-      left: 0;
+      transition: opacity 0.6s ease, background-color 1.2s ease;
     }
 
-    .badge {
-      background: rgba(250, 204, 21, 0.15);
-      color: var(--accent);
-      border: 1px solid rgba(250, 204, 21, 0.4);
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.2s;
-    }
-
-    .hero-title {
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 800;
-      line-height: 1.1;
-      max-width: 800px;
-      margin-bottom: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.5s;
-    }
-
-    .hero-title span {
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      color: var(--text-muted);
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      max-width: 600px;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.8s;
-    }
-
-    .start-btn {
-      background-color: var(--accent);
-      color: #090d16;
-      border: none;
-      padding: 1rem 2.2rem;
-      font-size: 1.1rem;
-      font-weight: 800;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(250, 204, 21, 0.25);
-      transition: transform 0.2s ease, background-color 0.2s ease;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 1.1s;
-    }
-
-    .start-btn:hover {
-      background-color: var(--accent-hover);
-      transform: translateY(-3px);
-    }
-
-    /* --- PANTALLA 2: FORMULARIO DE INSCRIPCIÓN --- */
-    #form-section {
-      min-height: 100vh;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem 1rem;
-      opacity: 0;
-      transform: translateY(25px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    #form-section.visible-screen {
-      display: flex;
+    #portal-overlay.active {
       opacity: 1;
-      transform: translateY(0);
+      pointer-events: all;
     }
 
-    .form-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    .portal-ring {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--accent-main);
+      border-bottom-color: var(--accent-secondary);
+      animation: spinPortal 1.1s linear infinite;
+      box-shadow: 0 0 30px var(--glow-color);
+      margin-bottom: 20px;
     }
 
-    .form-header {
-      text-align: center;
-      margin-bottom: 2rem;
+    @keyframes spinPortal {
+      to { transform: rotate(360deg); }
     }
 
-    .form-header h2 {
-      font-size: 1.7rem;
-      margin-bottom: 0.4rem;
+    .portal-text {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      animation: pulseText 1.2s ease-in-out infinite;
     }
 
-    .form-header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.6; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1.02); }
     }
 
-    .input-group {
-      margin-bottom: 1.2rem;
+    /* Barra Superior y Selector de Portales */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 5%;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--accent-main);
+      transition: border-color 1.4s ease;
     }
 
-    .input-group label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #cbd5e1;
-    }
-
-    .input-group input,
-    .input-group select {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      background-color: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text-main);
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .input-group input:focus,
-    .input-group select:focus {
-      border-color: var(--accent);
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 1rem;
-      background-color: #22c55e;
-      color: #052e16;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.05rem;
+    .brand {
+      font-size: 1.4rem;
       font-weight: 800;
-      cursor: pointer;
-      margin-top: 0.8rem;
-      transition: background-color 0.2s, transform 0.2s;
+      letter-spacing: 1px;
     }
 
-    .submit-btn:hover {
-      background-color: #16a34a;
+    .brand span {
+      color: var(--accent-main);
+      transition: color 1.4s ease;
+    }
+
+    .lang-selector {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 2px solid transparent;
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.4s ease;
+    }
+
+    .lang-btn.active {
+      border-color: var(--accent-main);
+      box-shadow: 0 0 18px var(--glow-color);
       transform: translateY(-2px);
     }
 
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 1.2rem;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-decoration: underline;
+    .lang-btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
     }
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .badge-soon {
+      font-size: 0.7rem;
+      background: #334155;
+      padding: 2px 6px;
+      border-radius: 5px;
+      text-transform: uppercase;
+    }
+
+    /* Contenido Principal del Portal */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .hero-portal {
+      background: var(--bg-card);
+      border-left: 6px solid var(--accent-main);
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: background-color 1.4s ease, border-color 1.4s ease;
+      margin-bottom: 30px;
+    }
+
+    .hero-portal h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .module-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--accent-main);
+      padding: 22px;
+      border-radius: 12px;
+      transition: all 1.4s ease, transform 0.3s ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px var(--glow-color);
+    }
+
+    .btn-action {
+      margin-top: 15px;
+      background: var(--accent-main);
+      color: var(--accent-secondary);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 1.4s ease, opacity 0.3s;
+    }
+
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+
+    /* Panel Owner (Control Total) */
+    .owner-panel {
+      margin-top: 60px;
+      background: #0f172a;
+      border: 2px dashed #475569;
+      padding: 25px;
+      border-radius: 14px;
+    }
+
+    .owner-panel h2 {
+      color: #38bdf8;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .owner-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .owner-item {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .add-lang-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #334155;
+    }
+
+    .add-lang-form input {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: white;
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. PANTALLA DE BIENVENIDA PRIMERO -->
-  <section id="welcome-screen">
-    <div class="badge">🎁 Clase de Prueba de 30 Minutos GRATIS</div>
-    <h1 class="hero-title">Domina un nuevo idioma con <span>Liroy Estudio</span></h1>
-    <p class="hero-sub">Clases en vivo personalizadas, plataformas interactivas y aprendizaje real desde cualquier lugar del mundo.</p>
-    <button class="start-btn" onclick="mostrarFormulario()">Reservar mi Clase Gratis →</button>
-  </section>
+  <!-- Animación de Transición entre Portales -->
+  <div id="portal-overlay">
+    <div class="portal-ring"></div>
+    <div class="portal-text" id="portal-status">Cambiando a Portal Inglés...</div>
+  </div>
 
-  <!-- 2. FORMULARIO DE INSCRIPCIÓN (APARECE DESPUÉS) -->
-  <section id="form-section">
-    <div class="form-card">
-      <div class="form-header">
-        <h2>Completa tu Registro</h2>
-        <p>Déjanos tus datos y coordinamos tu clase gratuita por WhatsApp.</p>
+  <header>
+    <div class="brand">LIROY <span>ESTUDIO</span></div>
+    <div class="lang-selector" id="lang-buttons"></div>
+  </header>
+
+  <main>
+    <section class="hero-portal">
+      <h1 id="portal-title">Portal Oficial de Inglés (USA)</h1>
+      <p id="portal-desc">Domina la pronunciación, gramática práctica, juegos interactivos y compite en el Leaderboard oficial.</p>
+    </section>
+
+    <div class="modules-grid" id="modules-container"></div>
+
+    <!-- PANEL DEL OWNER (Puedes protegerlo con tu contraseña maestra) -->
+    <section class="owner-panel">
+      <h2>👑 Panel de Control del Owner — Gestión de Idiomas</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px;">
+        Activa o desactiva portales en tiempo real o crea nuevos idiomas con su propia paleta de colores.
+      </p>
+      
+      <div class="owner-controls" id="owner-toggles"></div>
+
+      <h3 style="font-size: 1rem; margin-top: 15px;">➕ Agregar Nuevo Idioma</h3>
+      <div class="add-lang-form">
+        <input type="text" id="new-name" placeholder="Nombre (Ej: Italiano)">
+        <input type="text" id="new-flag" placeholder="Bandera/Código (Ej: IT)">
+        <input type="color" id="new-bg" value="#0b2918" title="Color Fondo">
+        <input type="color" id="new-accent" value="#ce2b37" title="Color Principal">
+        <button class="btn-action" style="margin-top:0;" onclick="addNewLanguage()">Crear Portal</button>
       </div>
-
-      <form id="registroForm" onsubmit="enviarWhatsApp(event)">
-        <div class="input-group">
-          <label for="nombre">Nombre y Apellido</label>
-          <input type="text" id="nombre" placeholder="Ej. Carlos Mendoza" required />
-        </div>
-
-        <div class="input-group">
-          <label for="edad">Edad del Estudiante</label>
-          <input type="number" id="edad" placeholder="Ej. 16" min="5" max="99" required />
-        </div>
-
-        <div class="input-group">
-          <label for="idioma">Idioma de Interés</label>
-          <select id="idioma" required>
-            <option value="" disabled selected>Selecciona un idioma...</option>
-            
-            <!-- Idiomas Disponibles -->
-            <option value="Inglés">Inglés</option>
-            <option value="Francés">Francés</option>
-            <option value="Portugués">Portugués</option>
-
-            <!-- Idiomas Bloqueados -->
-            <option value="Italiano" disabled>Italiano 🔒 (No disponible)</option>
-            <option value="Alemán" disabled>Alemán 🔒 (No disponible)</option>
-            <option value="Chino Mandarín" disabled>Chino Mandarín 🔒 (Próximamente)</option>
-            <option value="Japonés" disabled>Japonés 🔒 (Próximamente)</option>
-            <option value="Ruso" disabled>Ruso 🔒 (No disponible)</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label for="nivel">Nivel Actual</label>
-          <select id="nivel" required>
-            <option value="Principiante (Desde cero)">Principiante (Desde cero - A1)</option>
-            <option value="Intermedio (B1)">Intermedio (B1)</option>
-            <option value="Avanzado (C1)">Avanzado (C1)</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label for="experiencia">Tiempo de Experiencia con el Idioma</label>
-          <select id="experiencia" required>
-            <option value="" disabled selected>Selecciona tu experiencia previa...</option>
-            <option value="Cero (Nunca lo he estudiado)">Cero / Nunca lo he estudiado (Desde el inicio)</option>
-            <option value="Menos de 6 meses">Menos de 6 meses</option>
-            <option value="Entre 6 meses y 1 año">Entre 6 meses y 1 año</option>
-            <option value="Más de 1 año (Tengo bases)">Más de 1 año (Tengo bases)</option>
-          </select>
-        </div>
-
-        <button type="submit" class="submit-btn">Enviar Solicitud a WhatsApp 📲</button>
-      </form>
-
-      <span class="back-link" onclick="volverBienvenida()">← Volver al inicio</span>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <script>
-    // Cambia de la animación inicial al formulario
-    function mostrarFormulario() {
-      const welcome = document.getElementById('welcome-screen');
-      const formSection = document.getElementById('form-section');
+    // Base de datos inicial de idiomas (se guarda en localStorage o puedes conectarla a Firebase/Supabase)
+    let languages = JSON.parse(localStorage.getItem('liroy_languages')) || [
+      {
+        id: 'en',
+        name: 'Inglés',
+        country: 'Estados Unidos (USA)',
+        flag: '🇺🇸',
+        enabled: true,
+        theme: {
+          bgPrimary: '#0A3161',      // Azul USA profundo
+          bgCard: '#061E3E',
+          accentMain: '#B31942',     // Rojo USA intenso
+          accentSecondary: '#FFFFFF',
+          glow: 'rgba(179, 25, 66, 0.5)'
+        },
+        modules: ['Kids (A0) - $15', 'Básico (A1-A2) - $25', 'Intermedio (B1) - $25', 'Avanzado (B2-C2) - $40']
+      },
+      {
+        id: 'pt',
+        name: 'Portugués',
+        country: 'Brasil',
+        flag: '🇧🇷',
+        enabled: true,
+        theme: {
+          bgPrimary: '#004D25',      // Verde Brasil oscuro elegante
+          bgCard: '#003318',
+          accentMain: '#FFDF00',     // Amarillo Oro Brasil
+          accentSecondary: '#002776',
+          glow: 'rgba(255, 223, 0, 0.45)'
+        },
+        modules: ['Kids / Básico (A1-A2) - $20', 'Intermedio (B1) - $20', 'Avanzado (B2-C1) - $35']
+      },
+      {
+        id: 'fr',
+        name: 'Francés',
+        country: 'Francia',
+        flag: '🇫🇷',
+        enabled: true,
+        theme: {
+          bgPrimary: '#001B44',      // Azul Francia real
+          bgCard: '#00122E',
+          accentMain: '#ED2939',     // Rojo Francia
+          accentSecondary: '#FFFFFF',
+          glow: 'rgba(237, 41, 57, 0.45)'
+        },
+        modules: ['Básico (A1-A2) - $30', 'Avanzado (B1-C2) - $45']
+      }
+    ];
 
-      welcome.classList.add('hidden-screen');
+    let currentLangId = 'en';
+
+    function saveLanguages() {
+      localStorage.setItem('liroy_languages', JSON.stringify(languages));
+    }
+
+    // Cambiar de Portal con Animación Lenta de Color
+    function switchPortal(langId) {
+      const lang = languages.find(l => l.id === langId);
+      if (!lang || !lang.enabled) return;
+
+      const overlay = document.getElementById('portal-overlay');
+      const statusText = document.getElementById('portal-status');
       
+      statusText.textContent = `Cambiando a Portal ${lang.name} (${lang.country})...`;
+      
+      // Aplicamos los colores gradualmente mientras entra el portal
+      const root = document.documentElement;
+      root.style.setProperty('--bg-primary', lang.theme.bgPrimary);
+      root.style.setProperty('--bg-card', lang.theme.bgCard);
+      root.style.setProperty('--accent-main', lang.theme.accentMain);
+      root.style.setProperty('--accent-secondary', lang.theme.accentSecondary);
+      root.style.setProperty('--glow-color', lang.theme.glow);
+
+      overlay.classList.add('active');
+
       setTimeout(() => {
-        welcome.style.display = 'none';
-        formSection.style.display = 'flex';
-        setTimeout(() => {
-          formSection.classList.add('visible-screen');
-        }, 50);
-      }, 600);
+        currentLangId = langId;
+        renderPortalContent(lang);
+        renderHeaderButtons();
+        overlay.classList.remove('active');
+      }, 1100); // Duración de la transición inmersiva
     }
 
-    // Regresar a la pantalla de bienvenida
-    function volverBienvenida() {
-      const welcome = document.getElementById('welcome-screen');
-      const formSection = document.getElementById('form-section');
+    function renderPortalContent(lang) {
+      document.getElementById('portal-title').textContent = `${lang.flag} Portal Oficial de ${lang.name} — ${lang.country}`;
+      const container = document.getElementById('modules-container');
+      container.innerHTML = '';
 
-      formSection.classList.remove('visible-screen');
-      setTimeout(() => {
-        formSection.style.display = 'none';
-        welcome.style.display = 'flex';
-        setTimeout(() => {
-          welcome.classList.remove('hidden-screen');
-        }, 50);
-      }, 500);
+      lang.modules.forEach((mod, index) => {
+        const card = document.createElement('div');
+        card.className = 'module-card';
+        card.innerHTML = `
+          <h3>Módulo ${index + 1}: ${mod}</h3>
+          <p style="font-size: 0.9rem; opacity: 0.85; margin-top: 8px;">
+            Acceso a guías PDF oficiales, audios de pronunciación, juegos interactivos y tabla de clasificación.
+          </p>
+          <button class="btn-action" onclick="alert('Ingresa tu clave de acceso del módulo ${mod}')">
+            Entrar al Módulo 🔐
+          </button>
+        `;
+        container.appendChild(card);
+      });
     }
 
-    // Envía los datos directos al WhatsApp de la academia
-    function enviarWhatsApp(e) {
-      e.preventDefault();
+    function renderHeaderButtons() {
+      const container = document.getElementById('lang-buttons');
+      container.innerHTML = '';
 
-      // ⚠️ CAMBIA ESTE NÚMERO POR TU WHATSAPP REAL (código de país + número, sin el +)
-      const telefonoAcademia = "584125952360"; 
+      languages.forEach(lang => {
+        const btn = document.createElement('button');
+        btn.className = `lang-btn ${lang.id === currentLangId ? 'active' : ''} ${!lang.enabled ? 'disabled' : ''}`;
+        btn.innerHTML = `${lang.flag} ${lang.name} ${!lang.enabled ? '<span class="badge-soon">Próximamente</span>' : ''}`;
+        
+        if (lang.enabled) {
+          btn.onclick = () => switchPortal(lang.id);
+        }
+        container.appendChild(btn);
+      });
+    }
 
-      const nombre = document.getElementById('nombre').value;
-      const edad = document.getElementById('edad').value;
-      const idioma = document.getElementById('idioma').value;
-      const nivel = document.getElementById('nivel').value;
-      const experiencia = document.getElementById('experiencia').value;
+    // Funciones del Owner
+    function renderOwnerPanel() {
+      const container = document.getElementById('owner-toggles');
+      container.innerHTML = '';
 
-      const mensaje = `*Solicitud de Clase de Prueba — Liroy Estudio*%0A%0A` +
-                      `Estimado equipo, me pongo en contacto para formalizar mi solicitud de clase de cortesía. Mis datos de registro son los siguientes:%0A%0A` +
-                      `👤 *Nombre:* ${nombre}%0A` +
-                      `🎂 *Edad:* ${edad} años%0A` +
-                      `🌍 *Idioma de interés:* ${idioma}%0A` +
-                      `📊 *Nivel seleccionado:* ${nivel}%0A` +
-                      `⏳ *Experiencia previa:* ${experiencia}`;
+      languages.forEach(lang => {
+        const div = document.createElement('div');
+        div.className = 'owner-item';
+        div.innerHTML = `
+          <span>${lang.flag} <strong>${lang.name}</strong></span>
+          <input type="checkbox" ${lang.enabled ? 'checked' : ''} onchange="toggleLanguage('${lang.id}')">
+        `;
+        container.appendChild(div);
+      });
+    }
 
-      const url = `https://wa.me/${telefonoAcademia}?text=${mensaje}`;
-      window.open(url, '_blank');
+    function toggleLanguage(id) {
+      const lang = languages.find(l => l.id === id);
+      if (lang) {
+        lang.enabled = !lang.enabled;
+        saveLanguages();
+        renderHeaderButtons();
+        renderOwnerPanel();
+
+        // Si deshabilitas el idioma que estás viendo, te regresa al primer idioma activo
+        if (!lang.enabled && currentLangId === id) {
+          const firstActive = languages.find(l => l.enabled);
+          if (firstActive) switchPortal(firstActive.id);
+        }
+      }
+    }
+
+    function addNewLanguage() {
+      const name = document.getElementById('new-name').value.trim();
+      const flag = document.getElementById('new-flag').value.trim() || '🌐';
+      const bg = document.getElementById('new-bg').value;
+      const accent = document.getElementById('new-accent').value;
+
+      if (!name) return alert('Escribe el nombre del idioma.');
+
+      const newId = name.toLowerCase().slice(0, 3) + Date.now().toString().slice(-2);
+      languages.push({
+        id: newId,
+        name: name,
+        country: 'Internacional',
+        flag: flag,
+        enabled: true,
+        theme: {
+          bgPrimary: bg,
+          bgCard: '#111827',
+          accentMain: accent,
+          accentSecondary: '#FFFFFF',
+          glow: 'rgba(255, 255, 255, 0.25)'
+        },
+        modules: ['Básico (A1-A2) - $25', 'Intermedio (B1) - $30', 'Avanzado (B2-C1) - $40']
+      });
+
+      saveLanguages();
+      renderHeaderButtons();
+      renderOwnerPanel();
+      document.getElementById('new-name').value = '';
+    }
+
+    // Inicializar plataforma
+    renderHeaderButtons();
+    renderOwnerPanel();
+    const initialLang = languages.find(l => l.enabled) || languages[0];
+    if (initialLang) {
+      currentLangId = initialLang.id;
+      const root = document.documentElement;
+      root.style.setProperty('--bg-primary', initialLang.theme.bgPrimary);
+      root.style.setProperty('--bg-card', initialLang.theme.bgCard);
+      root.style.setProperty('--accent-main', initialLang.theme.accentMain);
+      root.style.setProperty('--accent-secondary', initialLang.theme.accentSecondary);
+      root.style.setProperty('--glow-color', initialLang.theme.glow);
+      renderPortalContent(initialLang);
+      renderHeaderButtons();
     }
   </script>
-
 </body>
 </html>
