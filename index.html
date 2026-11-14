@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liroy Estudio de Idiomas — Inscripciones y Registro</title>
+  <title>Liroy Estudio de Idiomas — Portal de Acceso</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -14,111 +14,173 @@
       --secondary: #f59e0b;
       --dark: #071936;
       --light: #f8fafc;
-      --gray: #64748b;
-      --success: #16a34a;
       --radius: 14px;
       --shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.3);
       --bg-gradient: radial-gradient(circle at top right, #0e2d5c, #040d1c);
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --glow: rgba(217, 30, 54, 0.45);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: var(--dark); background-image: var(--bg-gradient); color: #f8fafc; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1rem; }
+    body { background-color: var(--dark); background-image: var(--bg-gradient); color: #f8fafc; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
 
-    .inscripcion-container { width: 100%; max-width: 650px; background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; }
+    /* PANTALLA INICIAL DEL ROBOT */
+    #welcome-robot-screen {
+      position: fixed; inset: 0; background: radial-gradient(circle at center, #0f2347 0%, #030712 100%);
+      z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: white; padding: 2rem; transition: opacity 0.6s ease;
+    }
+
+    /* DISEÑO DEL ROBOT QUE SIGUE EL CURSOR */
+    .robot-container {
+      position: relative; width: 140px; height: 140px; background: linear-gradient(135deg, #334155, #1e293b);
+      border-radius: 28px; border: 3px solid var(--secondary); display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.3); margin-bottom: 1.5rem;
+    }
+    .robot-antenna {
+      position: absolute; top: -25px; width: 4px; height: 25px; background: var(--secondary);
+    }
+    .robot-antenna::after {
+      content: ''; position: absolute; top: -8px; left: -6px; width: 16px; height: 16px;
+      background: var(--accent); border-radius: 50%; animation: pulseAntenna 1.5s infinite;
+    }
+    @keyframes pulseAntenna { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+    .robot-eyes-box {
+      display: flex; gap: 20px; width: 80px; height: 35px; justify-content: space-between; align-items: center;
+    }
+    .robot-eye {
+      width: 26px; height: 26px; background: #0f172a; border-radius: 50%; position: relative;
+      overflow: hidden; border: 2px solid #38bdf8;
+    }
+    .robot-pupil {
+      position: absolute; width: 10px; height: 10px; background: #38bdf8; border-radius: 50%;
+      top: 6px; left: 6px; transition: transform 0.05s ease-out;
+    }
+
+    .robot-speech {
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 1.2rem 2rem; border-radius: 14px; max-width: 450px; font-size: 1.15rem; font-weight: 600;
+      margin-bottom: 1.5rem; backdrop-filter: blur(10px); box-shadow: var(--shadow);
+    }
+
+    .robot-buttons { display: flex; gap: 15px; }
+    .robot-btn {
+      padding: 0.8rem 2rem; border-radius: 10px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s;
+    }
+    .btn-yes { background: #16a34a; color: white; }
+    .btn-yes:hover { background: #15803d; box-shadow: 0 0 15px rgba(22, 163, 74, 0.5); transform: translateY(-2px); }
+    .btn-no { background: var(--accent); color: white; }
+    .btn-no:hover { background: #b91c1c; box-shadow: 0 0 15px rgba(217, 30, 54, 0.5); transform: translateY(-2px); }
+
+    /* PORTAL PRINCIPAL (OCULTO HASTA DECIR QUE SÍ) */
+    #main-portal-content { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
     
-    .logo-header { text-align: center; margin-bottom: 2rem; }
-    .logo-header i { font-size: 3rem; color: var(--secondary); margin-bottom: 0.5rem; }
-    .logo-header h1 { font-size: 2rem; font-weight: 800; color: #f8fafc; }
-    .logo-header h1 span { color: var(--accent); }
-    .logo-header p { color: #94a3b8; font-size: 0.95rem; margin-top: 5px; }
-
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px; }
-    
-    .input-field { width: 100%; padding: 0.8rem 1rem; border: 1px solid #334155; border-radius: 10px; font-size: 0.95rem; background: #0f172a; color: #fff; transition: border-color 0.3s; }
-    .input-field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--glow); }
-
-    .btn-inscripcion { display: block; width: 100%; padding: 0.9rem; border: none; border-radius: 10px; background: var(--accent); color: white; font-weight: 700; text-align: center; cursor: pointer; margin-top: 1.8rem; font-size: 1.05rem; transition: all 0.3s ease; }
-    .btn-inscripcion:hover { opacity: 0.92; box-shadow: 0 0 20px var(--glow); transform: translateY(-2px); }
-
-    .success-box { display: none; text-align: center; background: rgba(22, 163, 74, 0.15); border: 1px solid var(--success); padding: 2rem; border-radius: 12px; margin-top: 1rem; }
-    .success-box i { font-size: 3rem; color: var(--success); margin-bottom: 10px; }
-    .success-box h3 { color: #4ade80; font-size: 1.4rem; margin-bottom: 8px; }
-    .success-box p { color: #cbd5e1; font-size: 0.9rem; }
+    /* SECCIÓN DE RESEÑAS (CUANDO DICEN QUE NO) */
+    #reviews-section {
+      display: none; position: fixed; inset: 0; background: var(--dark); z-index: 99998;
+      justify-content: center; align-items: center; padding: 2rem; overflow-y: auto;
+    }
+    .reviews-card {
+      background: #1e293b; border-radius: var(--radius); padding: 2.5rem; max-width: 600px; width: 100%;
+      border: 1px solid #334155; text-align: center; box-shadow: var(--shadow);
+    }
+    .stars-container { color: var(--secondary); font-size: 1.8rem; margin: 1rem 0; }
   </style>
 </head>
 <body>
 
-  <div class="inscripcion-container">
-    <div class="logo-header">
-      <i class="fa-solid fa-graduation-cap"></i>
-      <h1>Liroy <span>Estudio</span></h1>
-      <p>Portal Oficial de Inscripciones y Registro de Nuevos Alumnos</p>
+  <!-- PANTALLA INICIAL CON ROBOT QUE SIGUE EL CURSOR -->
+  <div id="welcome-robot-screen">
+    <div class="robot-container">
+      <div class="robot-antenna"></div>
+      <div class="robot-eyes-box">
+        <div class="robot-eye"><div class="robot-pupil" id="pupil-left"></div></div>
+        <div class="robot-eye"><div class="robot-pupil" id="pupil-right"></div></div>
+      </div>
     </div>
 
-    <form id="formInscripcion" onsubmit="procesarInscripcion(event)">
-      <div class="form-group">
-        <label><i class="fa-solid fa-user"></i> Nombre y Apellido:</label>
-        <input type="text" id="nombreAlumno" class="input-field" placeholder="Ej. Carlos Pérez" required>
-      </div>
+    <div class="robot-speech">
+      ¡Hola, humano! 🤖 Soy el asistente de <strong>Liroy Estudio de Idiomas</strong>. ¿Deseas ingresar a la plataforma académica VIP el día de hoy?
+    </div>
 
-      <div class="form-group">
-        <label><i class="fa-solid fa-envelope"></i> Correo Electrónico:</label>
-        <input type="email" id="correoAlumno" class="input-field" placeholder="correo@ejemplo.com" required>
-      </div>
-
-      <div class="form-group">
-        <label><i class="fa-solid fa-globe"></i> Idioma de Interés:</label>
-        <select id="idiomaElegido" class="input-field" required>
-          <option value="Inglés">🇺🇸 Inglés</option>
-          <option value="Portugués">🇧🇷 Portugués</option>
-          <option value="Francés">🇫🇷 Francés</option>
-          <option value="Alemán">🇩🇪 Alemán</option>
-          <option value="Italiano">🇮🇹 Italiano</option>
-          <option value="Español">🇪🇸 Español</option>
-          <option value="Chino">🇨🇳 Chino Mandarín</option>
-          <option value="Japonés">🇯🇵 Japonés</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label><i class="fa-solid fa-layer-group"></i> Nivel Inicial:</label>
-        <select id="nivelElegido" class="input-field">
-          <option value="A1">Nivel A1 (Principiante)</option>
-          <option value="A2">Nivel A2 (Básico)</option>
-          <option value="B1">Nivel B1 (Intermedio)</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn-inscripcion"><i class="fa-solid fa-paper-plane"></i> Completar Inscripción</button>
-    </form>
-
-    <div id="mensajeExito" class="success-box">
-      <i class="fa-solid fa-circle-check"></i>
-      <h3>¡Inscripción Exitosa!</h3>
-      <p>Tus datos han sido registrados correctamente en el sistema de Liroy Estudio de Idiomas. ¡Bienvenido a la academia!</p>
+    <div class="robot-buttons">
+      <button class="robot-btn btn-yes" onclick="entrarAlPortal()">Sí, entrar ➔</button>
+      <button class="robot-btn btn-no" onclick="irAResenas()">No por ahora</button>
     </div>
   </div>
 
+  <!-- SECCIÓN DE RESEÑAS Y OPINIONES (SI DICEN QUE NO) -->
+  <div id="reviews-section">
+    <div class="reviews-card">
+      <h2><i class="fa-solid fa-star" style="color: var(--secondary);"></i> Reseñas y Opiniones de Liroy</h2>
+      <p style="color: #cbd5e1; margin-top: 10px;">¡Vaya! Parece que hoy no quieres estudiar, pero mira lo que opinan nuestros estudiantes estrella:</p>
+      
+      <div class="stars-container">
+        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+      </div>
+      
+      <p style="font-style: italic; color: #f8fafc; background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid #334155;">
+        "La mejor academia para aprender idiomas con pizarras interactivas y clases de nivel superior." — Estudiante Verificado 🌟
+      </p>
+
+      <button class="robot-btn btn-yes" style="margin-top: 20px;" onclick="volverAlInicio()">Volver a Intentarlo 🔄</button>
+    </div>
+  </div>
+
+  <!-- PORTAL PRINCIPAL DE LA ACADEMIA -->
+  <div id="main-portal-content">
+    <header style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 1rem 2rem; border-radius: 12px; border: 1px solid #334155;">
+      <h2 style="color: var(--secondary);"><i class="fa-solid fa-graduation-cap"></i> Liroy Estudio de Idiomas</h2>
+      <button onclick="volverAlInicio()" class="robot-btn btn-no" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Cerrar Sesión</button>
+    </header>
+    <main style="text-align: center; margin-top: 4rem;">
+      <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">¡Bienvenido al Sistema Académico Global!</h1>
+      <p style="color: #94a3b8; font-size: 1.1rem;">Disfruta de las clases personalizadas, pizarras interactivas y mucho más.</p>
+    </main>
+  </div>
+
   <script>
-    function procesarInscripcion(e) {
-      e.preventDefault();
-      const nombre = document.getElementById('nombreAlumno').value;
-      const correo = document.getElementById('correoAlumno').value;
-      const idioma = document.getElementById('idiomaElegido').value;
-      const nivel = document.getElementById('nivelElegido').value;
+    // LÓGICA PARA HACER QUE LOS OJOS DEL ROBOT SIGAN EL CURSOR DEL MOUSE
+    document.addEventListener('mousemove', (e) => {
+      const pupils = [document.getElementById('pupil-left'), document.getElementById('pupil-right')];
+      
+      pupils.forEach(pupil => {
+        if (!pupil) return;
+        const rect = pupil.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        
+        const radian = Math.atan2(e.clientY - y, e.clientX - x);
+        const distance = Math.min(6, Math.hypot(e.clientX - x, e.clientY - y) / 10);
+        
+        const moveX = Math.cos(radian) * distance;
+        const moveY = Math.sin(radian) * distance;
+        
+        pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
+    });
 
-      // Guardar de manera local o simular el registro
-      const nuevoEstudiante = { nombre, correo, idioma, nivel, fecha: new Date().toLocaleDateString() };
-      let lista = JSON.parse(localStorage.getItem('liroy_nuevos_registros') || '[]');
-      lista.push(nuevoEstudiante);
-      localStorage.setItem('liroy_nuevos_registros', JSON.stringify(lista));
+    function entrarAlPortal() {
+      document.getElementById('welcome-robot-screen').style.opacity = '0';
+      setTimeout(() => {
+        document.getElementById('welcome-robot-screen').style.display = 'none';
+        document.getElementById('main-portal-content').style.display = 'block';
+      }, 600);
+    }
 
-      // Ocultar formulario y mostrar éxito
-      document.getElementById('formInscripcion').style.display = 'none';
-      document.getElementById('mensajeExito').style.display = 'block';
+    function irAResenas() {
+      document.getElementById('welcome-robot-screen').style.opacity = '0';
+      setTimeout(() => {
+        document.getElementById('welcome-robot-screen').style.display = 'none';
+        document.getElementById('reviews-section').style.display = 'flex';
+      }, 600);
+    }
+
+    function volverAlInicio() {
+      document.getElementById('reviews-section').style.display = 'none';
+      document.getElementById('main-portal-content').style.display = 'none';
+      const welcome = document.getElementById('welcome-robot-screen');
+      welcome.style.display = 'flex';
+      setTimeout(() => { welcome.style.opacity = '1'; }, 50);
     }
   </script>
 </body>
