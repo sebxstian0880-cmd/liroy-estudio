@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liroy Estudio de Idiomas — Inscripciones y Registro</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-light: #1e3a8a;
+      --accent: #d91e36;
+      --secondary: #f59e0b;
+      --dark: #071936;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --success: #16a34a;
+      --radius: 14px;
+      --shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.3);
+      --bg-gradient: radial-gradient(circle at top right, #0e2d5c, #040d1c);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --glow: rgba(217, 30, 54, 0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--dark); background-image: var(--bg-gradient); color: #f8fafc; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1rem; }
+
+    .inscripcion-container { width: 100%; max-width: 650px; background: #1e293b; border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); border: 1px solid #334155; }
+    
+    .logo-header { text-align: center; margin-bottom: 2rem; }
+    .logo-header i { font-size: 3rem; color: var(--secondary); margin-bottom: 0.5rem; }
+    .logo-header h1 { font-size: 2rem; font-weight: 800; color: #f8fafc; }
+    .logo-header h1 span { color: var(--accent); }
+    .logo-header p { color: #94a3b8; font-size: 0.95rem; margin-top: 5px; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px; }
+    
+    .input-field { width: 100%; padding: 0.8rem 1rem; border: 1px solid #334155; border-radius: 10px; font-size: 0.95rem; background: #0f172a; color: #fff; transition: border-color 0.3s; }
+    .input-field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 10px var(--glow); }
+
+    .btn-inscripcion { display: block; width: 100%; padding: 0.9rem; border: none; border-radius: 10px; background: var(--accent); color: white; font-weight: 700; text-align: center; cursor: pointer; margin-top: 1.8rem; font-size: 1.05rem; transition: all 0.3s ease; }
+    .btn-inscripcion:hover { opacity: 0.92; box-shadow: 0 0 20px var(--glow); transform: translateY(-2px); }
+
+    .success-box { display: none; text-align: center; background: rgba(22, 163, 74, 0.15); border: 1px solid var(--success); padding: 2rem; border-radius: 12px; margin-top: 1rem; }
+    .success-box i { font-size: 3rem; color: var(--success); margin-bottom: 10px; }
+    .success-box h3 { color: #4ade80; font-size: 1.4rem; margin-bottom: 8px; }
+    .success-box p { color: #cbd5e1; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <div class="inscripcion-container">
+    <div class="logo-header">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <h1>Liroy <span>Estudio</span></h1>
+      <p>Portal Oficial de Inscripciones y Registro de Nuevos Alumnos</p>
+    </div>
+
+    <form id="formInscripcion" onsubmit="procesarInscripcion(event)">
+      <div class="form-group">
+        <label><i class="fa-solid fa-user"></i> Nombre y Apellido:</label>
+        <input type="text" id="nombreAlumno" class="input-field" placeholder="Ej. Carlos Pérez" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-envelope"></i> Correo Electrónico:</label>
+        <input type="email" id="correoAlumno" class="input-field" placeholder="correo@ejemplo.com" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-globe"></i> Idioma de Interés:</label>
+        <select id="idiomaElegido" class="input-field" required>
+          <option value="Inglés">🇺🇸 Inglés</option>
+          <option value="Portugués">🇧🇷 Portugués</option>
+          <option value="Francés">🇫🇷 Francés</option>
+          <option value="Alemán">🇩🇪 Alemán</option>
+          <option value="Italiano">🇮🇹 Italiano</option>
+          <option value="Español">🇪🇸 Español</option>
+          <option value="Chino">🇨🇳 Chino Mandarín</option>
+          <option value="Japonés">🇯🇵 Japonés</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-layer-group"></i> Nivel Inicial:</label>
+        <select id="nivelElegido" class="input-field">
+          <option value="A1">Nivel A1 (Principiante)</option>
+          <option value="A2">Nivel A2 (Básico)</option>
+          <option value="B1">Nivel B1 (Intermedio)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-inscripcion"><i class="fa-solid fa-paper-plane"></i> Completar Inscripción</button>
+    </form>
+
+    <div id="mensajeExito" class="success-box">
+      <i class="fa-solid fa-circle-check"></i>
+      <h3>¡Inscripción Exitosa!</h3>
+      <p>Tus datos han sido registrados correctamente en el sistema de Liroy Estudio de Idiomas. ¡Bienvenido a la academia!</p>
+    </div>
+  </div>
+
+  <script>
+    function procesarInscripcion(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('nombreAlumno').value;
+      const correo = document.getElementById('correoAlumno').value;
+      const idioma = document.getElementById('idiomaElegido').value;
+      const nivel = document.getElementById('nivelElegido').value;
+
+      // Guardar de manera local o simular el registro
+      const nuevoEstudiante = { nombre, correo, idioma, nivel, fecha: new Date().toLocaleDateString() };
+      let lista = JSON.parse(localStorage.getItem('liroy_nuevos_registros') || '[]');
+      lista.push(nuevoEstudiante);
+      localStorage.setItem('liroy_nuevos_registros', JSON.stringify(lista));
+
+      // Ocultar formulario y mostrar éxito
+      document.getElementById('formInscripcion').style.display = 'none';
+      document.getElementById('mensajeExito').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
