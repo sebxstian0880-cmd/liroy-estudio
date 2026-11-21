@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liroy Estudio de Idiomas — Portal Global de Inscripciones</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-light: #1e3a8a;
+      --accent: #d91e36;
+      --secondary: #f59e0b;
+      --dark: #071936;
+      --light: #f8fafc;
+      --radius: 14px;
+      --shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.3);
+      --bg-gradient: radial-gradient(circle at top right, #0e2d5c, #040d1c);
+    }
+
+    body.theme-en { --accent: #d91e36; --primary-light: #1e3a8a; --secondary: #f59e0b; }
+    body.theme-pt { --accent: #16a34a; --primary-light: #0284c7; --secondary: #eab308; }
+    body.theme-fr { --accent: #2563eb; --primary-light: #1e40af; --secondary: #ef4444; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--dark); background-image: var(--bg-gradient); color: #f8fafc; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+
+    /* PANTALLA DE CARGA CON FRASES MOTIVADORAS */
+    #welcome-splash {
+      position: fixed; inset: 0; background: radial-gradient(circle at center, #0f2347 0%, #030712 100%);
+      z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: white; padding: 2rem; transition: opacity 0.8s ease;
+    }
+    .splash-logo { font-size: 4rem; color: var(--secondary); margin-bottom: 1rem; }
+    .quote-box {
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem 2rem; border-radius: 12px; max-width: 600px; font-size: 1.1rem; font-style: italic;
+      margin-bottom: 2rem; min-height: 100px; display: flex; align-items: center; justify-content: center;
+    }
+    .splash-loader { width: 250px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; }
+    .splash-bar { width: 0%; height: 100%; background: var(--secondary); animation: loadSplash 3.5s linear forwards; }
+    @keyframes loadSplash { 0% { width: 0%; } 100% { width: 100%; } }
+
+    /* HEADER */
+    header {
+      background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); padding: 1.2rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .logo i { color: var(--secondary); }
+    .logo span { color: var(--accent); }
+    .nav-buttons { display: flex; gap: 10px; }
+    .nav-btn {
+      background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s;
+    }
+    .nav-btn:hover, .nav-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .nav-btn.vip-tab { background: linear-gradient(135deg, #0284c7, #0369a1); border-color: #0284c7; color: white; }
+
+    /* MAIN CONTAINER */
+    .main-container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+    .section-view { display: none; }
+    .section-view.active { display: block; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #1e293b; padding-bottom: 0.5rem; }
+
+    /* GRILLA DE IDIOMAS */
+    .languages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .lang-card {
+      background: #1e293b; border-radius: var(--radius); padding: 1.8rem; border: 1px solid #334155;
+      box-shadow: var(--shadow); position: relative; transition: transform 0.3s, border-color 0.3s;
+    }
+    .lang-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .lang-card.locked { opacity: 0.5; border-color: #334155; }
+    .lang-flag { font-size: 2.5rem; margin-bottom: 0.8rem; display: inline-block; }
+    
+    .pricing-table-mini { background: #0f172a; padding: 12px; border-radius: 8px; margin: 12px 0; font-size: 0.9rem; border: 1px solid #334155; }
+    .pricing-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .pricing-row:last-child { border-bottom: none; }
+
+    .btn { display: block; width: 100%; padding: 0.8rem; border: none; border-radius: 10px; background: var(--accent); color: white; font-weight: 700; text-align: center; cursor: pointer; transition: 0.3s; margin-top: 1rem; }
+    .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* MODAL DE INSCRIPCIÓN IDIOMAS */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85); z-index: 2000; justify-content: center; align-items: center; padding: 1.5rem; backdrop-filter: blur(5px); }
+    .modal-card { background: #1e293b; border-radius: 18px; padding: 2.5rem; max-width: 550px; width: 100%; border: 1px solid #334155; box-shadow: 0 25px 50px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
+    
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.88rem; font-weight: 600; color: #cbd5e1; margin-bottom: 5px; }
+    .input-field { width: 100%; padding: 0.75rem 1rem; border: 1px solid #334155; border-radius: 10px; background: #0f172a; color: white; font-size: 0.95rem; }
+    .input-field:focus { outline: none; border-color: var(--accent); }
+
+    /* CLASES PERSONALIZADAS VIP */
+    .vip-container { background: #1e293b; border-radius: var(--radius); padding: 2.5rem; border: 2px solid var(--secondary); max-width: 750px; margin: 0 auto; }
+    .price-output-box { background: #0f172a; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--secondary); text-align: center; margin-top: 1.5rem; display: none; }
+    
+    /* ANIMACIÓN ROBOT CALCULANDO */
+    #robot-calculating-overlay { display: none; position: fixed; inset: 0; background: rgba(7, 25, 54, 0.92); z-index: 3000; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 2rem; }
+    .robot-icon-anim { font-size: 4rem; color: var(--secondary); animation: robotBounce 1s infinite alternate ease-in-out; margin-bottom: 1rem; }
+    @keyframes robotBounce { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
+  </style>
+</head>
+<body class="theme-en">
+
+  <!-- SPLASH DE CARGA CON FRASES MOTIVADORAS -->
+  <div id="welcome-splash">
+    <div class="splash-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+    <h1 style="font-size: 2.2rem; margin-bottom: 1rem;">Liroy Estudio de Idiomas</h1>
+    <div class="quote-box" id="quote-display">"La educación es el arma más poderosa que puedes usar para cambiar el mundo." — Nelson Mandela</div>
+    <div class="splash-loader"><div class="splash-bar"></div></div>
+    <p style="color: #94a3b8; margin-top: 1rem; font-size: 0.9rem;">Cargando plataforma global...</p>
+  </div>
+
+  <!-- ROBOT CALCULANDO PRECIO (ANIMACIÓN) -->
+  <div id="robot-calculating-overlay">
+    <div class="robot-icon-anim"><i class="fa-solid fa-robot"></i></div>
+    <h2 style="color: var(--secondary); font-size: 1.6rem; margin-bottom: 10px;">¡Espera un momento!</h2>
+    <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 450px;" id="robot-status-text">Analizando tu perfil y calculando tu precio estimado personalizado...</p>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo" onclick="cambiarVista('cursos')"><i class="fa-solid fa-graduation-cap"></i> Liroy <span>Estudio</span></div>
+    <div class="nav-buttons">
+      <button class="nav-btn active" onclick="cambiarVista('cursos', this)"><i class="fa-solid fa-globe"></i> Cursos e Idiomas</button>
+      <button class="nav-btn vip-tab" onclick="cambiarVista('personalizadas', this)"><i class="fa-solid fa-chalkboard-user"></i> Clases Personalizadas</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- VISTA CURSOS E IDIOMAS -->
+    <div id="view-cursos" class="section-view active">
+      <h2 class="section-title"><i class="fa-solid fa-graduation-cap" style="color:var(--secondary);"></i> Programas de Idiomas Disponibles</h2>
+      <p style="color: #cbd5e1; margin-bottom: 2rem;">Selecciona tu idioma de preferencia para conocer los precios por bloque/nivel e iniciar tu inscripción directa al WhatsApp del director.</p>
+      
+      <div class="languages-grid" id="languages-grid-container"></div>
+    </div>
+
+    <!-- VISTA CLASES PERSONALIZADAS -->
+    <div id="view-personalizadas" class="section-view">
+      <div class="vip-container">
+        <h2 style="color: var(--secondary); font-size: 1.6rem; margin-bottom: 10px;"><i class="fa-solid fa-crown"></i> Calculador de Clases Personalizadas VIP</h2>
+        <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 1.5rem;">Diseñado para atención exclusiva con tarifas justas y ajustadas a tus requerimientos.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group"><label>Nombre:</label><input type="text" id="vip-nombre" class="input-field" placeholder="Tu nombre"></div>
+          <div class="form-group"><label>Apellido:</label><input type="text" id="vip-apellido" class="input-field" placeholder="Tu apellido"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group"><label>Edad:</label><input type="number" id="vip-edad" class="input-field" placeholder="Ej. 15"></div>
+          <div class="form-group"><label>País:</label><input type="text" id="vip-pais" class="input-field" placeholder="Ej. Venezuela"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group"><label>Idioma:</label>
+            <select id="vip-idioma" class="input-field">
+              <option value="Inglés">🇺🇸 Inglés</option>
+              <option value="Portugués">🇧🇷 Portugués</option>
+              <option value="Francés">🇫🇷 Francés</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Nivel a Cursar:</label>
+            <select id="vip-nivel" class="input-field">
+              <option value="18" data-label="Kids">👶 Nivel Kids</option>
+              <option value="25" data-label="A1 - A2" selected>📖 Nivel A1 – A2</option>
+              <option value="35" data-label="B1 - B2">📘 Nivel B1 – B2</option>
+              <option value="45" data-label="C1 - C2">🏆 Nivel C1 – C2</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group"><label>Duración del Plan (Meses):</label>
+            <select id="vip-meses" class="input-field">
+              <option value="1">1 mes</option>
+              <option value="3" selected>3 meses</option>
+              <option value="6">6 meses</option>
+              <option value="12">12 meses</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Personas que Participarán:</label><input type="number" id="vip-personas" class="input-field" value="1" min="1"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group"><label>Días que Desea Estudiar:</label>
+            <select id="vip-dias" class="input-field">
+              <option value="2">2 días por semana</option>
+              <option value="3">3 días por semana</option>
+              <option value="5">Intensivo (5 días)</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Tiempo Disponible Diario:</label><input type="text" id="vip-tiempo" class="input-field" placeholder="Ej. 1 hora al día"></div>
+        </div>
+        <div class="form-group"><label>Experiencia Previa:</label><input type="text" id="vip-experiencia" class="input-field" placeholder="Ej. Desde cero / 6 meses practicando"></div>
+
+        <button class="btn" style="background: var(--secondary); color: #0f172a; font-size: 1.05rem; margin-top: 1rem;" onclick="calcularPrecioPersonalizado()">🤖 Calcular Precio Estimado</button>
+
+        <div id="vip-result-box" class="price-output-box">
+          <h3 id="vip-result-title" style="color: #f8fafc; font-size: 1.25rem; margin-bottom: 5px;">Estimado Personalizado VIP</h3>
+          <p id="vip-price-text" style="font-size: 2rem; font-weight: 800; color: var(--secondary); margin-bottom: 5px;">$0.00 USD</p>
+          <p id="vip-monthly-breakdown" style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 10px;"></p>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">Incluye material didáctico, profesor dedicado y pizarra interactiva.</p>
+          <button class="btn" style="background: #16a34a;" onclick="enviarCartaInscripcionVIP()"><i class="fa-brands fa-whatsapp"></i> Enviar mi Carta de Inscripción a WhatsApp</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL DE INSCRIPCIÓN PARA IDIOMAS -->
+  <div class="modal-overlay" id="modalInscripcionIdioma">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 id="modal-idioma-titulo" style="color: var(--secondary);">Inscripción — Idioma</h3>
+        <button onclick="cerrarModalIdioma()" style="background:none; border:none; color:#94a3b8; font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+      
+      <div class="form-group"><label>Nombre y Apellido:</label><input type="text" id="ins-nombre" class="input-field" placeholder="Tu nombre completo"></div>
+      <div class="form-group"><label>Edad:</label><input type="number" id="ins-edad" class="input-field" placeholder="Tu edad"></div>
+      <div class="form-group"><label>País:</label><input type="text" id="ins-pais" class="input-field" placeholder="Tu país de residencia"></div>
+      <div class="form-group"><label>Nivel de Interés:</label>
+        <select id="ins-nivel" class="input-field">
+          <option value="Kids ($18/mes)">👶 Kids ($18/mes)</option>
+          <option value="A1 - A2 ($25/mes)">📖 A1 – A2 ($25/mes)</option>
+          <option value="B1 - B2 ($35/mes)">📘 B1 – B2 ($35/mes)</option>
+          <option value="C1 - C2 ($45/mes)">🏆 C1 – C2 ($45/mes)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Días Disponibles:</label><input type="text" id="ins-dias" class="input-field" placeholder="Ej. Lunes y Miércoles"></div>
+      <div class="form-group"><label>Tiempo de Experiencia (Práctica):</label><input type="text" id="ins-experiencia" class="input-field" placeholder="Ej. Desde cero / 3 meses"></div>
+
+      <button class="btn" style="background: #16a34a; margin-top: 1.5rem;" onclick="enviarInscripcionIdiomaWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Enviar Solicitud de Inscripción</button>
+    </div>
+  </div>
+
+  <script>
+    // FRASES MOTIVADORAS ROTATIVAS
+    const quotes = [
+      "\"La educación es el arma más poderosa que puedes usar para cambiar el mundo.\" — Nelson Mandela",
+      "\"Invierte en tu mente; la inversión más rentable paga el mejor interés.\" — Benjamin Franklin",
+      "\"El secreto de salir adelante es empezar.\" — Mark Twain",
+      "\"Nunca consideres el estudio como una obligación, sino como una oportunidad para penetrar en el maravilloso mundo del saber.\" — Albert Einstein"
+    ];
+    let qIdx = 0;
+    setInterval(() => {
+      qIdx = (qIdx + 1) % quotes.length;
+      const el = document.getElementById('quote-display');
+      if(el) el.innerText = quotes[qIdx];
+    }, 3000);
+
+    // QUITAR SPLASH AUTOMÁTICAMENTE
+    setTimeout(() => {
+      const splash = document.getElementById('welcome-splash');
+      if(splash) {
+        splash.style.opacity = '0';
+        setTimeout(() => splash.style.display = 'none', 800);
+      }
+    }, 3500);
+
+    // DATOS DE IDIOMAS (3 DESBLOQUEADOS CON PRECIOS NIVELADOS: KIDS $18, A1-A2 $25, B1-B2 $35, C1-C2 $45)
+    const idiomasData = [
+      { id: 'en', flag: '🇺🇸', name: 'Inglés', activo: true, theme: 'theme-en', precios: { kid: '$18/mes', a1a2: '$25/mes', b1b2: '$35/mes', c1c2: '$45/mes' } },
+      { id: 'pt', flag: '🇧🇷', name: 'Portugués', activo: true, theme: 'theme-pt', precios: { kid: '$18/mes', a1a2: '$25/mes', b1b2: '$35/mes', c1c2: '$45/mes' } },
+      { id: 'fr', flag: '🇫🇷', name: 'Francés', activo: true, theme: 'theme-fr', precios: { kid: '$18/mes', a1a2: '$25/mes', b1b2: '$35/mes', c1c2: '$45/mes' } },
+      { id: 'de', flag: '🇩🇪', name: 'Alemán', activo: false },
+      { id: 'it', flag: '🇮🇹', name: 'Italiano', activo: false },
+      { id: 'es', flag: '🇪🇸', name: 'Español', activo: false },
+      { id: 'zh', flag: '🇨🇳', name: 'Chino Mandarín', activo: false },
+      { id: 'ja', flag: '🇯🇵', name: 'Japonés', activo: false }
+    ];
+
+    let idiomaSeleccionadoActual = '';
+
+    function renderizarIdiomas() {
+      const grid = document.getElementById('languages-grid-container');
+      if(!grid) return;
+      grid.innerHTML = '';
+      idiomasData.forEach(item => {
+        if(item.activo) {
+          grid.innerHTML += `
+            <div class="lang-card">
+              <span class="lang-flag">${item.flag}</span>
+              <h3 style="font-size: 1.3rem; margin-bottom: 5px;">${item.name}</h3>
+              <p style="font-size: 0.82rem; color: #94a3b8; margin-bottom: 10px;">Precios Oficiales por Nivel:</p>
+              <div class="pricing-table-mini">
+                <div class="pricing-row"><span>👶 Nivel Kids:</span><strong>${item.precios.kid}</strong></div>
+                <div class="pricing-row"><span>📖 Nivel A1 – A2:</span><strong>${item.precios.a1a2}</strong></div>
+                <div class="pricing-row"><span>📘 Nivel B1 – B2:</span><strong>${item.precios.b1b2}</strong></div>
+                <div class="pricing-row"><span>🏆 Nivel C1 – C2:</span><strong>${item.precios.c1c2}</strong></div>
+              </div>
+              <button class="btn" onclick="abrirInscripcionIdioma('${item.id}', '${item.name}', '${item.theme}')">Inscribirme en ${item.name}</button>
+            </div>`;
+        } else {
+          grid.innerHTML += `
+            <div class="lang-card locked">
+              <span class="lang-flag">${item.flag}</span>
+              <h3 style="font-size: 1.3rem; margin-bottom: 5px;">${item.name}</h3>
+              <p style="color: #f59e0b; font-weight: 700; margin: 1.5rem 0; font-size: 0.95rem;">🔒 Próximamente Disponible</p>
+              <button class="btn" style="background:#334155; cursor:not-allowed;" disabled>No disponible</button>
+            </div>`;
+        }
+      });
+    }
+
+    function cambiarVista(v, btnEl) {
+      document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(`view-${v}`).classList.add('active');
+      if(btnEl) {
+        btnEl.classList.add('active');
+      } else {
+        document.querySelector('.nav-btn').classList.add('active');
+      }
+    }
+
+    function abrirInscripcionIdioma(id, nombre, theme) {
+      idiomaSeleccionadoActual = nombre;
+      document.body.className = theme;
+      document.getElementById('modal-idioma-titulo').innerText = `Inscripción — ${nombre}`;
+      document.getElementById('modalInscripcionIdioma').style.display = 'flex';
+    }
+
+    function cerrarModalIdioma() {
+      document.getElementById('modalInscripcionIdioma').style.display = 'none';
+    }
+
+    function enviarInscripcionIdiomaWhatsApp() {
+      const nombre = document.getElementById('ins-nombre').value.trim();
+      const edad = document.getElementById('ins-edad').value.trim();
+      const pais = document.getElementById('ins-pais').value.trim();
+      const nivel = document.getElementById('ins-nivel').value;
+      const dias = document.getElementById('ins-dias').value.trim();
+      const exp = document.getElementById('ins-experiencia').value.trim();
+
+      if(!nombre || !edad || !pais || !dias) { alert("Por favor completa los campos principales."); return; }
+
+      const texto = `Hola Director, quiero solicitar mi inscripción en el curso de *${idiomaSeleccionadoActual}*:\n\n👤 Nombre: ${nombre}\n🎂 Edad: ${edad}\n🌍 País: ${pais}\n📚 Nivel: ${nivel}\n📅 Días disponibles: ${dias}\n⏱️ Experiencia previa: ${exp || 'Ninguna'}`;
+      window.open(`https://api.whatsapp.com/send?phone=584125952360&text=${encodeURIComponent(texto)}`, '_blank');
+      cerrarModalIdioma();
+    }
+
+    // CÁLCULO REALISTA Y NIVELADO DE CLASES PERSONALIZADAS VIP
+    // Ejemplo: A1-A2 ($25) + $5 atención personalizada = $30/mes -> 3 meses (1 persona, 2 días/sem) = $90 USD
+    let precioMensualVIP = 0;
+    let precioTotalVIP = 0;
+
+    function calcularPrecioPersonalizado() {
+      const nombre = document.getElementById('vip-nombre').value.trim();
+      const apellido = document.getElementById('vip-apellido').value.trim();
+      const pais = document.getElementById('vip-pais').value.trim();
+      const precioNivelBase = parseFloat(document.getElementById('vip-nivel').value) || 25;
+      const meses = parseInt(document.getElementById('vip-meses').value) || 1;
+      const personas = Math.max(1, parseInt(document.getElementById('vip-personas').value) || 1);
+      const dias = parseInt(document.getElementById('vip-dias').value) || 2;
+
+      if(!nombre || !apellido || !pais) { alert("Por favor completa nombre, apellido y país."); return; }
+
+      const overlay = document.getElementById('robot-calculating-overlay');
+      overlay.style.display = 'flex';
+
+      setTimeout(() => {
+        // Tarifa mensual justa: Base del nivel + $5 por tutoría privada
+        // Ajustes suaves si piden más de 2 días/semana (+$5 por día adicional) o acompañantes (+$10 por persona extra)
+        const extraPersonalizado = 5;
+        const extraDias = dias > 2 ? (dias - 2) * 5 : 0;
+        const extraPersonas = personas > 1 ? (personas - 1) * 10 : 0;
+
+        precioMensualVIP = precioNivelBase + extraPersonalizado + extraDias + extraPersonas;
+        precioTotalVIP = precioMensualVIP * meses;
+
+        const textoMeses = meses === 1 ? '1 mes' : `${meses} meses`;
+        document.getElementById('vip-result-title').innerText = `Total Estimado (${textoMeses})`;
+        document.getElementById('vip-price-text').innerText = `$${precioTotalVIP.toFixed(2)} USD`;
+        document.getElementById('vip-monthly-breakdown').innerText = `Equivale a $${precioMensualVIP.toFixed(2)} USD por mes (${personas} ${personas === 1 ? 'persona' : 'personas'})`;
+
+        overlay.style.display = 'none';
+        document.getElementById('vip-result-box').style.display = 'block';
+      }, 2500);
+    }
+
+    function enviarCartaInscripcionVIP() {
+      const nombre = document.getElementById('vip-nombre').value.trim();
+      const apellido = document.getElementById('vip-apellido').value.trim();
+      const edad = document.getElementById('vip-edad').value.trim();
+      const pais = document.getElementById('vip-pais').value.trim();
+      const idioma = document.getElementById('vip-idioma').value;
+      const nivelSelect = document.getElementById('vip-nivel');
+      const nivelTexto = nivelSelect.options[nivelSelect.selectedIndex].getAttribute('data-label');
+      const meses = parseInt(document.getElementById('vip-meses').value) || 1;
+      const tiempo = document.getElementById('vip-tiempo').value.trim();
+      const personas = document.getElementById('vip-personas').value;
+      const dias = document.getElementById('vip-dias').value;
+      const exp = document.getElementById('vip-experiencia').value.trim();
+
+      const textoMeses = meses === 1 ? '1 mes' : `${meses} meses`;
+      const carta = `👑 *CARTA DE INSCRIPCIÓN - CLASES PERSONALIZADAS VIP*\n\n👤 Alumno: ${nombre} ${apellido}\n🎂 Edad: ${edad}\n🌍 País: ${pais}\n🌐 Idioma: ${idioma}\n📚 Nivel: ${nivelTexto}\n📆 Duración del plan: ${textoMeses}\n👥 Participantes: ${personas}\n📅 Días de estudio: ${dias} por semana\n⏱️ Tiempo disponible: ${tiempo || 'Flexible'}\n📖 Experiencia: ${exp || 'Desde cero'}\n\n💰 *Inversión Mensual:* $${precioMensualVIP.toFixed(2)} USD/mes\n💵 *Total por ${textoMeses}:* $${precioTotalVIP.toFixed(2)} USD`;
+      window.open(`https://api.whatsapp.com/send?phone=584125952360&text=${encodeURIComponent(carta)}`, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderizarIdiomas);
+  </script>
+</body>
+</html>
